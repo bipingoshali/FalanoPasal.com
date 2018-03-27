@@ -1,6 +1,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="SITE_URL" value="${pageContext.request.contextPath}" />
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -11,16 +14,27 @@
         <link href="${SITE_URL}/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- Custom CSS -->
         <link href="${SITE_URL}/static/css/custom.css" rel="stylesheet" type="text/css" />
+        
+        <script src="${SITE_URL}/static/js/jquery-3.2.1.min.js"></script>
+        <script src="${SITE_URL}/static/js/custom.js"></script>
+        
+        
 
     </head>
     <body style="background-color: #f9f9f9;height: 1000px;">
+        
         <div class="container" style="padding-top: 15px;">
+            
             <h1 style="text-align: center;margin: 40px 0px 30px 0px;">Join FalanoPasal</h1>
+            
+            <!-- Registration form message -->
+            <h3 style="text-align: center;"><c:out value="${message}"></c:out></h3>
+            
             <div class="panel panel-primary" style="width:900px;margin:0px auto;padding:10px;">
                 <div class="panel-heading">Register your account</div>
                 <div class="panel-body">
                     <spring:url value="/registerSave" var="registerURL" />
-                    <form:form method="post" action="${registerURL}" modelAttribute="user">
+                    <form:form method="post" action="${registerURL}" modelAttribute="user" id="registerForm">
                         <div class="row"> 
 
                             <div class="col-md-6">
@@ -111,21 +125,21 @@
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label" for="inputAddressLine1">Address Line 1</label>
-                                                <form:input class="form-control" path="addressline1" data-error="Please enter name field." id="inputAddressLine1" placeholder="Address Line 1"  type="text" required="required" />
+                                                <form:input class="form-control" path="addressLine1" data-error="Please enter name field." id="inputAddressLine1" placeholder="Address Line 1"  type="text" required="required" />
                                                 <div class="help-block with-errors"></div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label" for="inputAddressLine2">Address Line 2</label>
-                                                        <form:input class="form-control" path="addressline2" data-error="Please enter name field." id="inputAddressLine2" placeholder="Address Line 2"  type="text" required="required" />
+                                                        <form:input class="form-control" path="addressLine2" data-error="Please enter name field." id="inputAddressLine2" placeholder="Address Line 2"  type="text" required="required" />
                                                         <div class="help-block with-errors"></div>
                                                     </div>                                        
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label" for="inputHouseNo">House No.</label>
-                                                        <form:input class="form-control" path="houseno" data-error="Please enter name field." id="inputHouseNo" placeholder="House No."  type="number" required="required" />
+                                                        <form:input class="form-control" path="houseNo" data-error="Please enter name field." id="inputHouseNo" placeholder="House No."  type="text" />
                                                         <div class="help-block with-errors"></div>
                                                     </div>                                        
                                                 </div>
@@ -140,13 +154,13 @@
                                     <div class="panel panel-primary">
                                         <div class="panel-body">
                                             <div class="form-group">
-                                                <label class="control-label" for="inputPhoneNumber">Phone Number</label>
-                                                <form:input class="form-control" path="phoneno" data-error="Please enter name field." id="inputPhoneNumber" placeholder="Phone Number"  type="number" required="required" />
+                                                <label class="control-label" for="inputBirthDate">Birth date</label>
+                                                <form:input class="form-control" path="birthdate" data-error="Please enter name field." id="inputBirthDate"  type="date" required="required" />
                                                 <div class="help-block with-errors"></div>
                                             </div>
                                             <div class="form-group">
-                                                <label class="control-label" for="inputBirthDate">Birth date</label>
-                                                <form:input class="form-control" path="birthdate" data-error="Please enter name field." id="inputBirthDate"  type="date" required="required" />
+                                                <label class="control-label" for="inputPhoneNumber">Phone Number</label>
+                                                <form:input class="form-control" path="phoneNo" data-error="Please enter name field." id="inputPhoneNumber" placeholder="Phone Number"  type="number" required="required" />
                                                 <div class="help-block with-errors"></div>
                                             </div>
                                         </div>
@@ -157,7 +171,7 @@
                         </div> <!--/.row-->
 
                         <div class="form-group">
-                            <button class="btn btn-primary" type="submit" >
+                            <button class="btn btn-primary" type="submit" disabled="disabled" >
                                 Submit
                             </button>
                             <button class="btn btn-danger" type="reset">
@@ -170,7 +184,6 @@
                         <div>
                             <p>Already have an account? <a href="${SITE_URL}/login">Sign in</a>.</p>
                         </div>
-
                     </form:form>
 
                 </div> <!--/.panel-body-->

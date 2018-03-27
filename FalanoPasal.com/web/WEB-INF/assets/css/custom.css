@@ -20,3 +20,8 @@ legend{
     background-color: #ffffff;
 }
 
+#registerForm input:focus{
+	outline: none;
+	border-color: #009dff;
+}
+
