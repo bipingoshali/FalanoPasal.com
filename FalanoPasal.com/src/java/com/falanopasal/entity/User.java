@@ -13,15 +13,17 @@ import java.util.Date;
  */
 public class User {
     
-    private String userId,firstName,lastName,email,username,password,city,addressLine1,addressLine2,phoneNo,birthdate;
+    private int userId;
+    private String firstName,lastName,email,username,password,city,addressLine1,addressLine2,phoneNo,birthdate;
     private int houseNo,roleId;
     private boolean status=false;
     private Date birthdateformat;
+    private String emailToken;
 
     public User() {
     }
 
-    public User(String userId, String firstName, String lastName, String email, String username, String password, String city, String addressLine1, String addressLine2, String phoneNo, String birthdate, int houseNo, int roleId, Date birthdateformat) {
+    public User(int userId, String firstName, String lastName, String email, String username, String password, String city, String addressLine1, String addressLine2, String phoneNo, String birthdate, int houseNo, int roleId, Date birthdateformat, String emailToken) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -36,13 +38,22 @@ public class User {
         this.houseNo = houseNo;
         this.roleId = roleId;
         this.birthdateformat = birthdateformat;
+        this.emailToken = emailToken;
+    }
+    
+    public String getEmailToken(){
+        return emailToken;
+    }
+    
+    public void setEmailToken(String emailToken){
+        this.emailToken = emailToken;
     }
 
-    public String getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 

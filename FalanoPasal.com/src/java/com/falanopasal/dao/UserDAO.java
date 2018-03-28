@@ -8,6 +8,7 @@ package com.falanopasal.dao;
 import com.falanopasal.entity.User;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.List;
 
 /**
  *
@@ -20,4 +21,14 @@ public interface UserDAO {
     
     //check whether the username is available or not
     boolean isUsernameExist(String username) throws SQLException, ClassNotFoundException;
+    
+    //get user details
+    User getByEmail(User user) throws SQLException, ClassNotFoundException;
+    
+    //update email token
+    void updateEmailToken(String token,String username) throws SQLException, ClassNotFoundException;
+    
+    //update user status
+    User getByUserId(User user) throws SQLException, ClassNotFoundException;
+    void updateUserStatus(int userId) throws SQLException,ClassNotFoundException;    
 }

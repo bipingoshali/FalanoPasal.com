@@ -16,4 +16,8 @@ import java.text.ParseException;
 public interface UserService {
     int insert(User user) throws SQLException, ClassNotFoundException,  ParseException; 
     boolean isUsernameExist(String username) throws SQLException, ClassNotFoundException;    
+    User getByEmail(User user) throws SQLException, ClassNotFoundException;    
+    void updateEmailToken(String token,String username) throws SQLException, ClassNotFoundException; 
+    User getByUserId(User user) throws SQLException, ClassNotFoundException;   
+    void updateUserStatus(int userId) throws SQLException,ClassNotFoundException;        
 }

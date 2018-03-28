@@ -8,10 +8,13 @@ package com.falanopasal.dao.impl;
 import com.falanopasal.constant.SQLConstant;
 import com.falanopasal.dao.UserDAO;
 import com.falanopasal.entity.User;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -39,7 +42,8 @@ public class UserDAOImpl implements UserDAO{
             user.getPhoneNo(),
             user.getBirthdateformat(),
             user.getRoleId(),
-            user.isStatus()
+            user.isStatus(),
+            user.getEmailToken()
         });
     }
 
@@ -51,6 +55,52 @@ public class UserDAOImpl implements UserDAO{
         }
         return false;
     }
+
+    @Override
+    public User getByEmail(User user) throws SQLException, ClassNotFoundException {
+        List<User> fetchUsernameData = jdbcTemplate.query(SQLConstant.User.GET_BY_USERNAME, new Object[]{user.getUsername()}, new RowMapper<User>() {
+            @Override
+            public User mapRow(ResultSet rs, int i) throws SQLException {
+                return mapData(rs);
+            }
+        });
+        return fetchUsernameData.size() > 0 ? fetchUsernameData.get(0):null;
+    }
+
+    private User mapData(ResultSet rs) throws SQLException{
+        User user = new User();
+        user.setUserId(rs.getInt("userId"));
+        user.setEmailToken(rs.getString("emailToken"));
+        user.setStatus(rs.getBoolean("status"));
+        return user;
+    }
+
+    @Override
+    public void updateEmailToken(String token,String username) throws SQLException, ClassNotFoundException {        
+        jdbcTemplate.update(SQLConstant.User.EMAIL_TOKEN_UPDATE, new Object[]{token,username});        
+    }
+
+    @Override
+    public User getByUserId(User user) throws SQLException, ClassNotFoundException {
+        List<User> fetchUserIdData = jdbcTemplate.query(SQLConstant.User.GET_BY_USERID, new Object[]{user.getUserId()},new RowMapper<User>() {
+            @Override
+            public User mapRow(ResultSet rs, int i) throws SQLException {
+                return mapData(rs);
+            }
+        });    
+        return fetchUserIdData.size() > 0 ? fetchUserIdData.get(0):null;
+    }
+
+    @Override
+    public void updateUserStatus(int userId) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.User.UPDATE_USER_STATUS, new Object[]{userId});
+    }
+
+    
+        
+        
+    
+    
     
     
 }
