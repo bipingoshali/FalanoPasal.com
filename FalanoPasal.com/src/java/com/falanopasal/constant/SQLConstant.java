@@ -36,6 +36,11 @@ public class SQLConstant {
         
         public final static String UPDATE_USER_STATUS = "UPDATE " + TableConstant.USER_TABLE +
                 " set status=true where userId=?";
+        
+        
+        public final static String USERNAME_AUTHENTICATION = "SELECT * FROM "
+                +TableConstant.USER_TABLE+
+                " WHERE username=?";
 
     }
 }

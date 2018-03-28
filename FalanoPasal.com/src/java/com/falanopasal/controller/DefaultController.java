@@ -5,10 +5,12 @@
  */
 package com.falanopasal.controller;
 
+import com.falanopasal.entity.Login;
 import com.falanopasal.entity.User;
 import com.falanopasal.service.UserService;
 import java.sql.SQLException;
 import java.text.ParseException;
+import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -31,19 +33,16 @@ public class DefaultController {
     @Autowired
     private UserService userService;
     
-    @Autowired
-    private ApplicationContext appContext;
+//    @Autowired
+//    private ApplicationContext appContext;
+    
+    private SessionManager sessionManager;
     
     @RequestMapping(value= {"/","/index"})
     public String index(){
         return "index";
     }
-    
-    @RequestMapping("/login")
-    public String login(){
-        return "login";
-    }
-    
+        
     @RequestMapping("/register")
     public ModelAndView register(){
         ModelAndView model = new ModelAndView("/register");
@@ -102,4 +101,44 @@ public class DefaultController {
         }    
         return model;
     }
+    
+    @RequestMapping("/login")
+    public ModelAndView login(){
+        ModelAndView model = new ModelAndView("/login");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("roleId")!=null && sessionManager.getAttr("username")!=null){
+            return new ModelAndView("redirect:/user/home");
+        }
+        model.addObject("login", new Login());
+        return model;
+    }
+    
+    @RequestMapping(value="/checkLogin",method=RequestMethod.POST)
+    public ModelAndView userAuthentication(@ModelAttribute("login") Login login,final RedirectAttributes redirectAttributes) throws SQLException, ClassNotFoundException{
+        ModelAndView userModel = new ModelAndView("redirect:/user/home");
+        ModelAndView adminModel = new ModelAndView("redirect:/admin/home");
+        ModelAndView loginModel = new ModelAndView("redirect:/login");
+        
+        User user = userService.usernameAuthentication(login);
+        if(user!=null){
+            if(user.isStatus()){
+                if(login.getPassword().equals(user.getPassword())){
+//                    session.setAttribute("username", login.getUsername());
+                    sessionManager = new SessionManager();
+                    sessionManager.setData(new String[]{"roleId","username"},new String[]{String.valueOf(user.getRoleId()),user.getUsername()+""}); 
+                    if(user.getRoleId()==1){
+                        return adminModel;
+                    }
+                    return userModel;                                    
+                }
+                redirectAttributes.addFlashAttribute("message", "Password doesn't match!");
+                return loginModel;
+            }
+            redirectAttributes.addFlashAttribute("message", "Please verify your email address!");
+            return loginModel;
+        }
+        redirectAttributes.addFlashAttribute("message", "Username does not exist!");
+        return loginModel;
+    }
+    
 }

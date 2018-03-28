@@ -6,6 +6,7 @@
 package com.falanopasal.service.impl;
 
 import com.falanopasal.dao.UserDAO;
+import com.falanopasal.entity.Login;
 import com.falanopasal.entity.User;
 import com.falanopasal.service.UserService;
 import java.util.Date;
@@ -70,6 +71,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void updateUserStatus(int userId) throws SQLException, ClassNotFoundException {
         userDao.updateUserStatus(userId);
+    }
+
+    @Override
+    public User usernameAuthentication(Login login) throws SQLException, ClassNotFoundException {
+        return userDao.usernameAuthentication(login);
     }
 
    

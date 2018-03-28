@@ -1,6 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="SITE_URL" value="${pageContext.request.contextPath}" />
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -15,7 +17,10 @@
 
         <div class="container" style="padding-top: 15px;">
         <h1 style="text-align: center;margin: 40px 0px 30px 0px;">Sign in to FalanoPasal</h1>
-            <p><c:out value="${message}"></c:out></p>
+
+            <!-- Login form message -->
+            <h3 style="text-align: center;"><c:out value="${message}"></c:out></h3>
+            
                 <div class="panel panel-primary" style="width:400px;margin:0px auto;padding:10px;">
                     <div class="panel-heading">Login</div>
                     <div class="panel-body">
@@ -23,13 +28,11 @@
                         <form:form method="post" action="${loginURL}" modelAttribute="login">
                         <div class="form-group">
                             <label class="control-label" for="inputUsername">Username</label>
-                            <form:input class="form-control" path="username" data-error="Please enter username field." id="inputUsername" placeholder="Username"  type="text" required="required" />
-                            <div class="help-block with-errors"></div>
+                            <form:input class="form-control" path="username" id="inputUsername" placeholder="Username"  type="text" required="required" />                            
                         </div>
                         <div class="form-group">
                             <label class="control-label" for="inputPassword">Password</label>
-                            <form:input class="form-control" path="password" data-error="Please enter password." id="inputPassword" placeholder="Password"  type="password" required="required" />
-                            <div class="help-block with-errors"></div>
+                            <form:input class="form-control" path="password" id="inputPassword" placeholder="Password"  type="password" required="required" />                            
                         </div>
                         <div class="checkbox">
                             <label id="inputRememberMe">

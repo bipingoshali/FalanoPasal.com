@@ -5,6 +5,7 @@
  */
 package com.falanopasal.service;
 
+import com.falanopasal.entity.Login;
 import com.falanopasal.entity.User;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -19,5 +20,7 @@ public interface UserService {
     User getByEmail(User user) throws SQLException, ClassNotFoundException;    
     void updateEmailToken(String token,String username) throws SQLException, ClassNotFoundException; 
     User getByUserId(User user) throws SQLException, ClassNotFoundException;   
-    void updateUserStatus(int userId) throws SQLException,ClassNotFoundException;        
+    void updateUserStatus(int userId) throws SQLException,ClassNotFoundException; 
+    User usernameAuthentication(Login login) throws SQLException,ClassNotFoundException;
+    
 }

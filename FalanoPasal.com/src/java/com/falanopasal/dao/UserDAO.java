@@ -5,10 +5,10 @@
  */
 package com.falanopasal.dao;
 
+import com.falanopasal.entity.Login;
 import com.falanopasal.entity.User;
 import java.sql.SQLException;
 import java.text.ParseException;
-import java.util.List;
 
 /**
  *
@@ -30,5 +30,8 @@ public interface UserDAO {
     
     //update user status
     User getByUserId(User user) throws SQLException, ClassNotFoundException;
-    void updateUserStatus(int userId) throws SQLException,ClassNotFoundException;    
+    void updateUserStatus(int userId) throws SQLException,ClassNotFoundException;  
+    
+    //user authentication
+    User usernameAuthentication(Login login) throws SQLException,ClassNotFoundException;
 }

@@ -7,6 +7,7 @@ package com.falanopasal.dao.impl;
 
 import com.falanopasal.constant.SQLConstant;
 import com.falanopasal.dao.UserDAO;
+import com.falanopasal.entity.Login;
 import com.falanopasal.entity.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -67,11 +68,15 @@ public class UserDAOImpl implements UserDAO{
         return fetchUsernameData.size() > 0 ? fetchUsernameData.get(0):null;
     }
 
-    private User mapData(ResultSet rs) throws SQLException{
+    public User mapData(ResultSet rs) throws SQLException{
         User user = new User();
+        
         user.setUserId(rs.getInt("userId"));
         user.setEmailToken(rs.getString("emailToken"));
         user.setStatus(rs.getBoolean("status"));
+        
+        user.setPassword(rs.getString("password"));
+        user.setRoleId(rs.getInt("roleId"));
         return user;
     }
 
@@ -95,6 +100,19 @@ public class UserDAOImpl implements UserDAO{
     public void updateUserStatus(int userId) throws SQLException, ClassNotFoundException {
         jdbcTemplate.update(SQLConstant.User.UPDATE_USER_STATUS, new Object[]{userId});
     }
+
+    @Override
+    public User usernameAuthentication(Login login) throws SQLException, ClassNotFoundException {
+        List<User> checkUsername = jdbcTemplate.query(SQLConstant.User.USERNAME_AUTHENTICATION, new Object[]{login.getUsername()},new RowMapper<User>() {
+            @Override
+            public User mapRow(ResultSet rs, int i) throws SQLException {
+                return mapData(rs);
+            }
+        });
+        return checkUsername.size() > 0 ? checkUsername.get(0):null;
+    }
+
+    
 
     
         
