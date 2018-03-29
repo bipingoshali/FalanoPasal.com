@@ -7,12 +7,16 @@ package com.falanopasal.controller;
 
 import com.falanopasal.entity.Login;
 import com.falanopasal.entity.User;
+import com.falanopasal.service.SessionService;
 import com.falanopasal.service.UserService;
 import java.sql.SQLException;
 import java.text.ParseException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +35,9 @@ public class DefaultController {
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private SessionService sessionService;
     
 //    @Autowired
 //    private ApplicationContext appContext;
@@ -102,10 +109,12 @@ public class DefaultController {
     }
     
     @RequestMapping("/login")
-    public ModelAndView login(){
+    public ModelAndView login(@CookieValue(value="testA",defaultValue="defaultValue") String cookieValue) throws SQLException, ClassNotFoundException{
         ModelAndView model = new ModelAndView("/login");
         sessionManager = new SessionManager();
-        if(sessionManager.getAttr("username")!=null){            
+        User user = sessionService.rememberMe(cookieValue);
+        if(user!=null){
+            sessionManager.setData(new String[]{"username"},new String[]{user.getUsername()});                              
             return new ModelAndView("redirect:/user/home");
         }
         model.addObject("login", new Login());
@@ -113,7 +122,7 @@ public class DefaultController {
     }
     
     @RequestMapping(value="/checkLogin",method=RequestMethod.POST)
-    public ModelAndView userAuthentication(@ModelAttribute("login") Login login,final RedirectAttributes redirectAttributes) throws SQLException, ClassNotFoundException{
+    public ModelAndView userAuthentication(@ModelAttribute("login") Login login,final RedirectAttributes redirectAttributes,HttpServletResponse response) throws SQLException, ClassNotFoundException{
         ModelAndView userModel = new ModelAndView("redirect:/user/home");
         ModelAndView adminModel = new ModelAndView("redirect:/admin/home");
         ModelAndView loginModel = new ModelAndView("redirect:/login");
@@ -121,13 +130,20 @@ public class DefaultController {
         User user = userService.usernameAuthentication(login);
         if(user!=null){
             if(user.isStatus()){
-                if(login.getPassword().equals(user.getPassword())){
+                if(login.getPassword().equals(user.getPassword())) {
                     sessionManager = new SessionManager();
-                    
+
                     //assigning only one value in every session in order to reduce memory consumption
-                    sessionManager.setData(new String[]{"username"},new String[]{login.getUsername()}); 
-                    
-                    if(user.getRoleId()==1){
+                    sessionManager.setData(new String[]{"username"}, new String[]{login.getUsername()});
+                    if (login.isRememberme()) {
+                        java.util.UUID randomUUID = java.util.UUID.randomUUID();
+                        Cookie adminCookie = new Cookie("testA", randomUUID.toString());
+                        adminCookie.setMaxAge(60 * 2);
+                        response.addCookie(adminCookie);
+                        sessionService.insertCookie(randomUUID.toString(), login.getUsername());
+                    }
+
+                    if (user.getRoleId() == 1) {
                         return adminModel;
                     }else{
                         return userModel;                                                            
@@ -144,9 +160,12 @@ public class DefaultController {
     }
     
     @RequestMapping(value="/logout")
-    public ModelAndView displaylogin(){
+    public ModelAndView displaylogin(HttpServletResponse response){
         sessionManager = new SessionManager();
         sessionManager.clearData();
+        Cookie adminCookie = new Cookie("testA", "");
+        adminCookie.setMaxAge(0);
+        response.addCookie(adminCookie);
         return new ModelAndView("redirect:/login");
     }
     

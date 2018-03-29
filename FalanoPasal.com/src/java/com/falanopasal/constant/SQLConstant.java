@@ -34,13 +34,17 @@ public class SQLConstant {
                 +TableConstant.USER_TABLE+
                 " where userId=?";
         
-        public final static String UPDATE_USER_STATUS = "UPDATE " + TableConstant.USER_TABLE +
-                " set status=true where userId=?";
-        
-        
-        public final static String USERNAME_AUTHENTICATION = "SELECT * FROM "
-                +TableConstant.USER_TABLE+
-                " WHERE username=?";
+        public final static String UPDATE_USER_STATUS = "UPDATE " + TableConstant.USER_TABLE
+                + " set status=true where userId=?";
 
+    }
+
+    public class cookie {
+
+        public final static String INSERT_COOKIE = "INSERT INTO " + TableConstant.COOKIE_TABLE
+                + " VALUES(?,?)";
+        
+        public final static String GET_BY_COOKIE_VALUE = "SELECT * FROM user u,remembercookies r where u.username=r.username and token=?";
+                
     }
 }

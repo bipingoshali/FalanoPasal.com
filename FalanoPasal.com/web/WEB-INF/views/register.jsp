@@ -1,6 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="SITE_URL" value="${pageContext.request.contextPath}" />
+
+<!--spring form tag libraries-->
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
@@ -8,18 +10,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>FalanoPasal.com</title>
+        <title>Join FalanoPasal</title>
 
         <!-- Bootstrap core CSS -->
         <link href="${SITE_URL}/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- Custom CSS -->
         <link href="${SITE_URL}/static/css/custom.css" rel="stylesheet" type="text/css" />
-        
+        <!--JQuery-->
         <script src="${SITE_URL}/static/js/jquery-3.2.1.min.js"></script>
+        <!--Custom JQuery-->
         <script src="${SITE_URL}/static/js/custom.js"></script>
-        
-        
-
+                
     </head>
     <body style="background-color: #f9f9f9;height: 1000px;">
         
@@ -47,15 +48,13 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="control-label" for="inputFirstName">First Name</label>
-                                                    <form:input class="form-control" path="firstName" data-error="Please enter name field." id="inputFirstName" placeholder="First Name"  type="text" required="required" />
-                                                    <div class="help-block with-errors"></div>
+                                                    <form:input class="form-control" path="firstName" id="inputFirstName" placeholder="First Name" type="text" />
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="control-label" for="inputLastName">Last Name</label>
-                                                    <form:input class="form-control" path="lastName" data-error="Please enter name field." id="inputLastName" placeholder="Last Name"  type="text" required="required" />
-                                                    <div class="help-block with-errors"></div>
+                                                    <form:input class="form-control" path="lastName" id="inputLastName" placeholder="Last Name"  type="text" />
                                                 </div>
                                             </div>
                                         </div>
@@ -69,8 +68,7 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <label class="control-label" for="inputEmail">Email</label>
-                                                <form:input class="form-control" path="email" data-error="Please enter name field." id="inputEmail" placeholder="Email"  type="email" required="required" />
-                                                <div class="help-block with-errors"></div>
+                                                <form:input class="form-control" path="email" id="inputEmail" placeholder="Email" type="text" />
                                             </div>
                                         </div>
                                     </div>
@@ -83,22 +81,21 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <label class="control-label" for="inputUserName">Username</label>
-                                                <form:input class="form-control" path="username" data-error="Please enter name field." id="inputUserName" placeholder="Username"  type="text" required="required" />
-                                                <div id="id_res_div" style="color: red;"></div>
+                                                <form:input class="form-control" path="username" id="inputUserName" placeholder="Username" type="text" required="required" />
+                                                <div id="id_res_div" style="color: red;"></div> <!--Username Availability message-->
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label" for="inputPassword">Password</label>
-                                                        <form:input class="form-control" path="password" data-error="Please enter name field." id="inputPassword" placeholder="Password"  type="password" required="required" />
-                                                        <div class="help-block with-errors"></div>
+                                                        <form:input class="form-control" path="password" id="inputPassword" placeholder="Password"  type="password" />                                                        
                                                     </div>								
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label" for="inputConfirmPassword">Confirm Password</label>
-                                                        <input class="form-control" data-error="Please enter name field." id="inputConfirmPassword" placeholder="Confirm Password"  type="password" required="required" />
-                                                        <div id="id_password_div" style="color: red;"></div>
+                                                        <input class="form-control" id="inputConfirmPassword" placeholder="Confirm Password"  type="password" />
+                                                        <div id="id_password_div" style="color: red;"></div> <!--Message is print when password and confirm password does not match-->
                                                     </div>																
                                                 </div>
                                             </div>
@@ -116,31 +113,27 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <label class="control-label" for="selectCity">City</label>								
-                                                <form:select class="form-control" path="city" id="selectCity" required="required">
+                                                <form:select class="form-control" path="city" id="selectCity">
                                                     <option value="Kathmandu">Kathmandu</option>
                                                     <option value="Lalitpur">Lalitpur</option>
                                                     <option value="Bhaktapur">Bhaktapur</option>
                                                 </form:select>
-                                                <div class="help-block with-errors"></div>
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label" for="inputAddressLine1">Address Line 1</label>
-                                                <form:input class="form-control" path="addressLine1" data-error="Please enter name field." id="inputAddressLine1" placeholder="Address Line 1"  type="text" required="required" />
-                                                <div class="help-block with-errors"></div>
+                                                <form:input class="form-control" path="addressLine1" id="inputAddressLine1" placeholder="Address Line 1"  type="text" />
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label" for="inputAddressLine2">Address Line 2</label>
-                                                        <form:input class="form-control" path="addressLine2" data-error="Please enter name field." id="inputAddressLine2" placeholder="Address Line 2"  type="text" required="required" />
-                                                        <div class="help-block with-errors"></div>
+                                                        <form:input class="form-control" path="addressLine2" id="inputAddressLine2" placeholder="Address Line 2"  type="text" />
                                                     </div>                                        
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-group">
                                                         <label class="control-label" for="inputHouseNo">House No.</label>
-                                                        <form:input class="form-control" path="houseNo" data-error="Please enter name field." id="inputHouseNo" placeholder="House No."  type="text" />
-                                                        <div class="help-block with-errors"></div>
+                                                        <form:input class="form-control" path="houseNo" id="inputHouseNo" placeholder="House No."  type="number" />
                                                     </div>                                        
                                                 </div>
                                             </div>
@@ -155,13 +148,12 @@
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <label class="control-label" for="inputBirthDate">Birth date</label>
-                                                <form:input class="form-control" path="birthdate" data-error="Please enter name field." id="inputBirthDate"  type="date" required="required" />
-                                                <div class="help-block with-errors"></div>
+                                                <form:input class="form-control" path="birthdate" id="inputBirthDate"  type="date" />
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label" for="inputPhoneNumber">Phone Number</label>
-                                                <form:input class="form-control" path="phoneNo" data-error="Please enter name field." id="inputPhoneNumber" placeholder="Phone Number"  type="number" required="required" />
-                                                <div class="help-block with-errors"></div>
+                                                <form:input class="form-control" path="phoneNo" id="inputPhoneNumber" placeholder="Phone Number"  type="text" />
+                                                <div id="id_required_message" style="color: red;"></div> <!--Message is print when null fields are present-->                                                
                                             </div>
                                         </div>
                                     </div>

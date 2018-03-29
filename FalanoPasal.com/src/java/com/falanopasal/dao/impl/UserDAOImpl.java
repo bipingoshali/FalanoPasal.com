@@ -103,7 +103,7 @@ public class UserDAOImpl implements UserDAO{
 
     @Override
     public User usernameAuthentication(Login login) throws SQLException, ClassNotFoundException {
-        List<User> checkUsername = jdbcTemplate.query(SQLConstant.User.USERNAME_AUTHENTICATION, new Object[]{login.getUsername()},new RowMapper<User>() {
+        List<User> checkUsername = jdbcTemplate.query(SQLConstant.User.GET_BY_USERNAME, new Object[]{login.getUsername()},new RowMapper<User>() {
             @Override
             public User mapRow(ResultSet rs, int i) throws SQLException {
                 return mapData(rs);

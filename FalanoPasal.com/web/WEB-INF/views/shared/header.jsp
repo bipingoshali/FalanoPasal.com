@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="SITE_URL" value="${pageContext.request.contextPath}" />
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <!--fetching jstl tag library-->
+<c:set var="SITE_URL" value="${pageContext.request.contextPath}" /> <!--access jsp file from different directories-->
+
 <!DOCTYPE html>
 <html>
     <head>

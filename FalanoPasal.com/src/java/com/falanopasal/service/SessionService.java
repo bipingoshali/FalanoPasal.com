@@ -13,5 +13,8 @@ import java.sql.SQLException;
  * @author bipin
  */
 public interface SessionService {
-    User getDataFromSessionValue(User user) throws SQLException,ClassNotFoundException;    
+    User getDataFromSessionValue(User user) throws SQLException,ClassNotFoundException; 
+    User getDataFromCookieValue(String username) throws SQLException,ClassNotFoundException;  
+    void insertCookie(String token,String username) throws SQLException,ClassNotFoundException;
+    User rememberMe(String token) throws SQLException,ClassNotFoundException;
 }

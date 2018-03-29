@@ -16,14 +16,20 @@
     
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
 
+    <!--scan java packages-->
     <context:component-scan base-package="com.falanopasal" />
+    
+    <!--map incoming requests to a certain method through the use of RequestMapping-->
     <mvc:annotation-driven />
+    
+    <!--map the files inside the assets folder-->
     <mvc:resources mapping="/static/**" location="/WEB-INF/assets/" />
+    
     <!--
     Most controllers will use the ControllerClassNameHandlerMapping above, but
     for the index controller we are using ParameterizableViewController, so we must
     define an explicit mapping for it.
-    -->
+    -->    
     <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
         <property name="mappings">
             <props>

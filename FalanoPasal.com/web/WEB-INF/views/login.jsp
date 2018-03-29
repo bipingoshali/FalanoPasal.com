@@ -7,7 +7,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>FalanoPasal.com</title>
+        <title>Login</title>
 
         <!-- Bootstrap core CSS -->
         <link href="${SITE_URL}/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -37,7 +37,6 @@
                         <div class="checkbox">
                             <label id="inputRememberMe">
                                 <form:checkbox id="inputRememberMe" path="rememberme" value="rememberme"/><b> Remember me</b>
-                                <!--<input id="inputRememberMe" type="checkbox" name="rememberme" value="rememberme"/><b> Remember me</b>-->
                             </label>
                         </div>
                         <div class="form-group">
@@ -50,11 +49,10 @@
                                 </a>
                             </div>
                         </div>
-                                    <div>
-                                        <p>New to FalanoPasal? <a href="${SITE_URL}/register">Create an account</a>.</p>
-                                    </div>
-                    </form:form>
-
+                        <div>
+                            <p>New to FalanoPasal? <a href="${SITE_URL}/register">Create an account</a>.</p>
+                        </div>
+                        </form:form>
                 </div>
             </div>
         </div>

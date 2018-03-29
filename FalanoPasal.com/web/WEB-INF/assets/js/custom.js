@@ -2,6 +2,9 @@
 $(document).ready(function(){
 
     //Register form 
+    //keyup function validates the data when the user starts to type
+    //blur funtion works when the input field is left null
+    
     $("#inputFirstName").keyup(function(){
         if(/^[a-zA-z]+$/.test($(this).val()) && $(this).val().trim()!==""){
             $(this).css("border-color","#00E640");
@@ -123,21 +126,54 @@ $(document).ready(function(){
         }
     });
     $("#inputPhoneNumber").keyup(function () {
-        if (/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test($(this).val()) && $(this).val().trim() !== "") {
-            $(this).css("border-color", "#00E640");
-            $(':input[type="submit"]').prop('disabled', false);			            
-        } else {
-            $(this).css("border-color", "red");
-            $(':input[type="submit"]').prop('disabled', true);			            
+        
+//        check if all the input fields are filled up or not
+//        if it is not filled up then a error message will pop out
+        if ($("#inputFirstName").val() === ""
+                | $("#inputLastName").val() === ""
+                | $("#inputEmail").val()===""
+                | $("#inputUserName").val()===""
+                | $("#inputPassword").val()===""
+                | $("#inputConfirmPassword").val()===""
+                | $("#inputAddressLine1").val()===""
+                | $("#inputAddressLine2").val()===""
+                | $("#inputBirthDate").val()==="") 
+        {
+            $("#id_required_message").html("Please fill the remaining details");
+        }
+        else {
+            $("#id_required_message").html("");
+            if (/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test($(this).val()) && $(this).val().trim() !== "") {
+                $(this).css("border-color", "#00E640");
+                $(':input[type="submit"]').prop('disabled', false);
+            } else {
+                $(this).css("border-color", "red");
+                $(':input[type="submit"]').prop('disabled', true);
+            }
         }
     });    
     $("#inputPhoneNumber").blur(function () {
-        if (/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test($(this).val()) && $(this).val().trim() !== "") {
-            $(this).css("border-color", "#00E640");
-            $(':input[type="submit"]').prop('disabled', false);			            
-        } else {
-            $(this).css("border-color", "red");
-            $(':input[type="submit"]').prop('disabled', true);			            
+        if ($("#inputFirstName").val() === ""
+                | $("#inputLastName").val() === ""
+                | $("#inputEmail").val()===""
+                | $("#inputUserName").val()===""
+                | $("#inputPassword").val()===""
+                | $("#inputConfirmPassword").val()===""
+                | $("#inputAddressLine1").val()===""
+                | $("#inputAddressLine2").val()===""
+                | $("#inputBirthDate").val()==="") 
+        {
+            $("#id_required_message").html("Please fill the remaining details");
+        }
+        else {
+            $("#id_required_message").html("");
+            if (/^(\+\d{1,2}\s)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$/.test($(this).val()) && $(this).val().trim() !== "") {
+                $(this).css("border-color", "#00E640");
+                $(':input[type="submit"]').prop('disabled', false);
+            } else {
+                $(this).css("border-color", "red");
+                $(':input[type="submit"]').prop('disabled', true);
+            }
         }
     });
     $("#inputBirthDate").blur(function () {
@@ -155,7 +191,15 @@ $(document).ready(function(){
             url: 'check_username',
             data: {username: $("#inputUserName").val()},
             success: function (data) {
-                $("#id_res_div").html(data);
+                if(data){
+                    $("#inputPassword").prop('disabled', true);			                            
+                    $("#inputConfirmPassword").prop('disabled', true);			                            
+                    $("#id_res_div").html(data);                    
+                }else{
+                    $("#inputPassword").prop('disabled', false);			                            
+                    $("#inputConfirmPassword").prop('disabled', false);			                            
+                    $("#id_res_div").html(data);                                        
+                }
             }
         });
     });    
@@ -164,9 +208,21 @@ $(document).ready(function(){
             url: 'check_username',
             data: {username: $("#inputUserName").val()},
             success: function (data) {
-                $("#id_res_div").html(data);
+                if(data){
+                    $("#inputPassword").prop('disabled', true);			                            
+                    $("#inputConfirmPassword").prop('disabled', true);			                            
+                    $("#id_res_div").html(data);                    
+                }else{
+                    $("#inputPassword").prop('disabled', false);			                            
+                    $("#inputConfirmPassword").prop('disabled', false);			                            
+                    $("#id_res_div").html(data); 
+                }
             }
         });        
     });
+    
+    
+    
+    
 });
 

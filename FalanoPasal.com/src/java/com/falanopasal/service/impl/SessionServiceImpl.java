@@ -26,4 +26,20 @@ public class SessionServiceImpl implements SessionService{
     public User getDataFromSessionValue(User user) throws SQLException, ClassNotFoundException {        
         return sessionDao.getDataFromSessionValue(user);
     }
+
+    @Override
+    public User getDataFromCookieValue(String username) throws SQLException, ClassNotFoundException {
+        return sessionDao.getDataFromCookieValue(username);
+    }
+
+
+    @Override
+    public User rememberMe(String token) throws SQLException, ClassNotFoundException {
+        return sessionDao.rememberMe(token);
+    }    
+
+    @Override
+    public void insertCookie(String token, String username) throws SQLException, ClassNotFoundException {
+        sessionDao.insertCookie(token, username);
+    }
 }

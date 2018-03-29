@@ -16,5 +16,8 @@ public interface SessionDAO {
     
     //get value from session
     User getDataFromSessionValue(User user) throws SQLException,ClassNotFoundException;
+    User getDataFromCookieValue(String username) throws SQLException,ClassNotFoundException;
+    void insertCookie(String token,String username) throws SQLException,ClassNotFoundException;
+    User rememberMe(String token) throws SQLException,ClassNotFoundException;
     
 }

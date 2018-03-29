@@ -42,7 +42,7 @@ public class User {
         this.emailToken = emailToken;
         this.sessionValue = sessionValue;
     }
-
+    
     public String getSessionValue() {
         return sessionValue;
     }
