@@ -10,7 +10,6 @@ import com.falanopasal.entity.User;
 import com.falanopasal.service.UserService;
 import java.sql.SQLException;
 import java.text.ParseException;
-import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
@@ -106,7 +105,7 @@ public class DefaultController {
     public ModelAndView login(){
         ModelAndView model = new ModelAndView("/login");
         sessionManager = new SessionManager();
-        if(sessionManager.getAttr("roleId")!=null && sessionManager.getAttr("username")!=null){
+        if(sessionManager.getAttr("username")!=null){            
             return new ModelAndView("redirect:/user/home");
         }
         model.addObject("login", new Login());
@@ -123,13 +122,16 @@ public class DefaultController {
         if(user!=null){
             if(user.isStatus()){
                 if(login.getPassword().equals(user.getPassword())){
-//                    session.setAttribute("username", login.getUsername());
                     sessionManager = new SessionManager();
-                    sessionManager.setData(new String[]{"roleId","username"},new String[]{String.valueOf(user.getRoleId()),user.getUsername()+""}); 
+                    
+                    //assigning only one value in every session in order to reduce memory consumption
+                    sessionManager.setData(new String[]{"username"},new String[]{login.getUsername()}); 
+                    
                     if(user.getRoleId()==1){
                         return adminModel;
+                    }else{
+                        return userModel;                                                            
                     }
-                    return userModel;                                    
                 }
                 redirectAttributes.addFlashAttribute("message", "Password doesn't match!");
                 return loginModel;
@@ -139,6 +141,13 @@ public class DefaultController {
         }
         redirectAttributes.addFlashAttribute("message", "Username does not exist!");
         return loginModel;
+    }
+    
+    @RequestMapping(value="/logout")
+    public ModelAndView displaylogin(){
+        sessionManager = new SessionManager();
+        sessionManager.clearData();
+        return new ModelAndView("redirect:/login");
     }
     
 }

@@ -19,11 +19,12 @@ public class User {
     private boolean status=false;
     private Date birthdateformat;
     private String emailToken;
+    private String sessionValue;
 
     public User() {
     }
 
-    public User(int userId, String firstName, String lastName, String email, String username, String password, String city, String addressLine1, String addressLine2, String phoneNo, String birthdate, int houseNo, int roleId, Date birthdateformat, String emailToken) {
+    public User(int userId, String firstName, String lastName, String email, String username, String password, String city, String addressLine1, String addressLine2, String phoneNo, String birthdate, int houseNo, int roleId, Date birthdateformat, String emailToken, String sessionValue ) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,7 +40,17 @@ public class User {
         this.roleId = roleId;
         this.birthdateformat = birthdateformat;
         this.emailToken = emailToken;
+        this.sessionValue = sessionValue;
     }
+
+    public String getSessionValue() {
+        return sessionValue;
+    }
+
+    public void setSessionValue(String sessionValue) {
+        this.sessionValue = sessionValue;
+    }
+    
     
     public String getEmailToken(){
         return emailToken;
