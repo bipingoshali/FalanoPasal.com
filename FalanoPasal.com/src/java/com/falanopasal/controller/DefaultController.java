@@ -48,6 +48,7 @@ public class DefaultController {
     private User userSessionSet; // session value is set in User Entity(username)
     private User userSessionGet; // to fetch user data
     private User fetchUserList; // to store user data which will be used while sending mail
+    int counter=0; // to count the login Attempt
     
     @RequestMapping(value= {"/","/index"})
     public String index(){
@@ -156,7 +157,7 @@ public class DefaultController {
     }
     
     @RequestMapping(value="/checkLogin",method=RequestMethod.POST)
-    public ModelAndView userAuthentication(@ModelAttribute("login") Login login,final RedirectAttributes redirectAttributes,HttpServletResponse response) throws SQLException, ClassNotFoundException{
+    public ModelAndView userAuthentication(@ModelAttribute("login") Login login,final RedirectAttributes redirectAttributes,HttpServletResponse response,@CookieValue(value="loginAttempt",defaultValue="0") String cookieValue) throws SQLException, ClassNotFoundException{
         ModelAndView userModel = new ModelAndView("redirect:/user/home");
         ModelAndView adminModel = new ModelAndView("redirect:/admin/home");
         ModelAndView loginModel = new ModelAndView("redirect:/login");
@@ -164,8 +165,14 @@ public class DefaultController {
         User user = userService.usernameAuthentication(login);
         if(user!=null){
             if(user.isStatus()){
+                
+                //works if the user login attempt is failed for 3 times
+                if(Integer.parseInt(cookieValue)==3){
+                    redirectAttributes.addFlashAttribute("message", "You have been blocked for 2 minutes!");
+                    return loginModel;
+                }
+                
                 if(login.getPassword().equals(user.getPassword())) {
-                    
                     sessionManager = new SessionManager();
                     //assigning only one value in every session in order to reduce memory consumption
                     sessionManager.setData(new String[]{"username"}, new String[]{login.getUsername()});
@@ -176,13 +183,23 @@ public class DefaultController {
                         falanoPasalCookie.setMaxAge(60 * 5);
                         response.addCookie(falanoPasalCookie);
                         sessionService.insertCookie(randomUUID.toString(), login.getUsername());
+                        counter=0; //setting the default value of counter
                     }
 
                     if (user.getRoleId() == 1) {
+                        counter=0;
                         return adminModel;
                     }else{
+                        counter=0;
                         return userModel;                                                            
                     }
+                }
+                counter++;
+                if(counter==3){
+                    Cookie loginAttempt = new Cookie("loginAttempt",String.valueOf(counter));
+                    loginAttempt.setMaxAge(60*2);
+                    response.addCookie(loginAttempt);
+                    counter=0;
                 }
                 redirectAttributes.addFlashAttribute("message", "Password doesn't match!");
                 return loginModel;
