@@ -12,4 +12,6 @@ package com.falanopasal.constant;
 public class TableConstant {
     public final static String USER_TABLE = "user";
     public final static String COOKIE_TABLE = "remembercookies";
+    public final static String PRODUCT_TABLE = "product";
+    public final static String CATEGORY_TABLE = "category";
 }

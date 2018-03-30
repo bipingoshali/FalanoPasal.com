@@ -1,22 +1,23 @@
-<%-- 
-    Document   : home
-    Created on : Mar 28, 2018, 10:22:50 PM
-    Author     : bipin
---%>
+<%@include file="adminShared/header.jsp" %>
+    <h1 class="page-header">Dashboard</h1>
+    <div class="col-md-4">
+    <form>
+        <div class="form-group">
+            <label class="control-label" for="selectCategory">Select Category</label>								
+            <select class="form-control" id="selectCategory">            
+            </select>
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="selectProduct">Select Product</label>								
+            <select class="form-control" id="selectProduct">   
+                <c:forEach var="productEntity" items="${productList}">                    
+                    <option>${productEntity.productName}</option>
+                </c:forEach>
+            </select>
+        </div>
+    </form>        
+    </div>
+<%@include file="adminShared/footer.jsp" %>
+                    
+                    
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set var="SITE_URL" value="${pageContext.request.contextPath}" />
-
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-    </head>
-    <body>
-        <h1>Hello World!</h1>
-        <h3 style="text-align: center;"><c:out value="${message}"></c:out></h3>
-        <a href="${SITE_URL}/logout"><button>Logout</button></a>
-    </body>
-</html>

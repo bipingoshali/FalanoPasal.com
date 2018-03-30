@@ -51,4 +51,23 @@ public class SQLConstant {
                 
                 
     }
+    
+    public class admin{
+        
+        public final static String GET_CATEGORY = "SELECT * FROM " + TableConstant.CATEGORY_TABLE;
+        
+        public final static String INSERT_PRODUCT = "INSERT INTO " + TableConstant.PRODUCT_TABLE 
+                + " (categoryId,productName,price,calorieValue,description)"
+                + " values(?,?,?,?,?)";
+        
+        public final static String GET_PRODUCT = "SELECT * FROM " + TableConstant.PRODUCT_TABLE;
+        
+        public final static String GET_CATEGORY_BY_ID = "SELECT categoryName from " + TableConstant.CATEGORY_TABLE
+                + " where categoryId=?";
+        
+        public final static String GET_PRODUCT_BY_CATEGORYID = "Select * from "
+                +TableConstant.PRODUCT_TABLE+
+                " where categoryId=?";
+                
+    }
 }
