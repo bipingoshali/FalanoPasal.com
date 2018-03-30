@@ -212,13 +212,17 @@ public class DefaultController {
     }
     
     @RequestMapping(value="/logout")
-    public ModelAndView displaylogin(HttpServletResponse response){
+    public ModelAndView displaylogin(HttpServletResponse response) throws SQLException, ClassNotFoundException{
         sessionManager = new SessionManager();
+        String username = sessionManager.getAttr("username").toString();        
+        sessionService.deleteCookie(username);
         sessionManager.clearData();
         Cookie adminCookie = new Cookie("falanoPasal", "");
         adminCookie.setMaxAge(0);
         response.addCookie(adminCookie);
         return new ModelAndView("redirect:/login");
     }
+    
+//    end of login and logout function
         
 }

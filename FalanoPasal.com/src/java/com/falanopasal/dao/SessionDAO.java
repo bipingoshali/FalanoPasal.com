@@ -17,12 +17,15 @@ public interface SessionDAO {
     //get user data from session value
     User getDataFromSessionValue(User user) throws SQLException,ClassNotFoundException;
     
-    User getDataFromCookieValue(String username) throws SQLException,ClassNotFoundException;
+//    User getDataFromCookieValue(String username) throws SQLException,ClassNotFoundException;
     
     //insert cookie inside user table
     void insertCookie(String token,String username) throws SQLException,ClassNotFoundException;
     
     //get user data form cookie value
     User rememberMe(String token) throws SQLException,ClassNotFoundException;
+    
+    //delete cookies
+    void deleteCookie(String username) throws SQLException,ClassNotFoundException;
     
 }

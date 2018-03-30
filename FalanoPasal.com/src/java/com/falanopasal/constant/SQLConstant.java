@@ -45,6 +45,10 @@ public class SQLConstant {
                 + " VALUES(?,?)";
         
         public final static String GET_BY_COOKIE_VALUE = "SELECT * FROM user u,remembercookies r where u.username=r.username and token=?";
+        
+        public final static String DELETE_COOKIE = "DELETE FROM " + TableConstant.COOKIE_TABLE +
+                " WHERE username=?";
+                
                 
     }
 }

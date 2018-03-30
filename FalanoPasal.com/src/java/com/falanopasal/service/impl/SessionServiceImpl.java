@@ -27,10 +27,10 @@ public class SessionServiceImpl implements SessionService{
         return sessionDao.getDataFromSessionValue(user);
     }
 
-    @Override
-    public User getDataFromCookieValue(String username) throws SQLException, ClassNotFoundException {
-        return sessionDao.getDataFromCookieValue(username);
-    }
+//    @Override
+//    public User getDataFromCookieValue(String username) throws SQLException, ClassNotFoundException {
+//        return sessionDao.getDataFromCookieValue(username);
+//    }
 
 
     @Override
@@ -41,5 +41,10 @@ public class SessionServiceImpl implements SessionService{
     @Override
     public void insertCookie(String token, String username) throws SQLException, ClassNotFoundException {
         sessionDao.insertCookie(token, username);
+    }
+
+    @Override
+    public void deleteCookie(String username) throws SQLException, ClassNotFoundException {
+        sessionDao.deleteCookie(username);
     }
 }

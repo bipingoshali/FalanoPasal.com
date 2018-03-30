@@ -46,16 +46,16 @@ public class SessionDAOImpl implements SessionDAO{
         return user;
     }
 
-    @Override
-    public User getDataFromCookieValue(String username) throws SQLException, ClassNotFoundException {
-        List<User> fetchDataFromCookieValue = jdbcTemplate.query(SQLConstant.User.GET_BY_USERNAME, new Object[]{username}, new RowMapper<User>() {
-            @Override
-            public User mapRow(ResultSet rs, int i) throws SQLException {
-                return mapData(rs);
-            }
-        });
-        return fetchDataFromCookieValue.size() > 0 ? fetchDataFromCookieValue.get(0):null;
-    }
+//    @Override
+//    public User getDataFromCookieValue(String username) throws SQLException, ClassNotFoundException {
+//        List<User> fetchDataFromCookieValue = jdbcTemplate.query(SQLConstant.User.GET_BY_USERNAME, new Object[]{username}, new RowMapper<User>() {
+//            @Override
+//            public User mapRow(ResultSet rs, int i) throws SQLException {
+//                return mapData(rs);
+//            }
+//        });
+//        return fetchDataFromCookieValue.size() > 0 ? fetchDataFromCookieValue.get(0):null;
+//    }
 
 
     @Override
@@ -72,6 +72,11 @@ public class SessionDAOImpl implements SessionDAO{
     @Override
     public void insertCookie(String token, String username) throws SQLException, ClassNotFoundException {
         jdbcTemplate.update(SQLConstant.cookie.INSERT_COOKIE, new Object[]{username,token});
+    }
+
+    @Override
+    public void deleteCookie(String username) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.cookie.DELETE_COOKIE, new Object[]{username});
     }
 
 
