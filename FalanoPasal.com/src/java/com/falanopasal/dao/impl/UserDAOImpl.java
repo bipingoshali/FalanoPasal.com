@@ -51,14 +51,14 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public boolean isUsernameExist(String username) throws SQLException, ClassNotFoundException {
         Integer count = jdbcTemplate.queryForObject(SQLConstant.User.IS_USERNAME_EXIST, new String[]{username}, Integer.class);
-        if(count==1){
+        if(count>=1){
             return true;
         }
         return false;
     }
 
     @Override
-    public User getByEmail(User user) throws SQLException, ClassNotFoundException {
+    public User getByUsername(User user) throws SQLException, ClassNotFoundException {
         List<User> fetchUsernameData = jdbcTemplate.query(SQLConstant.User.GET_BY_USERNAME, new Object[]{user.getUsername()}, new RowMapper<User>() {
             @Override
             public User mapRow(ResultSet rs, int i) throws SQLException {

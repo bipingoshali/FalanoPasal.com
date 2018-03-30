@@ -11,7 +11,7 @@ package com.falanopasal.entity;
  */
 public class Login {
     private String username,password;
-    private boolean rememberme=false;
+    private boolean rememberme=false; //setting the default value
 
     public Login() {
     }

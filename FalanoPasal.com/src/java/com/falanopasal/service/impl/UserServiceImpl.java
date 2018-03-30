@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         user.setBirthdateformat(sqlDate);
 
         //setting the default role id in every registration
-        user.setRoleId(1);
+        user.setRoleId(2);
         
         //creating a random email token id 
         java.util.UUID randomUUID = java.util.UUID.randomUUID();
@@ -54,8 +54,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getByEmail(User user) throws SQLException, ClassNotFoundException {
-        return userDao.getByEmail(user);
+    public User getByUsername(User user) throws SQLException, ClassNotFoundException {
+        return userDao.getByUsername(user);
     }
 
     @Override

@@ -44,11 +44,17 @@ public class DefaultController {
     
     private SessionManager sessionManager;
     
+    private User userCookie; // to store user data obtained from cookie value
+    private User userSessionSet; // session value is set in User Entity(username)
+    private User userSessionGet; // to fetch user data
+    private User fetchUserList; // to store user data which will be used while sending mail
+    
     @RequestMapping(value= {"/","/index"})
     public String index(){
         return "index";
     }
-        
+
+//    registration page controller
     @RequestMapping("/register")
     public ModelAndView register(){
         ModelAndView model = new ModelAndView("/register");
@@ -59,14 +65,15 @@ public class DefaultController {
     @RequestMapping(value="/registerSave",method=RequestMethod.POST)
     public String registerSave(@ModelAttribute("user") User user,final RedirectAttributes redirectAttributes) throws SQLException,ClassNotFoundException,ParseException{
         userService.insert(user);
-        User fetchUserList = userService.getByEmail(user);
+        fetchUserList = new User();
+        fetchUserList = userService.getByUsername(user);
         
 //        //creating a random user id 
 //        java.util.UUID randomUUID = java.util.UUID.randomUUID();
 //        String emailToken = randomUUID.toString();
 //        
 //        //update token value in user table
-//        userService.updateEmailToken(emailToken, user.getUsername());
+//        userService.updateEmailToken(emailToken, user.getUsername()); it might not be required
 
 //        String msg = "Congratulation "+user.getUsername()+"! Your account has been created. \n";
 //        msg+= "Your Address :"+user.getCity()+", "+user.getAddressLine1()+", "+user.getAddressLine2()+" "+user.getHouseNo()+" \n";
@@ -93,7 +100,7 @@ public class DefaultController {
         user.setUserId(userId);
         User fetchUserStatusForStatusCheck = userService.getByUserId(user);
         
-        //fetching email token stored in database
+        //fetching email token which is stored in database
         String fetchEmailToken = fetchUserStatusForStatusCheck.getEmailToken();
         
         //if the user account is already activated
@@ -108,15 +115,42 @@ public class DefaultController {
         return model;
     }
     
+//    end of registration page controller
+    
+//    login page controller
+    
     @RequestMapping("/login")
-    public ModelAndView login(@CookieValue(value="testA",defaultValue="defaultValue") String cookieValue) throws SQLException, ClassNotFoundException{
+    public ModelAndView login(@CookieValue(value="falanoPasal",defaultValue="defaultValue") String cookieValue) throws SQLException, ClassNotFoundException{
         ModelAndView model = new ModelAndView("/login");
+        ModelAndView userModel =  new ModelAndView("redirect:/user/home");
+        ModelAndView adminModel = new ModelAndView("redirect:/admin/home");
+        
         sessionManager = new SessionManager();
-        User user = sessionService.rememberMe(cookieValue);
-        if(user!=null){
-            sessionManager.setData(new String[]{"username"},new String[]{user.getUsername()});                              
-            return new ModelAndView("redirect:/user/home");
+        
+        userCookie = new User();
+//        User userCookie; //for cookie value
+        userCookie = sessionService.rememberMe(cookieValue);
+        
+        //if a cookie is present
+        if(userCookie!=null){
+            sessionManager.setData(new String[]{"username"},new String[]{userCookie.getUsername()});
+            return userModel;
+        }else{
+            if (sessionManager.getAttr("username") != null) {
+                String username = sessionManager.getAttr("username").toString();
+                userSessionSet = new User();
+                userSessionSet.setSessionValue(username); //setting username to find out the user role ID
+                userSessionGet = new User();
+                userSessionGet = sessionService.getDataFromSessionValue(userSessionSet); // userSessionGet holds all the value of the User
+                
+                if(userSessionGet.getRoleId()==1){
+                    return adminModel;
+                } else {
+                    return userModel;
+                }
+            }            
         }
+        
         model.addObject("login", new Login());
         return model;
     }
@@ -131,15 +165,16 @@ public class DefaultController {
         if(user!=null){
             if(user.isStatus()){
                 if(login.getPassword().equals(user.getPassword())) {
+                    
                     sessionManager = new SessionManager();
-
                     //assigning only one value in every session in order to reduce memory consumption
                     sessionManager.setData(new String[]{"username"}, new String[]{login.getUsername()});
+                    
                     if (login.isRememberme()) {
                         java.util.UUID randomUUID = java.util.UUID.randomUUID();
-                        Cookie adminCookie = new Cookie("testA", randomUUID.toString());
-                        adminCookie.setMaxAge(60 * 2);
-                        response.addCookie(adminCookie);
+                        Cookie falanoPasalCookie = new Cookie("falanoPasal", randomUUID.toString());
+                        falanoPasalCookie.setMaxAge(60 * 5);
+                        response.addCookie(falanoPasalCookie);
                         sessionService.insertCookie(randomUUID.toString(), login.getUsername());
                     }
 
@@ -163,10 +198,10 @@ public class DefaultController {
     public ModelAndView displaylogin(HttpServletResponse response){
         sessionManager = new SessionManager();
         sessionManager.clearData();
-        Cookie adminCookie = new Cookie("testA", "");
+        Cookie adminCookie = new Cookie("falanoPasal", "");
         adminCookie.setMaxAge(0);
         response.addCookie(adminCookie);
         return new ModelAndView("redirect:/login");
     }
-    
+        
 }

@@ -34,7 +34,7 @@ public class UserController {
         if(sessionManager.getAttr("username")!=null){
             String username = sessionManager.getAttr("username").toString();
             User user = new User();
-            user.setSessionValue(username);
+            user.setSessionValue(username); //setting the session value in User entity
             User fetchSessionData;
             fetchSessionData = sessionService.getDataFromSessionValue(user);
             if(fetchSessionData.getRoleId()==1){

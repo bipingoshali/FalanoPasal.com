@@ -16,10 +16,10 @@ public class User {
     private int userId;
     private String firstName,lastName,email,username,password,city,addressLine1,addressLine2,phoneNo,birthdate;
     private int houseNo,roleId;
-    private boolean status=false;
+    private boolean status=false; //setting the default value
     private Date birthdateformat;
-    private String emailToken;
-    private String sessionValue;
+    private String emailToken; //carries email token
+    private String sessionValue; //caries session value
 
     public User() {
     }

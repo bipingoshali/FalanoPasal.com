@@ -14,10 +14,15 @@ import java.sql.SQLException;
  */
 public interface SessionDAO {
     
-    //get value from session
+    //get user data from session value
     User getDataFromSessionValue(User user) throws SQLException,ClassNotFoundException;
+    
     User getDataFromCookieValue(String username) throws SQLException,ClassNotFoundException;
+    
+    //insert cookie inside user table
     void insertCookie(String token,String username) throws SQLException,ClassNotFoundException;
+    
+    //get user data form cookie value
     User rememberMe(String token) throws SQLException,ClassNotFoundException;
     
 }

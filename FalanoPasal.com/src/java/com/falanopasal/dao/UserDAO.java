@@ -22,8 +22,8 @@ public interface UserDAO {
     //check whether the username is available or not
     boolean isUsernameExist(String username) throws SQLException, ClassNotFoundException;
     
-    //get user details
-    User getByEmail(User user) throws SQLException, ClassNotFoundException;
+    //get user details by username
+    User getByUsername(User user) throws SQLException, ClassNotFoundException;
     
     //update email token
     void updateEmailToken(String token,String username) throws SQLException, ClassNotFoundException;
@@ -32,6 +32,6 @@ public interface UserDAO {
     User getByUserId(User user) throws SQLException, ClassNotFoundException;
     void updateUserStatus(int userId) throws SQLException,ClassNotFoundException;  
     
-    //user authentication
+    //user authentication while login
     User usernameAuthentication(Login login) throws SQLException,ClassNotFoundException;
 }
