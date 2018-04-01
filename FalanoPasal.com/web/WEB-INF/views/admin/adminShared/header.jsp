@@ -15,6 +15,11 @@
         <!-- admin custom CSS -->
         <link href="${SITE_URL}/static/css/adminCustom.css" rel="stylesheet" type="text/css" />
 
+        <!--JQuery-->
+        <script src="${SITE_URL}/static/js/jquery-3.2.1.min.js"></script>
+        <!--Custom JQuery-->
+        <script src="${SITE_URL}/static/js/custom.js"></script>        
+
     </head>
 
     <body>
@@ -45,12 +50,12 @@
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
                         <li><a href="#">Overview</a></li>
+                        <li><a href="${SITE_URL}/admin/category">Category</a></li>
                         <li><a href="${SITE_URL}/admin/product">Product</a></li>
                         <li><a href="#">Analytics</a></li>
-                        <li><a href="#">Export</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">
-                        <li><a href="">Nav item</a></li>
+                        <li><a href="${SITE_URL}/admin/order">Order</a></li>
                         <li><a href="">Nav item again</a></li>
                         <li><a href="">One more nav</a></li>
                         <li><a href="">Another nav item</a></li>

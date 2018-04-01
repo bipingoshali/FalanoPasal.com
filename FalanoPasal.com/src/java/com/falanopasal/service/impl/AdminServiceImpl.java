@@ -43,5 +43,35 @@ public class AdminServiceImpl implements AdminService{
     public List<Product> getProductByCategoryId(int categoryId) throws SQLException, ClassNotFoundException {
         return adminDao.getProductByCategoryId(categoryId);
     }
+
+    @Override
+    public void insertCategory(Category category) throws SQLException, ClassNotFoundException {
+        adminDao.insertCategory(category);
+    }
+
+    @Override
+    public Product getProductById(int productId) throws SQLException, ClassNotFoundException {
+        return adminDao.getProductById(productId);
+    }
+
+    @Override
+    public void editProduct(Product product) throws SQLException, ClassNotFoundException {
+        adminDao.editProduct(product);
+    }
+
+    @Override
+    public void updateProductStock(Product product) throws SQLException, ClassNotFoundException {
+        adminDao.updateProductStock(product);
+    }
+
+    @Override
+    public void updateProductCategoryType(Product product) throws SQLException, ClassNotFoundException {
+        adminDao.updateProductCategoryType(product);
+    }
+
+    @Override
+    public void deleteProduct(int productId) throws SQLException, ClassNotFoundException {
+        adminDao.deleteProduct(productId);
+    }
     
 }

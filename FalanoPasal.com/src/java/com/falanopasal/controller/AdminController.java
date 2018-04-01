@@ -15,9 +15,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -49,13 +52,34 @@ public class AdminController {
             if(fetchSessionData.getRoleId()==2){
                 return userModel;
             }else{
-                List<Product> productList = adminService.getProductByCategoryId(2);
-                adminModel.addObject("productList", productList);
+//                List<Product> productList = adminService.getProductByCategoryId(2);
+//                adminModel.addObject("productList", productList);
                 return adminModel;
             }
         }
         return new ModelAndView("redirect:/login");
     }
+    
+    @RequestMapping(value="home", params = "searchTerm")
+    public ModelAndView adminHomePage2(@RequestParam("searchTerm") String searchTerm) throws SQLException, ClassNotFoundException{
+        List<Product> productList = adminService.getProductByCategoryId(Integer.parseInt(searchTerm));
+        ModelAndView model = new ModelAndView("redirect:/admin/home");
+        model.addObject("productList", productList);
+        return model;
+    }
+    
+	@RequestMapping(value = "/products-by-category-{categoryName}")
+	public ModelAndView listProductsByCategory(@PathVariable("categoryName") String categoryName) {
+//		List<Product> products = productService.findProductsByCategory(categoryName);
+//		List<String> categories = categoryService.findAll();
+//		
+//		ModelAndView model = new ModelAndView("products");
+//		
+//		model.addObject("categoryList", categories);
+//		model.addObject("productList", products);
+//		
+		return null;
+	}            
     
     @RequestMapping(value="/admin/product")
     public ModelAndView adminProductPage() throws SQLException, ClassNotFoundException{
@@ -74,5 +98,67 @@ public class AdminController {
         return new ModelAndView("redirect:/admin/product");
     }
     
+    @RequestMapping(value="/admin/category")
+    public ModelAndView adminCategory() throws SQLException, ClassNotFoundException{
+        ModelAndView model =  new ModelAndView("/admin/category");
+        List<Category> categoryList = adminService.getCategory();
+        model.addObject("categoryList", categoryList);
+        model.addObject("category", new Category());
+        return model;
+    }
+    
+    @RequestMapping(value="/admin/addCategory", method=RequestMethod.POST)
+    public ModelAndView adminCategoryInsert(@ModelAttribute("category") Category category) throws SQLException, ClassNotFoundException{
+        adminService.insertCategory(category);
+        return new ModelAndView("redirect:/admin/category");
+    }    
+    
+    @RequestMapping(value="/admin/productEdit/{productId}")
+    public ModelAndView adminProductEdit(@PathVariable("productId") int productId) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("/admin/productEdit");
+        model.addObject("product", new Product()); 
+        Product product = adminService.getProductById(productId);
+        List<Category> categoryList = adminService.getCategory();
+        model.addObject("categoryList", categoryList);
+        model.addObject(product);
+        return model;
+    }
+    
+    @RequestMapping(value="/admin/productEditSave", method=RequestMethod.POST)
+    public ModelAndView adminProductEditSave(@ModelAttribute("product") Product product) throws SQLException,ClassNotFoundException{
+        ModelAndView model = new ModelAndView("redirect:/admin/product");
+        adminService.editProduct(product);
+        return model;
+    }
+    
+    @RequestMapping(value="/admin/productStockEditSave", method=RequestMethod.POST)
+    public ModelAndView adminProductStockEditSave(@ModelAttribute("product") Product product) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("redirect:/admin/product");
+        adminService.updateProductStock(product);
+        return model;
+    }
+    
+    @RequestMapping(value="/admin/productCategoryTypeEditSave",method=RequestMethod.POST)
+    public ModelAndView adminProductCategoryTypeEditSave(@ModelAttribute("product") Product product) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("redirect:/admin/product");
+        adminService.updateProductCategoryType(product);
+        return model;
+    }
+    
+    @RequestMapping(value="/admin/productDelete/{productId}")
+    public ModelAndView adminProductDelete(@PathVariable("productId") int productId,final RedirectAttributes redirectAttributes) throws SQLException,ClassNotFoundException{
+        ModelAndView model = new ModelAndView("redirect:/admin/product");
+        Product product = adminService.getProductById(productId);
+        if(product!=null){
+            if(product.getStockValue()==0){
+                adminService.deleteProduct(productId);
+                return model;
+            }
+            redirectAttributes.addFlashAttribute("message", "Stock value must be 0!");
+            return model;
+            
+        }
+        return model;
+    }
     
 }

@@ -10,7 +10,7 @@ package com.falanopasal.entity;
  * @author bipin
  */
 public class Product {
-    private int categoryId,productId,stockValue;
+    private int categoryId,productId,stockValue,updatedStockValue;
     private String productName,description;
     private float productPrice,calorieValue;
     private Category category;
@@ -18,15 +18,24 @@ public class Product {
     public Product() {
     }
 
-    public Product(int categoryId, int productId, int stockValue, String productName, String description, float productPrice, float calorieValue, Category category) {
+    public Product(int categoryId, int productId, int stockValue, int updatedStockValue, String productName, String description, float productPrice, float calorieValue, Category category) {
         this.categoryId = categoryId;
         this.productId = productId;
         this.stockValue = stockValue;
+        this.updatedStockValue = updatedStockValue;
         this.productName = productName;
         this.description = description;
         this.productPrice = productPrice;
         this.calorieValue = calorieValue;
         this.category = category;
+    }
+
+    public int getUpdatedStockValue() {
+        return updatedStockValue;
+    }
+
+    public void setUpdatedStockValue(int updatedStockValue) {
+        this.updatedStockValue = updatedStockValue;
     }
 
     public Category getCategory() {

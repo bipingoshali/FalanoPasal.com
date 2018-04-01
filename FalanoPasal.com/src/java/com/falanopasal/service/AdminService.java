@@ -19,4 +19,10 @@ public interface AdminService {
     void insertProduct(Product product) throws SQLException,ClassNotFoundException;
     List<Product> getProduct() throws SQLException,ClassNotFoundException;    
     List<Product> getProductByCategoryId(int categoryId) throws SQLException,ClassNotFoundException;
+    void insertCategory(Category category) throws SQLException,ClassNotFoundException;    
+    Product getProductById(int productId) throws SQLException,ClassNotFoundException;
+    void editProduct(Product product) throws SQLException,ClassNotFoundException; 
+    void updateProductStock(Product product) throws SQLException, ClassNotFoundException;
+    void updateProductCategoryType(Product product) throws SQLException,ClassNotFoundException;   
+    void deleteProduct(int productId) throws SQLException,ClassNotFoundException;
 }

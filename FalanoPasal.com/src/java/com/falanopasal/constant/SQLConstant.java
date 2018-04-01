@@ -57,8 +57,8 @@ public class SQLConstant {
         public final static String GET_CATEGORY = "SELECT * FROM " + TableConstant.CATEGORY_TABLE;
         
         public final static String INSERT_PRODUCT = "INSERT INTO " + TableConstant.PRODUCT_TABLE 
-                + " (categoryId,productName,price,calorieValue,description)"
-                + " values(?,?,?,?,?)";
+                + " (categoryId,productName,price,calorieValue,description,stockAmount)"
+                + " values(?,?,?,?,?,?)";
         
         public final static String GET_PRODUCT = "SELECT * FROM " + TableConstant.PRODUCT_TABLE;
         
@@ -69,5 +69,24 @@ public class SQLConstant {
                 +TableConstant.PRODUCT_TABLE+
                 " where categoryId=?";
                 
+        public final static String INSERT_CATEGORY = "INSERT INTO " + TableConstant.CATEGORY_TABLE +
+                " (categoryName) values(?)";
+        
+        public final static String GET_PRODUCT_BY_ID = "SELECT * FROM " + TableConstant.PRODUCT_TABLE +
+                " WHERE productId=?";
+        
+        public final static String EDIT_PRODUCT = "UPDATE " + TableConstant.PRODUCT_TABLE +
+                " SET productName=?,price=?,calorieValue=?,description=? where productId=?";
+        
+        public final static String UPDATE_PRODUCT_STOCK = "UPDATE " + TableConstant.PRODUCT_TABLE +
+                " SET stockAmount=stockAmount+? where productId=?";
+        
+        public final static String UPDATE_PRODUCT_CATEGORY_TYPE = "UPDATE " + TableConstant.PRODUCT_TABLE +
+                " SET categoryId=? where productId=?";
+        
+        public final static String DELETE_PRODUCT = "DELETE FROM " + TableConstant.PRODUCT_TABLE +
+                " WHERE productId=?";
+        
     }
+    
 }

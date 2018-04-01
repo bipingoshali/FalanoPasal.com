@@ -222,6 +222,16 @@ $(document).ready(function(){
     });
     
     
+    //admin 
+    //shows the product list according to categoryId
+    $("#selectCategory").keyup(function (){
+        $.ajax({
+            url: 'home',
+            data: {searchTerm: $("#selectCategory").val()},
+        });
+    });
+    
+    
     
     
 });

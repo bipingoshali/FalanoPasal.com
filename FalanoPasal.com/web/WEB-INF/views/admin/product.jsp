@@ -1,7 +1,7 @@
 <%@include file="adminShared/header.jsp" %>
 <h1 class="page-header">Product</h1>
 
-<div class="row">
+<div class="row">    
     <!-- register new product button trigger modal -->
     <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#addProductModal">
         <span class="glyphicon glyphicon-plus"></span>
@@ -53,37 +53,42 @@
         </div>
     </div>
 </div>
-            
-            <div class="row">
-                <h3>Product list</h3>
-                <table class="table table-striped table-hover">
-                    <tr>
-                        <th>S.N.</th>
-                        <th>Name</th>
-                        <th>Unit price</th>
-                        <th>Calorie value</th>
-                        <th>Description</th>
-                        <th>Category</th>
-                        <th>Stock Value</th>
-                        <th style="width: 88px;">Action</th>                        
-                    </tr>
-                    <c:set var="count" value="0" scope="page"/>
-                    <c:forEach var="productEntity" items="${productList}">
-                    <tr>
-                        <c:set var="count" value="${count+1}" scope="page"/>
-                        <td>${count}</td>
-                        <td>${productEntity.productName}</td>
-                        <td>${productEntity.productPrice}</td>
-                        <td>${productEntity.calorieValue}</td>
-                        <td>${productEntity.description}</td>
-                        <td>${productEntity.category.categoryName}</td>
-                        <td>${productEntity.stockValue}</td>
-                        <td>
-                            <button class="btn btn-success btn-sm" title="Edit"><span class="glyphicon glyphicon-edit"></span></button>
-                            <button class="btn btn-danger btn-sm" title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
-                        </td>
-                    </tr>
-                    </c:forEach>
-                </table>
-            </div>            
+
+<!-- Delete message -->
+<div style="color: red;font-size: medium;"><c:out value="${message}"></c:out></div>
+
+<div class="row">
+    <h3>Product list</h3>
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>S.N.</th>
+            <th>Name</th>
+            <th>Unit price</th>
+            <th>Calorie value</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Stock Value</th>
+            <th style="width: 88px;">Action</th>                        
+        </tr>
+        <c:set var="count" value="0" scope="page"/>
+        <c:forEach var="productEntity" items="${productList}">
+            <tr>
+                <c:set var="count" value="${count+1}" scope="page"/>
+                <td>${count}</td>
+                <td>${productEntity.productName}</td>
+                <td>${productEntity.productPrice}</td>
+                <td>${productEntity.calorieValue}</td>
+                <td>${productEntity.description}</td>
+                <td>${productEntity.category.categoryName}</td>
+                <td>${productEntity.stockValue}</td>
+                <td>
+                    <a class="btn btn-success btn-sm" href="${SITE_URL}/admin/productEdit/${productEntity.productId}" title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                    <a class="btn btn-danger btn-sm" href="${SITE_URL}/admin/productDelete/${productEntity.productId}" title="Delete" onclick="return confirm('Are you sure to delete?')">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
+</div>            
 <%@include file="adminShared/footer.jsp" %>

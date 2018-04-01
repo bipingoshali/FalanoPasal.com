@@ -4,8 +4,9 @@
     <form>
         <div class="form-group">
             <label class="control-label" for="selectCategory">Select Category</label>								
-            <select class="form-control" id="selectCategory">            
-            </select>
+            <input class="form-control" id="selectCategory" type="text" />
+<!--                <option value="1">Rice</option>
+            </select>-->
         </div>
         <div class="form-group">
             <label class="control-label" for="selectProduct">Select Product</label>								

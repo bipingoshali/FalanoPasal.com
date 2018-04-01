@@ -15,6 +15,10 @@ import java.util.List;
  * @author bipin
  */
 public interface AdminDAO {
+    
+    //insert category data
+    void insertCategory(Category category) throws SQLException,ClassNotFoundException;
+    
     //get category data 
     List<Category> getCategory() throws SQLException,ClassNotFoundException;
     
@@ -26,4 +30,19 @@ public interface AdminDAO {
     
     //get product data by category id
     List<Product> getProductByCategoryId(int categoryId) throws SQLException,ClassNotFoundException;
+    
+    //get product data by product id
+    Product getProductById(int productId) throws SQLException,ClassNotFoundException;
+    
+    //edit product data
+    void editProduct(Product product) throws SQLException,ClassNotFoundException;
+    
+    //update stock value of any product
+    void updateProductStock(Product product) throws SQLException, ClassNotFoundException;
+    
+    //update product category type
+    void updateProductCategoryType(Product product) throws SQLException,ClassNotFoundException;
+    
+    //delete product
+    void deleteProduct(int productId) throws SQLException,ClassNotFoundException;
 }
