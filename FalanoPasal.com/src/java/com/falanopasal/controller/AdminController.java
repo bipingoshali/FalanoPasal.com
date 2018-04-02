@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -172,7 +173,9 @@ public class AdminController {
     public ModelAndView productImagePage() throws SQLException, ClassNotFoundException{
         ModelAndView model = new ModelAndView("/admin/productImage");
         List<Category> categoryList = adminService.getCategory();
+        List<Product> productList = adminService.getProduct();
         model.addObject("categoryList", categoryList);
+        model.addObject("productList", productList);
         return model;
     }
     
@@ -186,9 +189,7 @@ public class AdminController {
         model.addObject("product", new Product()); //form model attribute
         return model;
     }
-    
-    
-    
+            
     @RequestMapping(value="/admin/checkUpload", method=RequestMethod.POST)
     public ModelAndView uploadImage(@ModelAttribute("product") Product product){
         ModelAndView model = new ModelAndView("redirect:/admin/productImage");
@@ -205,6 +206,19 @@ public class AdminController {
         return model;
     }
 
+    @RequestMapping(value="/deletePhoto")
+    public ModelAndView deletePhoto(@RequestParam("categoryId") int categoryId,@RequestParam("productId") int productId){       
+        ModelAndView model = new ModelAndView("redirect:/admin/productImage");
+        path = Paths.get("C:/Users/bipin/Documents/NetBeansProjects/FalanoPasal.com/FalanoPasal.com/web/WEB-INF/assets/images/"+categoryId+productId+".png");        
+        if(Files.exists(path)){
+            try{
+               Files.delete(path);
+            }catch(IOException e){
+                e.printStackTrace();
+            }
+        }
+        return model;
+    }
     
 }
 

@@ -8,12 +8,30 @@
     </c:forEach>
 </h1>
 
-<div class="row">    
+    <div class="row" style="margin-bottom: 20px;">    
     <!-- register new product button trigger modal -->
     <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#uploadImage">
         <span class="glyphicon glyphicon-plus"></span>
         Upload Image
     </button>
+</div>
+
+<div class="row" style="margin-bottom: 5px;">
+    <style>
+        img {width:200px;height: 200px;object-fit: cover;}
+    </style>
+    <c:forEach var="productEntity" items="${productList}">
+        <div class="col-lg-3" style="padding: 10px;">
+            <center><img src="<c:url value="/static/images/${productEntity.categoryId}${productEntity.productId}.png"/>" alt="image" class="image"/></center>
+            <h4 style="text-align: center;">${productEntity.productName}</h4>
+            <h4 style="text-align: center;">Rs. ${productEntity.productPrice}</h4>
+            <center>
+                <a href="${SITE_URL}/deletePhoto?categoryId=${productEntity.categoryId}&productId=${productEntity.productId}" class="btn btn-danger" onclick="return confirm('Are you sure to delete?')">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
+            </center>
+        </div>        
+    </c:forEach>
 </div>
 
 <!-- Register product modal -->
