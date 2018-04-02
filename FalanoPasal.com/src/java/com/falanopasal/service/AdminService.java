@@ -17,6 +17,7 @@ import java.util.List;
 public interface AdminService {
     List<Category> getCategory() throws SQLException,ClassNotFoundException;  
     void insertProduct(Product product) throws SQLException,ClassNotFoundException;
+    List<Category> getCategoryById(int categoryId) throws SQLException, ClassNotFoundException;
     List<Product> getProduct() throws SQLException,ClassNotFoundException;    
     List<Product> getProductByCategoryId(int categoryId) throws SQLException,ClassNotFoundException;
     void insertCategory(Category category) throws SQLException,ClassNotFoundException;    

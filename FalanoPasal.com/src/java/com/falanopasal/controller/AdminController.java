@@ -10,6 +10,10 @@ import com.falanopasal.entity.Product;
 import com.falanopasal.entity.User;
 import com.falanopasal.service.AdminService;
 import com.falanopasal.service.SessionService;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -37,6 +42,8 @@ public class AdminController {
     private AdminService adminService;
     
     private SessionManager sessionManager;
+    
+    private Path path;
     
     @RequestMapping("/admin/home")
     public ModelAndView adminHomePage() throws SQLException,ClassNotFoundException{
@@ -161,4 +168,43 @@ public class AdminController {
         return model;
     }
     
+    @RequestMapping(value="/admin/productImage")
+    public ModelAndView productImagePage() throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("/admin/productImage");
+        List<Category> categoryList = adminService.getCategory();
+        model.addObject("categoryList", categoryList);
+        return model;
+    }
+    
+    @RequestMapping(value="/admin/productImageByCategory/{categoryId}")
+    public ModelAndView productImageByCategory(@PathVariable("categoryId") int categoryId) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("/admin/productImageByCategory");
+        List<Category> categoryList = adminService.getCategoryById(categoryId);
+        List<Product> productList = adminService.getProductByCategoryId(categoryId);
+        model.addObject("categoryList",categoryList);
+        model.addObject("productList", productList);  
+        model.addObject("product", new Product()); //form model attribute
+        return model;
+    }
+    
+    
+    
+    @RequestMapping(value="/admin/checkUpload", method=RequestMethod.POST)
+    public ModelAndView uploadImage(@ModelAttribute("product") Product product){
+        ModelAndView model = new ModelAndView("redirect:/admin/productImage");
+        MultipartFile productImage = product.getProductImage();
+        path = Paths.get("C:/Users/bipin/Documents/NetBeansProjects/FalanoPasal.com/FalanoPasal.com/web/WEB-INF/assets/images/"+product.getCategoryId()+product.getProductId()+".png");        
+        if(productImage!=null && !productImage.isEmpty()){
+            try{
+                productImage.transferTo(new File(path.toString()));
+            }catch(IllegalStateException | IOException e){
+                e.printStackTrace();
+                throw new RuntimeException("Saving User image was not successful", e);
+            }
+        }
+        return model;
+    }
+
+    
 }
+

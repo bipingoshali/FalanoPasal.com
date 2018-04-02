@@ -52,12 +52,12 @@
                         <li><a href="#">Overview</a></li>
                         <li><a href="${SITE_URL}/admin/category">Category</a></li>
                         <li><a href="${SITE_URL}/admin/product">Product</a></li>
-                        <li><a href="#">Analytics</a></li>
+                        <li><a href="${SITE_URL}/admin/productImage">Product Image</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">
                         <li><a href="${SITE_URL}/admin/order">Order</a></li>
                         <li><a href="">Nav item again</a></li>
-                        <li><a href="">One more nav</a></li>
+                        <li><a href="">AnalyticsOne more nav</a></li>
                         <li><a href="">Another nav item</a></li>
                         <li><a href="">More navigation</a></li>
                     </ul>

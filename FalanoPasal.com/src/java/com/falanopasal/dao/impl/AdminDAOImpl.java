@@ -78,6 +78,7 @@ public class AdminDAOImpl implements AdminDAO{
         product.setCalorieValue(rs.getFloat("calorieValue"));
         product.setDescription(rs.getString("description"));
         product.setStockValue(rs.getInt("stockAmount"));
+        product.setCategoryId(rs.getInt("categoryId"));
         product.setCategory(this.getCategoryName(rs.getInt("categoryId")));
         return product;
     }
@@ -130,6 +131,16 @@ public class AdminDAOImpl implements AdminDAO{
     @Override
     public void deleteProduct(int productId) throws SQLException, ClassNotFoundException {
         jdbcTemplate.update(SQLConstant.admin.DELETE_PRODUCT, new Object[]{productId});
+    }
+
+    @Override
+    public List<Category> getCategoryById(int categoryId) throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.admin.GET_ALL_CATEGORY_COLUMN_BY_ID, new Object[]{categoryId},new RowMapper<Category>() {
+            @Override
+            public Category mapRow(ResultSet rs, int i) throws SQLException {
+                return mapCategoryData(rs);
+            }
+        });
     }
 
     

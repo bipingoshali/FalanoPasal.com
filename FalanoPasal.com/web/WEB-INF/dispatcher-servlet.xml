@@ -16,6 +16,8 @@
     
     <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>
 
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+    
     <!--scan java packages-->
     <context:component-scan base-package="com.falanopasal" />
     
@@ -25,6 +27,7 @@
     <!--map the files inside the assets folder-->
     <mvc:resources mapping="/static/**" location="/WEB-INF/assets/" />
     
+    <!--<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />-->
     <!--
     Most controllers will use the ControllerClassNameHandlerMapping above, but
     for the index controller we are using ParameterizableViewController, so we must

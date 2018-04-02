@@ -73,5 +73,10 @@ public class AdminServiceImpl implements AdminService{
     public void deleteProduct(int productId) throws SQLException, ClassNotFoundException {
         adminDao.deleteProduct(productId);
     }
+
+    @Override
+    public List<Category> getCategoryById(int categoryId) throws SQLException, ClassNotFoundException {
+        return adminDao.getCategoryById(categoryId);
+    }
     
 }

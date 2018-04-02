@@ -5,6 +5,8 @@
  */
 package com.falanopasal.entity;
 
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  *
  * @author bipin
@@ -14,11 +16,13 @@ public class Product {
     private String productName,description;
     private float productPrice,calorieValue;
     private Category category;
+    
+    private MultipartFile productImage;
 
     public Product() {
     }
 
-    public Product(int categoryId, int productId, int stockValue, int updatedStockValue, String productName, String description, float productPrice, float calorieValue, Category category) {
+    public Product(int categoryId, int productId, int stockValue, int updatedStockValue, String productName, String description, float productPrice, float calorieValue, Category category, MultipartFile productImage) {
         this.categoryId = categoryId;
         this.productId = productId;
         this.stockValue = stockValue;
@@ -28,7 +32,17 @@ public class Product {
         this.productPrice = productPrice;
         this.calorieValue = calorieValue;
         this.category = category;
+        this.productImage = productImage;
     }
+
+    public MultipartFile getProductImage() {
+        return productImage;
+    }
+
+    public void setProductImage(MultipartFile productImage) {
+        this.productImage = productImage;
+    }
+
 
     public int getUpdatedStockValue() {
         return updatedStockValue;

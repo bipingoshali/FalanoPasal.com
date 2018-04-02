@@ -65,6 +65,9 @@ public class SQLConstant {
         public final static String GET_CATEGORY_BY_ID = "SELECT categoryName from " + TableConstant.CATEGORY_TABLE
                 + " where categoryId=?";
         
+        public final static String GET_ALL_CATEGORY_COLUMN_BY_ID = "SELECT * FROM " + TableConstant.CATEGORY_TABLE
+                + " where categoryId=?";
+        
         public final static String GET_PRODUCT_BY_CATEGORYID = "Select * from "
                 +TableConstant.PRODUCT_TABLE+
                 " where categoryId=?";

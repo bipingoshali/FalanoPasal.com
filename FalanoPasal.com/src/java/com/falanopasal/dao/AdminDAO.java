@@ -22,6 +22,9 @@ public interface AdminDAO {
     //get category data 
     List<Category> getCategory() throws SQLException,ClassNotFoundException;
     
+    //get category by id
+    List<Category> getCategoryById(int categoryId) throws SQLException, ClassNotFoundException;
+    
     //insert product data 
     void insertProduct(Product product) throws SQLException,ClassNotFoundException;
     
