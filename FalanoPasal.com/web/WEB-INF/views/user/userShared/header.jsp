@@ -10,6 +10,7 @@
         
         <!-- Bootstrap core CSS -->
         <link href="${SITE_URL}/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="${SITE_URL}/static/css/custom.css" rel="stylesheet" type="text/css" />
         
     </head>
     
@@ -32,7 +33,7 @@
                     <li><a href="#about">About</a></li>
                     <li><a href="#contact">Contact</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="${SITE_URL}/my-page">Action</a></li>
                             <li><a href="#">Another action</a></li>
@@ -45,8 +46,8 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="${SITE_URL}/login">Login</a></li>
-                    <li><a href="${SITE_URL}/register">Register</a></li>
+                    <li><a href="#">Hy ${username}</a></li>
+                    <li><a href="${SITE_URL}/logout">Logout</a></li>
                     <!--<li class="active"><a href="abc.html">Welcome <span class="sr-only">(current)</span></a></li>-->
                 </ul>
             </div><!--/.nav-collapse -->

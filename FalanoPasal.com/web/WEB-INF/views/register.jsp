@@ -26,7 +26,7 @@
         
         <div class="container" style="padding-top: 15px;">
             
-            <h1 style="text-align: center;margin: 40px 0px 30px 0px;">Join FalanoPasal</h1>
+            <h1 style="text-align: center;margin: 0px 0px 30px 0px;">Join FalanoPasal</h1>
             
             <!-- Registration form message -->
             <h3 style="text-align: center;"><c:out value="${message}"></c:out></h3>

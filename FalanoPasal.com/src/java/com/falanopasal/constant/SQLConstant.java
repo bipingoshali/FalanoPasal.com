@@ -92,4 +92,19 @@ public class SQLConstant {
         
     }
     
+    public class Category{
+        
+        public final static String GET_CATEGORY = "SELECT * FROM " + TableConstant.CATEGORY_TABLE;
+
+    }
+    
+    public class Product{
+        
+        public final static String GET_PRODUCT = "SELECT * FROM " + TableConstant.PRODUCT_TABLE;
+        
+        public final static String GET_CATEGORY_BY_ID = "SELECT categoryName from " + TableConstant.CATEGORY_TABLE
+                + " where categoryId=?";
+        
+    }
+    
 }

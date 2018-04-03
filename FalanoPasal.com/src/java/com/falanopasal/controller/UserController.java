@@ -5,9 +5,14 @@
  */
 package com.falanopasal.controller;
 
+import com.falanopasal.entity.Category;
+import com.falanopasal.entity.Product;
 import com.falanopasal.entity.User;
+import com.falanopasal.service.CategoryService;
+import com.falanopasal.service.ProductService;
 import com.falanopasal.service.SessionService;
 import java.sql.SQLException;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +29,12 @@ public class UserController {
     @Autowired
     private SessionService sessionService;
     
+    @Autowired
+    private CategoryService categoryService;
+    
+    @Autowired
+    private ProductService productService;
+    
     private SessionManager sessionManager;
     
     @RequestMapping("/user/home")
@@ -33,13 +44,18 @@ public class UserController {
         sessionManager = new SessionManager();
         if(sessionManager.getAttr("username")!=null){
             String username = sessionManager.getAttr("username").toString();
+            adminModel.addObject("username", username);
             User user = new User();
             user.setSessionValue(username); //setting the session value in User entity
             User fetchSessionData;
             fetchSessionData = sessionService.getDataFromSessionValue(user);
-            if(fetchSessionData.getRoleId()==1){
+            if(fetchSessionData.getRoleId()==1){                
                 return adminModel;
             }else{
+                List<Category> categoryList = categoryService.getCategory();
+                List<Product> productList = productService.getProduct();
+                userModel.addObject("categoryList", categoryList);
+                userModel.addObject("productList", productList);
                 return userModel;
             }
         }

@@ -18,7 +18,7 @@
 
 <div class="row" style="margin-bottom: 5px;">
     <style>
-        img {width:200px;height: 200px;object-fit: cover;}
+        img {width:180px;height: 180px;object-fit: cover;}
     </style>
     <c:forEach var="productEntity" items="${productList}">
         <div class="col-lg-3" style="padding: 10px;">

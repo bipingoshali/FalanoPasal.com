@@ -1,4 +1,6 @@
-
+body {
+  padding-top: 70px;
+}
 /*register form field set CSS*/
 fieldset{
     border: 1px solid #ddd !important;
