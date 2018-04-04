@@ -55,6 +55,26 @@ public class ProductDAOImpl implements ProductDAO{
         product.setCategory(this.getCategoryName(rs.getInt("categoryId")));
         return product;
     }
+
+    @Override
+    public Product getProductByProductId(int productId) throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.queryForObject(SQLConstant.admin.GET_PRODUCT_BY_ID, new Object[]{productId}, new RowMapper<Product>() {
+            @Override
+            public Product mapRow(ResultSet rs, int i) throws SQLException {
+                return mapProductData(rs);
+            }
+        });        
+    }
+
+    @Override
+    public List<Product> getProductByCategoryId(int categoryId) throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.Product.GET_PRODUCT_BY_CATEGORYID, new Object[]{categoryId}, new RowMapper<Product>() {
+            @Override
+            public Product mapRow(ResultSet rs, int i) throws SQLException {
+                return mapProductData(rs);
+            }
+        });        
+    }
     
 
 

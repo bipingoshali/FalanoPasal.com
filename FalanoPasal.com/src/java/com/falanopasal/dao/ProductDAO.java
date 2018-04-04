@@ -17,4 +17,10 @@ public interface ProductDAO {
     //get product data
     List<Product> getProduct() throws SQLException,ClassNotFoundException;
     
+    //get product data by product id
+    Product getProductByProductId(int productId) throws SQLException,ClassNotFoundException;
+    
+    //get product data by category id
+    List<Product> getProductByCategoryId(int categoryId) throws SQLException,ClassNotFoundException;
+    
 }

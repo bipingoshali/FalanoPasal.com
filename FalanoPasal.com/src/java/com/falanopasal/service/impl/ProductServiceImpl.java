@@ -27,5 +27,15 @@ public class ProductServiceImpl implements ProductService{
     public List<Product> getProduct() throws SQLException, ClassNotFoundException {
         return productDao.getProduct();
     }
+
+    @Override
+    public Product getProductByProductId(int productId) throws SQLException, ClassNotFoundException {
+        return productDao.getProductByProductId(productId);
+    }
+
+    @Override
+    public List<Product> getProductByCategoryId(int categoryId) throws SQLException, ClassNotFoundException {
+        return productDao.getProductByCategoryId(categoryId);
+    }
     
 }

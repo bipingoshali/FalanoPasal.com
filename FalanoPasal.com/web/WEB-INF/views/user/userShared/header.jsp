@@ -11,6 +11,8 @@
         <!-- Bootstrap core CSS -->
         <link href="${SITE_URL}/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="${SITE_URL}/static/css/custom.css" rel="stylesheet" type="text/css" />
+        <!--JQuery-->
+        <script src="${SITE_URL}/static/js/jquery-3.2.1.min.js"></script>
         
     </head>
     
@@ -46,6 +48,7 @@
                     </li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href="${SITE_URL}/user/shoppingCart" ><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</a></li>
                     <li><a href="#">Hy ${username}</a></li>
                     <li><a href="${SITE_URL}/logout">Logout</a></li>
                     <!--<li class="active"><a href="abc.html">Welcome <span class="sr-only">(current)</span></a></li>-->
@@ -53,6 +56,6 @@
             </div><!--/.nav-collapse -->
         </div>
     </nav>    
-
-
+<!--Page Content-->
+<div class="container">
 
