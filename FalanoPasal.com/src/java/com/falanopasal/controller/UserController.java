@@ -7,6 +7,7 @@ package com.falanopasal.controller;
 
 import com.falanopasal.entity.Category;
 import com.falanopasal.entity.Product;
+import com.falanopasal.entity.ShoppingCart;
 import com.falanopasal.entity.ShoppingCartHandlerEntry;
 import com.falanopasal.entity.ShoppingCartMap;
 import com.falanopasal.entity.User;
@@ -16,7 +17,6 @@ import com.falanopasal.service.ProductService;
 import com.falanopasal.service.SessionService;
 import com.falanopasal.service.ShoppingCartHandlerService;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,6 +55,7 @@ public class UserController {
     private SessionManager sessionManager;
     private User user;
     private User fetchSessionData;
+    private ShoppingCart shoppingCart;
     
     @RequestMapping("/user/home")
     public ModelAndView userHomePage() throws SQLException, ClassNotFoundException{
@@ -162,15 +163,23 @@ public class UserController {
             }else{
                 List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries = shoppingCartHandlerService.getShoppingCartEntries(shoppingCartMap);
                 java.util.UUID randomUUID = java.util.UUID.randomUUID();
-                String cartId = randomUUID.toString();                
+                String cartId = randomUUID.toString();  
+                shoppingCart = new ShoppingCart();
+                shoppingCart.setCartId(cartId);
                 orderService.registerUserShoppingCart(cartId,fetchSessionData.getUserId());
-                orderService.registerUserShoppingCartItem(cartId,shoppingCartHandlerEntries);
+                orderService.registerUserShoppingCartItem(shoppingCart,shoppingCartHandlerEntries);
                 return model;
-            }           
-            
+            }                       
         }
-//        orderService.order(shoppingCartHandlerEntries);
         return new ModelAndView("redirect:/login");
+    }
+    
+    @RequestMapping("/user/orderHistory")
+    public ModelAndView orderHistory() throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("/user/orderHistory");
+        List<ShoppingCartHandlerEntry> s = orderService.getUserShoppingCarts();
+        model.addObject("s", s);
+        return model;
     }
     
 }

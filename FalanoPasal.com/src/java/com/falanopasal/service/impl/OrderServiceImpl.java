@@ -6,6 +6,7 @@
 package com.falanopasal.service.impl;
 
 import com.falanopasal.dao.OrderDAO;
+import com.falanopasal.entity.ShoppingCart;
 import com.falanopasal.entity.ShoppingCartHandlerEntry;
 import com.falanopasal.service.OrderService;
 import java.sql.SQLException;
@@ -34,8 +35,13 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public void registerUserShoppingCartItem(String cartId, List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) throws SQLException, ClassNotFoundException {
-        orderDao.registerUserShoppingCartItem(cartId, shoppingCartHandlerEntries);
+    public void registerUserShoppingCartItem(ShoppingCart shoppingCart, List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) throws SQLException, ClassNotFoundException {
+        orderDao.registerUserShoppingCartItem(shoppingCart, shoppingCartHandlerEntries);
+    }
+
+    @Override
+    public List<ShoppingCartHandlerEntry> getUserShoppingCarts() throws SQLException, ClassNotFoundException {
+        return orderDao.getUserShoppingCarts();
     }
     
 }

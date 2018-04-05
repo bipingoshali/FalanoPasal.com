@@ -119,6 +119,12 @@ public class SQLConstant {
         
         public final static String REGISTER_USER_SHOPPING_CART_ITEM = "INSERT INTO " + TableConstant.SHOPPING_CART_ITEM_TABLE +
                 " (cartId,productId,productQuantity,productPrice,productTotalPrice,productTotalCalorie) values(?,?,?,?,?,?)";
+               
+    }
+    
+    public class OrderHistory{
+        
+        public final static String GET_USER_ORDER_HISTORY = "SELECT * FROM shoppingcarts sc,shoppingcartitem sci where sc.cartId=sci.cartId and sc.userId=1";
     }
     
 }
