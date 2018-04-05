@@ -112,4 +112,13 @@ public class SQLConstant {
         
     }
     
+    public class ShoppingCarts{
+        
+        public final static String REGISTER_USER_SHOPPING_CART = "INSERT INTO " + TableConstant.SHOPPING_CARTS_TABLE +
+                " (cartId,userId,purchased) values (?,?,false)";
+        
+        public final static String REGISTER_USER_SHOPPING_CART_ITEM = "INSERT INTO " + TableConstant.SHOPPING_CART_ITEM_TABLE +
+                " (cartId,productId,productQuantity,productPrice,productTotalPrice,productTotalCalorie) values(?,?,?,?,?,?)";
+    }
+    
 }

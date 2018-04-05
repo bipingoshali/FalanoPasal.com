@@ -11,10 +11,12 @@ import com.falanopasal.entity.ShoppingCartHandlerEntry;
 import com.falanopasal.entity.ShoppingCartMap;
 import com.falanopasal.entity.User;
 import com.falanopasal.service.CategoryService;
+import com.falanopasal.service.OrderService;
 import com.falanopasal.service.ProductService;
 import com.falanopasal.service.SessionService;
 import com.falanopasal.service.ShoppingCartHandlerService;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,6 +48,9 @@ public class UserController {
     
     @Autowired
     private ShoppingCartHandlerService shoppingCartHandlerService;
+    
+    @Autowired
+    private OrderService orderService;
     
     private SessionManager sessionManager;
     private User user;
@@ -141,5 +146,31 @@ public class UserController {
         model.addObject("totalCalorieValue", shoppingCartHandlerService.getTotalCalorie(shoppingCartHandlerEntries));
         return model;
     }   
+    
+    @RequestMapping(value="/user/shoppingCartOrder")
+    public ModelAndView order() throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("redirect:/user/shoppingCart");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            user = new User();
+            user.setSessionValue(username);
+            fetchSessionData = new User();
+            fetchSessionData = sessionService.getDataFromSessionValue(user); 
+            if(fetchSessionData.getRoleId()==1){
+                return new ModelAndView("redirect:/admin/home");
+            }else{
+                List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries = shoppingCartHandlerService.getShoppingCartEntries(shoppingCartMap);
+                java.util.UUID randomUUID = java.util.UUID.randomUUID();
+                String cartId = randomUUID.toString();                
+                orderService.registerUserShoppingCart(cartId,fetchSessionData.getUserId());
+                orderService.registerUserShoppingCartItem(cartId,shoppingCartHandlerEntries);
+                return model;
+            }           
+            
+        }
+//        orderService.order(shoppingCartHandlerEntries);
+        return new ModelAndView("redirect:/login");
+    }
     
 }

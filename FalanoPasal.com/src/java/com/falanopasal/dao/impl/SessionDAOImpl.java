@@ -39,6 +39,7 @@ public class SessionDAOImpl implements SessionDAO{
     
     private User mapData(ResultSet rs) throws SQLException{
         User user = new User();
+        user.setUserId(rs.getInt("userId"));
         user.setAddressLine1(rs.getString("addressLine1"));
         user.setUsername(rs.getString("username"));
         user.setEmail(rs.getString("email"));

@@ -41,23 +41,41 @@
                     </div>
                     <hr>
                 </c:forEach>
-                    
-	            	<div class="row">
 
-	            		<h4>${shoppingItemSize} items on your basket.</h4>
+                <div class="row">
 
-	            	</div>
+                    <h4>${shoppingItemSize} items on your basket.</h4>
+
+                </div>
             </c:if>
             <c:if test="${empty shoppingCartHandlerEntries}">
                 <h4>You have not add any product in the cart</h4>
             </c:if>
             <div class="row">
-                <span class="pull-right">Total: ${grandTotal}</span>
+                <span class="pull-right"><strong>Total: £</strong> ${grandTotal}</span>
             </div>
             <div class="row">
-                <span class="pull-right">Total Calorie Value: ${totalCalorieValue} </span>
+                <span class="pull-right"><strong>Total Calorie Value:</strong> ${totalCalorieValue} Kcal/g</span>
             </div>
+            <div class="row">
+                <c:if test="${not empty shoppingCartHandlerEntries}">
+                <a href="${SITE_URL}/user/shoppingCartOrder" id="checkout-btn" type="button" class="btn btn-primary btn-md pull-right" onclick="return confirm('Are you sure to order?')" title="Order">Order</a>
+                </c:if>
+            </div>            
         </div>
     </div>
 </div>
+
+
+<!-- Footer -->
+
+<footer>
+    <div class="row">
+        <div class="col-lg-12">
+            <hr>
+            <p>Copyright &copy; FalanoPasal.com 2018</p>
+        </div>
+    </div>
+    <!-- /.row -->
+</footer>                
 <%@include file="userShared/footer.jsp" %>

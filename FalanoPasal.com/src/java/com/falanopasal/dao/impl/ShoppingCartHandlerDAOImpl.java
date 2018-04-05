@@ -40,6 +40,7 @@ public class ShoppingCartHandlerDAOImpl implements ShoppingCartHandlerDAO{
             
             int quantity = shoppingCartMap.getQuantity(productId);
             
+            s.setProductId(product.getProductId());
             s.setProductName(product.getProductName());
             s.setPrice(product.getProductPrice());
             s.setCalorieValue(product.getCalorieValue());
@@ -59,7 +60,7 @@ public class ShoppingCartHandlerDAOImpl implements ShoppingCartHandlerDAO{
 
     @Override
     public double getTotalCalorie(List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) {
-        return shoppingCartItemCalculateStrategyService.getTotal(shoppingCartHandlerEntries);
+        return shoppingCartItemCalculateStrategyService.getTotalCalorieValue(shoppingCartHandlerEntries);
     }
     
 }
