@@ -2,7 +2,7 @@
 <h1 class="page-header">Category</h1>
 
 <div class="row">    
-    <!-- register new product button trigger modal -->
+    <!-- register new category button trigger modal -->
     <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#addCategoryModal">
         <span class="glyphicon glyphicon-plus"></span>
         Register new category
@@ -33,7 +33,9 @@
         </div>
     </div>
 </div>
+<!--end of register category modal-->            
 
+<!--table-->            
 <div class="row">
     <div class="col-md-3"></div>
     <div class="col-md-6">

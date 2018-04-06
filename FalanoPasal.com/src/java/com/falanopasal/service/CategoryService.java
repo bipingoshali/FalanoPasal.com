@@ -18,4 +18,10 @@ public interface CategoryService {
     //get category data 
     List<Category> getCategory() throws SQLException,ClassNotFoundException;
 
+    //insert category data
+    void insertCategory(Category category) throws SQLException,ClassNotFoundException;    
+
+    //get category by id
+    List<Category> getCategoryById(int categoryId) throws SQLException, ClassNotFoundException;
+    
 }

@@ -53,10 +53,12 @@
         </div>
     </div>
 </div>
+<!--end of register product modal-->            
 
 <!-- Delete message -->
 <div style="color: red;font-size: medium;"><c:out value="${message}"></c:out></div>
 
+<!--product table-->
 <div class="row">
     <h3>Product list</h3>
     <table class="table table-striped table-hover">
@@ -90,5 +92,6 @@
             </tr>
         </c:forEach>
     </table>
-</div>            
+</div> 
+<!--end of product table-->        
 <%@include file="adminShared/footer.jsp" %>

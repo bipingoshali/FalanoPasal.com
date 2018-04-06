@@ -51,6 +51,10 @@
             <c:if test="${empty shoppingCartHandlerEntries}">
                 <h4>You have not add any product in the cart</h4>
             </c:if>
+                
+            <!--successful order message-->
+            <h4>${orderMessage}</h4>
+            
             <div class="row">
                 <span class="pull-right"><strong>Total: £</strong> ${grandTotal}</span>
             </div>

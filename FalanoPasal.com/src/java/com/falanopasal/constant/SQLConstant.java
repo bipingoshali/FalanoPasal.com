@@ -16,8 +16,8 @@ public class SQLConstant {
         public final static String USER_INSERT = "INSERT INTO "
                 + TableConstant.USER_TABLE
                 + " (firstName,lastName,email,username,password,city,"
-                + "addressline1,addressline2,houseno,phoneno,birthdate,roleid,status,emailToken)"
-                + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                + "addressline1,addressline2,houseno,phoneno,birthdate,roleid,status,emailToken,enrollDate)"
+                + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         
         public final static String IS_USERNAME_EXIST = "SELECT COUNT(username) FROM "
                 + TableConstant.USER_TABLE +
@@ -26,10 +26,7 @@ public class SQLConstant {
         public final static String GET_BY_USERNAME = "SELECT * FROM "
                 + TableConstant.USER_TABLE +
                 " WHERE username=?";
-        
-        public final static String EMAIL_TOKEN_UPDATE = "UPDATE " + TableConstant.USER_TABLE +
-                " SET emailToken=? where username=?";
-        
+                
         public final static String GET_BY_USERID = "SELECT * FROM "
                 +TableConstant.USER_TABLE+
                 " where userId=?";
@@ -48,54 +45,19 @@ public class SQLConstant {
         
         public final static String DELETE_COOKIE = "DELETE FROM " + TableConstant.COOKIE_TABLE +
                 " WHERE username=?";
-                
-                
+                                
     }
-    
-    public class admin{
-        
-        public final static String GET_CATEGORY = "SELECT * FROM " + TableConstant.CATEGORY_TABLE;
-        
-        public final static String INSERT_PRODUCT = "INSERT INTO " + TableConstant.PRODUCT_TABLE 
-                + " (categoryId,productName,price,calorieValue,description,stockAmount)"
-                + " values(?,?,?,?,?,?)";
-        
-        public final static String GET_PRODUCT = "SELECT * FROM " + TableConstant.PRODUCT_TABLE;
-        
-        public final static String GET_CATEGORY_BY_ID = "SELECT categoryName from " + TableConstant.CATEGORY_TABLE
-                + " where categoryId=?";
-        
-        public final static String GET_ALL_CATEGORY_COLUMN_BY_ID = "SELECT * FROM " + TableConstant.CATEGORY_TABLE
-                + " where categoryId=?";
-        
-        public final static String GET_PRODUCT_BY_CATEGORYID = "Select * from "
-                +TableConstant.PRODUCT_TABLE+
-                " where categoryId=?";
                 
-        public final static String INSERT_CATEGORY = "INSERT INTO " + TableConstant.CATEGORY_TABLE +
-                " (categoryName) values(?)";
-        
-        public final static String GET_PRODUCT_BY_ID = "SELECT * FROM " + TableConstant.PRODUCT_TABLE +
-                " WHERE productId=?";
-        
-        public final static String EDIT_PRODUCT = "UPDATE " + TableConstant.PRODUCT_TABLE +
-                " SET productName=?,price=?,calorieValue=?,description=? where productId=?";
-        
-        public final static String UPDATE_PRODUCT_STOCK = "UPDATE " + TableConstant.PRODUCT_TABLE +
-                " SET stockAmount=stockAmount+? where productId=?";
-        
-        public final static String UPDATE_PRODUCT_CATEGORY_TYPE = "UPDATE " + TableConstant.PRODUCT_TABLE +
-                " SET categoryId=? where productId=?";
-        
-        public final static String DELETE_PRODUCT = "DELETE FROM " + TableConstant.PRODUCT_TABLE +
-                " WHERE productId=?";
-        
-    }
-    
     public class Category{
         
         public final static String GET_CATEGORY = "SELECT * FROM " + TableConstant.CATEGORY_TABLE;
+        
+        public final static String INSERT_CATEGORY = "INSERT INTO " + TableConstant.CATEGORY_TABLE +
+                " (categoryName) values(?)";
 
+        public final static String GET_ALL_CATEGORY_BY_ID = "SELECT * FROM " + TableConstant.CATEGORY_TABLE
+                + " where categoryId=?";
+        
     }
     
     public class Product{
@@ -109,13 +71,32 @@ public class SQLConstant {
                 +TableConstant.PRODUCT_TABLE+
                 " where categoryId=?";
 
+        public final static String INSERT_PRODUCT = "INSERT INTO " + TableConstant.PRODUCT_TABLE 
+                + " (categoryId,productName,price,calorieValue,description,stockAmount)"
+                + " values(?,?,?,?,?,?)";
+        
+        public final static String GET_PRODUCT_BY_ID = "SELECT * FROM " + TableConstant.PRODUCT_TABLE +
+                " WHERE productId=?";
+        
+        public final static String EDIT_PRODUCT = "UPDATE " + TableConstant.PRODUCT_TABLE +
+                " SET productName=?,price=?,calorieValue=?,description=? where productId=?";
+        
+        public final static String UPDATE_PRODUCT_STOCK = "UPDATE " + TableConstant.PRODUCT_TABLE +
+                " SET stockAmount=stockAmount+? where productId=?";
+
+        public final static String UPDATE_PRODUCT_CATEGORY_TYPE = "UPDATE " + TableConstant.PRODUCT_TABLE +
+                " SET categoryId=? where productId=?";
+
+        public final static String DELETE_PRODUCT = "DELETE FROM " + TableConstant.PRODUCT_TABLE +
+                " WHERE productId=?";
+        
         
     }
     
     public class ShoppingCarts{
         
         public final static String REGISTER_USER_SHOPPING_CART = "INSERT INTO " + TableConstant.SHOPPING_CARTS_TABLE +
-                " (cartId,userId,purchased) values (?,?,false)";
+                " (cartId,username,purchased,purchasedDate) values (?,?,false,?)";
         
         public final static String REGISTER_USER_SHOPPING_CART_ITEM = "INSERT INTO " + TableConstant.SHOPPING_CART_ITEM_TABLE +
                 " (cartId,productId,productQuantity,productPrice,productTotalPrice,productTotalCalorie) values(?,?,?,?,?,?)";
@@ -124,7 +105,7 @@ public class SQLConstant {
     
     public class OrderHistory{
         
-        public final static String GET_USER_ORDER_HISTORY = "SELECT * FROM shoppingcarts sc,shoppingcartitem sci where sc.cartId=sci.cartId and sc.userId=1";
+        public final static String GET_USER_ORDER_HISTORY = "SELECT * FROM shoppingcarts sc,shoppingcartitem sci where sc.cartId=sci.cartId and sc.username=?";
     }
     
 }

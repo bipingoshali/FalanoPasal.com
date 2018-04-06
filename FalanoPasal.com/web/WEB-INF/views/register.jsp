@@ -1,5 +1,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<!--jstl core tag-->
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!--request mapping-->
 <c:set var="SITE_URL" value="${pageContext.request.contextPath}" />
 
 <!--spring form tag libraries-->
@@ -8,6 +11,7 @@
 
 <!DOCTYPE html>
 <html>
+
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Join FalanoPasal</title>
@@ -20,20 +24,23 @@
         <script src="${SITE_URL}/static/js/jquery-3.2.1.min.js"></script>
         <!--Custom JQuery-->
         <script src="${SITE_URL}/static/js/custom.js"></script>
-                
+
     </head>
+
     <body style="background-color: #f9f9f9;height: 1000px;">
-        
+
         <div class="container" style="padding-top: 15px;">
-            
+
             <h1 style="text-align: center;margin: 0px 0px 30px 0px;">Join FalanoPasal</h1>
-            
+
             <!-- Registration form message -->
             <h3 style="text-align: center;"><c:out value="${message}"></c:out></h3>
-            
-            <div class="panel panel-primary" style="width:900px;margin:0px auto;padding:10px;">
-                <div class="panel-heading">Register your account</div>
-                <div class="panel-body">
+
+                <!--form panel-->
+                <div class="panel panel-primary" style="width:900px;margin:0px auto;padding:10px;">
+                    <div class="panel-heading">Register your account</div>
+                    <div class="panel-body">
+
                     <spring:url value="/registerSave" var="registerURL" />
                     <form:form method="post" action="${registerURL}" modelAttribute="user" id="registerForm">
                         <div class="row"> 
@@ -60,6 +67,7 @@
                                         </div>
                                     </div>
                                 </fieldset>
+                                <!--end of name field set-->                
 
                                 <!--Email field-set-->                    
                                 <fieldset style="margin-top:10px;margin-bottom:10px;">    	
@@ -73,6 +81,7 @@
                                         </div>
                                     </div>
                                 </fieldset>	
+                                <!--end of email field set-->           
 
                                 <!--Login field-set-->                    
                                 <fieldset style="margin-top:10px;margin-bottom:10px;">    	
@@ -98,14 +107,25 @@
                                                         <div id="id_password_div" style="color: red;"></div> <!--Message is print when password and confirm password does not match-->
                                                     </div>																
                                                 </div>
+                                                <!--alert message-->
+                                                <div class="row" style="margin: auto;" id="passwordAlertMessage" hidden="hidden">
+                                                    <div class="col-md-12">
+                                                        <div class="alert alert-info" role="alert">
+                                                            Must contain 8 characters & atleast 1 number
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </fieldset>	
+                                </fieldset>
+                                <!--end of login field set-->                    
 
                             </div> <!--/.col-md-6-->
 
+
                             <div class="col-md-6">
+
                                 <!--Address field-set-->
                                 <fieldset style="margin-top:10px;margin-bottom:10px;">    	
                                     <legend>Address</legend>
@@ -139,7 +159,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                </fieldset>		
+                                </fieldset>	
+                                <!--end of address field set-->                    
 
                                 <!--Other Information field set-->
                                 <fieldset style="margin-top:10px;margin-bottom:10px;">    	
@@ -157,11 +178,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                </fieldset>		
+                                </fieldset>
+                                <!--end of other information field set-->                
 
                             </div> <!--/.col-md-6-->
                         </div> <!--/.row-->
 
+                        <!--button group-->
                         <div class="form-group">
                             <button class="btn btn-primary" type="submit" disabled="disabled" >
                                 Submit
@@ -176,6 +199,8 @@
                         <div>
                             <p>Already have an account? <a href="${SITE_URL}/login">Sign in</a>.</p>
                         </div>
+                        <!--end of button group-->
+
                     </form:form>
 
                 </div> <!--/.panel-body-->

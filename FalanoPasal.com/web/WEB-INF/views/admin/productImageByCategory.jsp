@@ -1,4 +1,5 @@
 <%@include file="adminShared/header.jsp" %>
+
 <h1 class="page-header">
     <div class="pull-right">
         <a class="btn btn-danger" href="${SITE_URL}/admin/productImage">Back</a>
@@ -8,7 +9,7 @@
     </c:forEach>
 </h1>
 
-    <div class="row" style="margin-bottom: 20px;">    
+<div class="row" style="margin-bottom: 20px;">    
     <!-- register new product button trigger modal -->
     <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#uploadImage">
         <span class="glyphicon glyphicon-plus"></span>

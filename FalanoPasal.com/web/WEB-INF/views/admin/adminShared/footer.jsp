@@ -2,8 +2,6 @@
         </div> <!-- /.row -->
     </div> <!-- /.container-fluid -->  
  
-    <!--JQuery-->
-    <!--<script src="E_URL}/static/js/jquery-3.2.1.min.js"></script>--> 
     <!--Bootstrap core Javascript-->
     <script src="${SITE_URL}/static/js/bootstrap.min.js" type="text/javascript"></script>
    

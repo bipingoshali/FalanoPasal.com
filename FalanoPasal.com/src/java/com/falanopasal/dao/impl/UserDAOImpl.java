@@ -44,7 +44,8 @@ public class UserDAOImpl implements UserDAO{
             user.getBirthdateformat(),
             user.getRoleId(),
             user.isStatus(),
-            user.getEmailToken()
+            user.getEmailToken(),
+            user.getEnrollDate()
         });
     }
 
@@ -78,11 +79,6 @@ public class UserDAOImpl implements UserDAO{
         user.setPassword(rs.getString("password"));
         user.setRoleId(rs.getInt("roleId"));
         return user;
-    }
-
-    @Override
-    public void updateEmailToken(String token,String username) throws SQLException, ClassNotFoundException {        
-        jdbcTemplate.update(SQLConstant.User.EMAIL_TOKEN_UPDATE, new Object[]{token,username});        
     }
 
     @Override

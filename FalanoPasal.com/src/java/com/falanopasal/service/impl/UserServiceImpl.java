@@ -13,8 +13,6 @@ import java.util.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
-import org.apache.xml.security.utils.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +41,12 @@ public class UserServiceImpl implements UserService {
         java.util.UUID randomUUID = java.util.UUID.randomUUID();
         String emailToken = randomUUID.toString();        
         user.setEmailToken(emailToken);
-        
+
+        //setting the default system date in user enroll date
+        Date utilEnrollDate = new Date();
+        java.sql.Date sqlEnrollDate = new java.sql.Date(utilEnrollDate.getTime());
+        user.setEnrollDate(sqlEnrollDate);
+
         
         return userDao.insert(user);
     }
@@ -56,11 +59,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getByUsername(User user) throws SQLException, ClassNotFoundException {
         return userDao.getByUsername(user);
-    }
-
-    @Override
-    public void updateEmailToken(String token, String username) throws SQLException, ClassNotFoundException {
-        userDao.updateEmailToken(token, username);
     }
 
     @Override

@@ -23,4 +23,19 @@ public interface ProductService {
     //get product data by category id
     List<Product> getProductByCategoryId(int categoryId) throws SQLException,ClassNotFoundException;
     
+    //insert product data 
+    void insertProduct(Product product) throws SQLException,ClassNotFoundException;
+    
+    //edit product data
+    void editProduct(Product product) throws SQLException,ClassNotFoundException;
+
+    //update stock value of any product
+    void updateProductStock(Product product) throws SQLException, ClassNotFoundException;
+    
+    //update product category type
+    void updateProductCategoryId(Product product) throws SQLException,ClassNotFoundException;
+
+    //delete product
+    void deleteProduct(int productId) throws SQLException,ClassNotFoundException;
+    
 }

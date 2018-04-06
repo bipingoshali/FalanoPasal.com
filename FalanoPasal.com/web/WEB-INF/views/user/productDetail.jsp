@@ -42,16 +42,22 @@
 </div>
 <!--row-->
 
+<!--breadcrumb-->
 <ol class="breadcrumb">
     <li><a href="${SITE_URL}/admin/home">Home</a></li>
     <li class="active">Product detail</li>
 </ol>
+<!--end of breadcrumb-->
 
-<div class="row container">
+<div class="row">
     <div class="row" style="background-color: white;padding: 30px;">
+        
+        <!--product image-->
         <div class="col-md-4" style="background-color: white;">
             <center><img src="<c:url value="/static/images/${product.categoryId}${product.productId}.png"/>" alt="image" class="image"/></center>
         </div>
+        
+        <!--products add basket-->
         <div class="col-md-8" style="background-color: white; padding: 0px 30px 0px 150px;">
             <div class="row" style="margin-bottom: 20px;">
                 <div class="col-md-12">
@@ -103,6 +109,7 @@
                 </div>
             </div>    
 
+            <!--product details-->
             <div class="row">
                 <div class="col-md-10">
                     <table class="table">
@@ -123,7 +130,7 @@
                 </div>    
             </div>
 
-
+            <!--product description-->               
             <div class="row">                
                 <div class="col-md-12">
                     <strong>Product Description</strong><br/>
@@ -145,4 +152,17 @@
         </div>
     </div>
 </div>
+                    
+<!-- Footer -->
+
+<footer>
+    <div class="row">
+        <div class="col-lg-12">
+            <hr>
+            <p>Copyright &copy; FalanoPasal.com 2018</p>
+        </div>
+    </div>
+    <!-- /.row -->
+</footer>                
+                    
 <%@include file="userShared/footer.jsp" %>

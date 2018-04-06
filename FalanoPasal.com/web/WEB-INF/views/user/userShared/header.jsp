@@ -10,6 +10,7 @@
         
         <!-- Bootstrap core CSS -->
         <link href="${SITE_URL}/static/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <!--Custom css-->
         <link href="${SITE_URL}/static/css/custom.css" rel="stylesheet" type="text/css" />
         <!--JQuery-->
         <script src="${SITE_URL}/static/js/jquery-3.2.1.min.js"></script>
@@ -27,11 +28,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">FalanoPasal.com</a>
+                <a class="navbar-brand" href="${SITE_URL}/user/home">FalanoPasal.com</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Home</a></li>
+                    <li><a href="${SITE_URL}/user/home">Home</a></li>
                     <li><a href="${SITE_URL}/user/orderHistory">Order History</a></li>
                     <li><a href="#contact">Contact</a></li>
                     <li class="dropdown">

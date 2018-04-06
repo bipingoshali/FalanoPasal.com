@@ -42,27 +42,55 @@ public class DefaultController {
 //    @Autowired
 //    private ApplicationContext appContext;
     
-    private SessionManager sessionManager;
-    
+    private SessionManager sessionManager; //session data    
     private User userCookie; // to store user data obtained from cookie value
     private User userSessionSet; // session value is set in User Entity(username)
     private User userSessionGet; // to fetch user data
     private User fetchUserList; // to store user data which will be used while sending mail
     int counter=0; // to count the login Attempt
     
+    
+    /*
+    main home page controller
+    it opens the index page    
+    */
     @RequestMapping(value= {"/","/index"})
     public String index(){
         return "index";
     }
 
-//    registration page controller
+    /*
+    registration page controller
+    it opens register page
+    */
     @RequestMapping("/register")
-    public ModelAndView register(){
+    public ModelAndView register() throws SQLException, ClassNotFoundException {
         ModelAndView model = new ModelAndView("/register");
+        ModelAndView userModel =  new ModelAndView("redirect:/user/home");
+        ModelAndView adminModel = new ModelAndView("redirect:/admin/home");        
+        sessionManager = new SessionManager();
+        if (sessionManager.getAttr("username") != null) {
+            String username = sessionManager.getAttr("username").toString();
+            userSessionSet = new User();
+            userSessionSet.setSessionValue(username); //setting username to find out the user role ID
+            userSessionGet = new User();
+            userSessionGet = sessionService.getDataFromSessionValue(userSessionSet); // userSessionGet holds all the value of the User
+
+            if (userSessionGet.getRoleId() == 1) {
+                return adminModel;
+            } else {
+                return userModel;
+            }
+        }
+
         model.addObject("user", new User());
         return model;
     }
-    
+        
+    /*
+    it saves the user data 
+    it fetch the user data after insertion which will be used while sending mail
+    */
     @RequestMapping(value="/registerSave",method=RequestMethod.POST)
     public String registerSave(@ModelAttribute("user") User user,final RedirectAttributes redirectAttributes) throws SQLException,ClassNotFoundException,ParseException{
         userService.insert(user);
@@ -86,6 +114,9 @@ public class DefaultController {
         return "redirect:/register";
     }
     
+    /*
+    checks whether the username is available or not
+    */
     @RequestMapping(value="/check_username")
     public @ResponseBody String checkUsernameAvailability(@RequestParam String username) throws SQLException, ClassNotFoundException{
         if(userService.isUsernameExist(username)){
@@ -94,8 +125,11 @@ public class DefaultController {
         return null;
     }
     
+    /*
+    activate the user account
+    */
     @RequestMapping(value="/confirmEmail")
-    public @ResponseBody ModelAndView updateUserStatus(@RequestParam("token") String token,@RequestParam("userId") int userId) throws SQLException, ClassNotFoundException{
+    public @ResponseBody ModelAndView updateUserStatus(@RequestParam("token") String token,@RequestParam("userId") int userId,final RedirectAttributes redirectAttributes) throws SQLException, ClassNotFoundException{
         ModelAndView model = new ModelAndView("redirect:/login");    
         User user = new User();
         user.setUserId(userId);
@@ -106,11 +140,11 @@ public class DefaultController {
         
         //if the user account is already activated
         if(fetchUserStatusForStatusCheck.isStatus()){
-            model.addObject("hello", "your account has already been activated!");
+            redirectAttributes.addFlashAttribute("message", "Your account has already been activated!");
         }else{
             if(token.equals(fetchEmailToken)) {
                 userService.updateUserStatus(userId);
-                model.addObject("hello", "your account has been activated!");
+                redirectAttributes.addFlashAttribute("message", "Congratulation! Your account has been activated!");
             }            
         }    
         return model;
@@ -118,8 +152,10 @@ public class DefaultController {
     
 //    end of registration page controller
     
-//    login page controller
-    
+    /*
+    login page controller
+    it opens login page
+    */        
     @RequestMapping("/login")
     public ModelAndView login(@CookieValue(value="falanoPasal",defaultValue="defaultValue") String cookieValue) throws SQLException, ClassNotFoundException{
         ModelAndView model = new ModelAndView("/login");
@@ -129,13 +165,12 @@ public class DefaultController {
         sessionManager = new SessionManager();
         
         userCookie = new User();
-//        User userCookie; //for cookie value
         userCookie = sessionService.rememberMe(cookieValue);
         
         //if a cookie is present
         if(userCookie!=null){
             sessionManager.setData(new String[]{"username"},new String[]{userCookie.getUsername()});
-            return userModel;
+            return userModel; //default redirect page
         }else{
             if (sessionManager.getAttr("username") != null) {
                 String username = sessionManager.getAttr("username").toString();
@@ -156,6 +191,9 @@ public class DefaultController {
         return model;
     }
     
+    /*
+    it authenticates the username and password
+    */
     @RequestMapping(value="/checkLogin",method=RequestMethod.POST)
     public ModelAndView userAuthentication(@ModelAttribute("login") Login login,final RedirectAttributes redirectAttributes,HttpServletResponse response,@CookieValue(value="loginAttempt",defaultValue="0") String cookieValue) throws SQLException, ClassNotFoundException{
         ModelAndView userModel = new ModelAndView("redirect:/user/home");
@@ -211,15 +249,22 @@ public class DefaultController {
         return loginModel;
     }
     
+    /*
+    user logout
+    */
     @RequestMapping(value="/logout")
-    public ModelAndView displaylogin(HttpServletResponse response) throws SQLException, ClassNotFoundException{
+    public ModelAndView logout(@CookieValue(value="falanoPasal",defaultValue="defaultValue") String cookieValue,HttpServletResponse response) throws SQLException, ClassNotFoundException{
         sessionManager = new SessionManager();
         String username = sessionManager.getAttr("username").toString();        
         sessionService.deleteCookie(username);
         sessionManager.clearData();
-        Cookie adminCookie = new Cookie("falanoPasal", "");
-        adminCookie.setMaxAge(0);
-        response.addCookie(adminCookie);
+        
+        //the following code runs if the cookie is present
+        if(cookieValue!=null){
+            Cookie adminCookie = new Cookie("falanoPasal", "");
+            adminCookie.setMaxAge(0);
+            response.addCookie(adminCookie);            
+        }
         return new ModelAndView("redirect:/login");
     }
     

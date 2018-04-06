@@ -32,13 +32,13 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" href="#">FalanoPasal.com</a>
+                    <a class="navbar-brand" href="${SITE_URL}/admin/home">FalanoPasal.com</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#">Dashboard</a></li>
                         <li><a href="#">Settings</a></li>
-                        <li><a href="#">Profile</a></li>
+                        <li><a href="#">Hy ${username}</a></li>
                         <li><a href="${SITE_URL}/logout">Logout</a></li>
                     </ul>
                 </div>

@@ -58,7 +58,7 @@ public class ProductDAOImpl implements ProductDAO{
 
     @Override
     public Product getProductByProductId(int productId) throws SQLException, ClassNotFoundException {
-        return jdbcTemplate.queryForObject(SQLConstant.admin.GET_PRODUCT_BY_ID, new Object[]{productId}, new RowMapper<Product>() {
+        return jdbcTemplate.queryForObject(SQLConstant.Product.GET_PRODUCT_BY_ID, new Object[]{productId}, new RowMapper<Product>() {
             @Override
             public Product mapRow(ResultSet rs, int i) throws SQLException {
                 return mapProductData(rs);
@@ -74,6 +74,41 @@ public class ProductDAOImpl implements ProductDAO{
                 return mapProductData(rs);
             }
         });        
+    }
+
+    @Override
+    public void insertProduct(Product product) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.Product.INSERT_PRODUCT, 
+                new Object[]{product.getCategoryId(),
+                                product.getProductName(),
+                                product.getProductPrice(),
+                                product.getCalorieValue(),
+                                product.getDescription(),0});        
+    }
+
+    @Override
+    public void editProduct(Product product) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.Product.EDIT_PRODUCT,
+                new Object[]{product.getProductName(),
+                            product.getProductPrice(),
+                            product.getCalorieValue(),
+                            product.getDescription(),
+                            product.getProductId()});
+    }
+
+    @Override
+    public void updateProductStock(Product product) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.Product.UPDATE_PRODUCT_STOCK, new Object[]{product.getUpdatedStockValue(),product.getProductId()});
+    }
+
+    @Override
+    public void updateProductCategoryId(Product product) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.Product.UPDATE_PRODUCT_CATEGORY_TYPE, new Object[]{product.getCategoryId(),product.getProductId()});
+    }
+
+    @Override
+    public void deleteProduct(int productId) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.Product.DELETE_PRODUCT, new Object[]{productId});
     }
     
 

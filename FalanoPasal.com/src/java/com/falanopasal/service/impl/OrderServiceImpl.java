@@ -25,13 +25,8 @@ public class OrderServiceImpl implements OrderService{
     private OrderDAO orderDao;
     
     @Override
-    public List<ShoppingCartHandlerEntry> order(List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) {
-        return orderDao.order(shoppingCartHandlerEntries);
-    }
-
-    @Override
-    public void registerUserShoppingCart(String cartId,int userId) throws SQLException, ClassNotFoundException {
-        orderDao.registerUserShoppingCart(cartId,userId);
+    public void registerUserShoppingCart(ShoppingCart shoppingCart) throws SQLException, ClassNotFoundException {
+        orderDao.registerUserShoppingCart(shoppingCart);
     }
 
     @Override
@@ -40,8 +35,8 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public List<ShoppingCartHandlerEntry> getUserShoppingCarts() throws SQLException, ClassNotFoundException {
-        return orderDao.getUserShoppingCarts();
+    public List<ShoppingCartHandlerEntry> getUserShoppingCarts(String username) throws SQLException, ClassNotFoundException {
+        return orderDao.getUserShoppingCarts(username);
     }
     
 }

@@ -53,17 +53,25 @@ $(document).ready(function(){
             $(':input[type="submit"]').prop('disabled', true);			            
         }
     });
+
+    $("#inputPassword").click(function(){
+        $("#passwordAlertMessage").show();        
+    });
+
+
     $("#inputPassword").keyup(function(){
-        if($(this).val()!=="" && $(this).val().trim()!==""){
+        if(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test($(this).val()) && $(this).val().trim()!==""){
             $(this).css("border-color", "#00E640");
+            $("#passwordAlertMessage").hide();        
         } else {
             $(this).css("border-color", "red");
             $(':input[type="submit"]').prop('disabled', true);			           
         }
     });
     $("#inputPassword").blur(function(){
-        if($(this).val()!=="" && $(this).val().trim()!==""){
+        if(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test($(this).val()) && $(this).val().trim()!==""){
             $(this).css("border-color", "#00E640");
+            $("#passwordAlertMessage").hide();        
         } else {
             $(this).css("border-color", "red");
             $(':input[type="submit"]').prop('disabled', true);			            

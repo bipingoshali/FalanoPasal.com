@@ -47,17 +47,6 @@ public class SessionDAOImpl implements SessionDAO{
         return user;
     }
 
-//    @Override
-//    public User getDataFromCookieValue(String username) throws SQLException, ClassNotFoundException {
-//        List<User> fetchDataFromCookieValue = jdbcTemplate.query(SQLConstant.User.GET_BY_USERNAME, new Object[]{username}, new RowMapper<User>() {
-//            @Override
-//            public User mapRow(ResultSet rs, int i) throws SQLException {
-//                return mapData(rs);
-//            }
-//        });
-//        return fetchDataFromCookieValue.size() > 0 ? fetchDataFromCookieValue.get(0):null;
-//    }
-
 
     @Override
     public User rememberMe(String token) throws SQLException, ClassNotFoundException {

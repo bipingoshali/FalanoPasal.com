@@ -13,7 +13,6 @@
 </div>
 <!--row-->
 
-
 <div class="row container">
     <div class="row">
         <!--left category-->
@@ -49,5 +48,16 @@
     </div>
 </div>
 
+<!-- Footer -->
+
+<footer>
+    <div class="row">
+        <div class="col-lg-12">
+            <hr>
+            <p>Copyright &copy; FalanoPasal.com 2018</p>
+        </div>
+    </div>
+    <!-- /.row -->
+</footer>                
 
 <%@include file="userShared/footer.jsp" %>

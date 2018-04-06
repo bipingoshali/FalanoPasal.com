@@ -25,9 +25,6 @@ public interface UserDAO {
     //get user details by username
     User getByUsername(User user) throws SQLException, ClassNotFoundException;
     
-    //update email token
-    void updateEmailToken(String token,String username) throws SQLException, ClassNotFoundException;
-    
     //update user status
     User getByUserId(User user) throws SQLException, ClassNotFoundException;
     void updateUserStatus(int userId) throws SQLException,ClassNotFoundException;  

@@ -1,5 +1,10 @@
 <%@include file="adminShared/header.jsp" %>
-<h1 class="page-header">Product Edit</h1>
+<h1 class="page-header">
+    Product Edit
+    <div class="pull-right">
+        <a class="btn btn-danger" href="${SITE_URL}/admin/product">Back</a>
+    </div>
+</h1>
 
 <!--Edit product details only-->
 <div class="col-md-6">
@@ -25,7 +30,6 @@
         <div class="form-group">
             <button type="submit" class="btn btn-success" title="Edit">Edit</button>
             <button type="reset" class="btn btn-warning" title="Reset">Reset</button>
-            <a href="${SITE_URL}/admin/product" class="btn btn-danger" title="Back">Back</a>
         </div>
     </form:form>
 </div>
@@ -62,7 +66,6 @@
                 <div class="col-sm-4"></div>
                 <div class="col-sm-6">
                     <button class="btn btn-success" title="Add" type="submit">Add</button>
-                    <a href="${SITE_URL}/admin/product" class="btn btn-danger" title="Back">Back</a>
                 </div>
             </div>
         </div>
@@ -73,8 +76,8 @@
     <!--edit product categoryId only-->
     <div class="row">
         <h4>Update Product Category Type</h4>
-        <spring:url value="/admin/productCategoryTypeEditSave" var="productCategoryTypeEditSaveURL" />            
-        <form:form class="form-horizontal" method="post" action="${productCategoryTypeEditSaveURL}" modelAttribute="product">
+        <spring:url value="/admin/productCategoryIdEditSave" var="productCategoryIdEditSaveURL" />            
+        <form:form class="form-horizontal" method="post" action="${productCategoryIdEditSaveURL}" modelAttribute="product">
             <form:hidden path="productId"/>        
             <div class="form-group form-group">
                 <div class="row" style="margin-top:15px;margin-bottom:15px;">
@@ -103,7 +106,6 @@
                     <div class="col-sm-4"></div>
                     <div class="col-sm-6">
                         <button class="btn btn-success" title="Update" type="submit">Update</button>
-                        <a href="${SITE_URL}/admin/product" class="btn btn-danger" title="Back">Back</a>
                     </div>
                 </div>
             </div>

@@ -44,4 +44,19 @@ public class CategoryDAOImpl implements CategoryDAO {
         return category;
     }
 
+    @Override
+    public void insertCategory(Category category) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.Category.INSERT_CATEGORY, new Object[]{category.getCategoryName()});                
+    }
+
+    @Override
+    public List<Category> getCategoryById(int categoryId) throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.Category.GET_ALL_CATEGORY_BY_ID, new Object[]{categoryId},new RowMapper<Category>() {
+            @Override
+            public Category mapRow(ResultSet rs, int i) throws SQLException {
+                return mapCategoryData(rs);
+            }
+        });
+    }
+
 }

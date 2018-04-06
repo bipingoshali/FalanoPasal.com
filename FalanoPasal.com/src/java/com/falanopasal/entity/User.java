@@ -6,7 +6,6 @@
 package com.falanopasal.entity;
 
 import java.util.Date;
-
 /**
  *
  * @author bipin
@@ -17,14 +16,14 @@ public class User {
     private String firstName,lastName,email,username,password,city,addressLine1,addressLine2,phoneNo,birthdate;
     private int houseNo,roleId;
     private boolean status=false; //setting the default value
-    private Date birthdateformat;
+    private Date birthdateformat,enrollDate;
     private String emailToken; //carries email token
     private String sessionValue; //caries session value
 
     public User() {
     }
 
-    public User(int userId, String firstName, String lastName, String email, String username, String password, String city, String addressLine1, String addressLine2, String phoneNo, String birthdate, int houseNo, int roleId, Date birthdateformat, String emailToken, String sessionValue ) {
+    public User(int userId, String firstName, String lastName, String email, String username, String password, String city, String addressLine1, String addressLine2, String phoneNo, String birthdate, int houseNo, int roleId, Date birthdateformat, Date enrollDate, String emailToken, String sessionValue) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -39,9 +38,19 @@ public class User {
         this.houseNo = houseNo;
         this.roleId = roleId;
         this.birthdateformat = birthdateformat;
+        this.enrollDate = enrollDate;
         this.emailToken = emailToken;
         this.sessionValue = sessionValue;
     }
+
+    public Date getEnrollDate() {
+        return enrollDate;
+    }
+
+    public void setEnrollDate(Date enrollDate) {
+        this.enrollDate = enrollDate;
+    }
+
     
     public String getSessionValue() {
         return sessionValue;

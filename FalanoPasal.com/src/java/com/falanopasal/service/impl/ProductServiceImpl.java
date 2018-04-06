@@ -37,5 +37,30 @@ public class ProductServiceImpl implements ProductService{
     public List<Product> getProductByCategoryId(int categoryId) throws SQLException, ClassNotFoundException {
         return productDao.getProductByCategoryId(categoryId);
     }
+
+    @Override
+    public void insertProduct(Product product) throws SQLException, ClassNotFoundException {
+        productDao.insertProduct(product);
+    }
+
+    @Override
+    public void editProduct(Product product) throws SQLException, ClassNotFoundException {
+        productDao.editProduct(product);
+    }
+
+    @Override
+    public void updateProductStock(Product product) throws SQLException, ClassNotFoundException {
+        productDao.updateProductStock(product);
+    }
+
+    @Override
+    public void updateProductCategoryId(Product product) throws SQLException, ClassNotFoundException {
+        productDao.updateProductCategoryId(product);
+    }
+
+    @Override
+    public void deleteProduct(int productId) throws SQLException, ClassNotFoundException {
+        productDao.deleteProduct(productId);
+    }
     
 }

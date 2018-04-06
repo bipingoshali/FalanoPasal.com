@@ -27,5 +27,15 @@ public class CategoryServiceImpl implements CategoryService{
     public List<Category> getCategory() throws SQLException, ClassNotFoundException {
         return categoryDao.getCategory();
     }
+
+    @Override
+    public void insertCategory(Category category) throws SQLException, ClassNotFoundException {
+        categoryDao.insertCategory(category);
+    }
+
+    @Override
+    public List<Category> getCategoryById(int categoryId) throws SQLException, ClassNotFoundException {
+        return categoryDao.getCategoryById(categoryId);
+    }
     
 }

@@ -15,9 +15,12 @@ import java.util.List;
  * @author bipin
  */
 public interface OrderDAO {
-    void registerUserShoppingCart(String cartId,int userId) throws SQLException,ClassNotFoundException;
-    void registerUserShoppingCartItem(ShoppingCart shoppingCart,List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) throws SQLException,ClassNotFoundException;
-    List<ShoppingCartHandlerEntry> order(List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries);
+    //register user shopping cart
+    void registerUserShoppingCart(ShoppingCart shoppingCart) throws SQLException,ClassNotFoundException;
     
-    List<ShoppingCartHandlerEntry> getUserShoppingCarts() throws SQLException,ClassNotFoundException;
+    //add products in user shopping cart
+    void registerUserShoppingCartItem(ShoppingCart shoppingCart,List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) throws SQLException,ClassNotFoundException;
+        
+    //get order history
+    List<ShoppingCartHandlerEntry> getUserShoppingCarts(String username) throws SQLException,ClassNotFoundException;
 }

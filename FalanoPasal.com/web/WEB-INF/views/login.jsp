@@ -16,16 +16,17 @@
     <body style="background-color: #f9f9f9;">
 
         <div class="container" style="padding-top: 15px;">
-        <h1 style="text-align: center;margin: 40px 0px 30px 0px;">Sign in to FalanoPasal</h1>
+            <h1 style="text-align: center;margin: 40px 0px 30px 0px;">Sign in to FalanoPasal</h1>
 
             <!-- Login form message -->
             <h3 style="text-align: center;"><c:out value="${message}"></c:out></h3>
-            
+
+                <!--form panel-->
                 <div class="panel panel-primary" style="width:400px;margin:0px auto;padding:10px;">
                     <div class="panel-heading">Login</div>
                     <div class="panel-body">
-                        <spring:url value="/checkLogin" var="loginURL" />            
-                        <form:form method="post" action="${loginURL}" modelAttribute="login">
+                    <spring:url value="/checkLogin" var="loginURL" />            
+                    <form:form method="post" action="${loginURL}" modelAttribute="login">
                         <div class="form-group">
                             <label class="control-label" for="inputUsername">Username</label>
                             <form:input class="form-control" path="username" id="inputUsername" placeholder="Username"  type="text" required="required" />                            
@@ -52,9 +53,10 @@
                         <div>
                             <p>New to FalanoPasal? <a href="${SITE_URL}/register">Create an account</a>.</p>
                         </div>
-                        </form:form>
+                    </form:form>
                 </div>
             </div>
+            <!--end of login panel-->
         </div>
     </body>
 </html>

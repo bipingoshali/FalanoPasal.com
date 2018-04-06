@@ -30,20 +30,13 @@ public class OrderDAOImpl implements OrderDAO{
     private JdbcTemplate jdbcTemplate;
         
     @Override
-    public List<ShoppingCartHandlerEntry> order(List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) {
-        jdbcTemplate.update(SQLConstant.ShoppingCarts.REGISTER_USER_SHOPPING_CART, new Object[]{2});
-        return null;
-    }
-
-    @Override
-    public void registerUserShoppingCart(String cartId,int userId) throws SQLException, ClassNotFoundException {
-        jdbcTemplate.update(SQLConstant.ShoppingCarts.REGISTER_USER_SHOPPING_CART, new Object[]{cartId,userId});
+    public void registerUserShoppingCart(ShoppingCart shoppingCart) throws SQLException, ClassNotFoundException {        
+        jdbcTemplate.update(SQLConstant.ShoppingCarts.REGISTER_USER_SHOPPING_CART, new Object[]{shoppingCart.getCartId(),shoppingCart.getUsername(),shoppingCart.getPurchasedDate()});
     }
 
     @Override
     public void registerUserShoppingCartItem(ShoppingCart shoppingCart,List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) throws SQLException, ClassNotFoundException {
         for(int i=0;i<shoppingCartHandlerEntries.size();i++){
-            shoppingCartHandlerEntries.get(i).getProductId();
             jdbcTemplate.update(SQLConstant.ShoppingCarts.REGISTER_USER_SHOPPING_CART_ITEM,
                     new Object[]{shoppingCart.getCartId(),
                                  shoppingCartHandlerEntries.get(i).getProductId(),
@@ -55,8 +48,8 @@ public class OrderDAOImpl implements OrderDAO{
     }
 
     @Override
-    public List<ShoppingCartHandlerEntry> getUserShoppingCarts() throws SQLException,ClassNotFoundException {
-        return jdbcTemplate.query(SQLConstant.OrderHistory.GET_USER_ORDER_HISTORY, new RowMapper<ShoppingCartHandlerEntry>() {
+    public List<ShoppingCartHandlerEntry> getUserShoppingCarts(String username) throws SQLException,ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.OrderHistory.GET_USER_ORDER_HISTORY, new String[]{username}, new RowMapper<ShoppingCartHandlerEntry>() {
             @Override
             public ShoppingCartHandlerEntry mapRow(ResultSet rs, int i) throws SQLException {
                 return mapShoppingCartHandlerEntryData(rs);
