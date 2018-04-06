@@ -15,7 +15,7 @@
                 url: 'addToCart',
                 data: {
                     'productId': productId,
-                    'quantity':quantity
+                    'quantity': quantity
                 }
             });
 
@@ -26,6 +26,10 @@
         $("#ok-modal-button").click(function () {
             // refresh quantity input
             $("#quantity-input").val('');
+        });
+        
+        $("#rate-input").keyup(function(){
+            
         });
     });
 </script>
@@ -51,12 +55,12 @@
 
 <div class="row">
     <div class="row" style="background-color: white;padding: 30px;">
-        
+
         <!--product image-->
         <div class="col-md-4" style="background-color: white;">
             <center><img src="<c:url value="/static/images/${product.categoryId}${product.productId}.png"/>" alt="image" class="image"/></center>
         </div>
-        
+
         <!--products add basket-->
         <div class="col-md-8" style="background-color: white; padding: 0px 30px 0px 150px;">
             <div class="row" style="margin-bottom: 20px;">
@@ -73,7 +77,8 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">Quantity</div>
-                                <input id="quantity-input" type="number" class="form-control"  aria-describedby="quantity-input">                            </div>
+                                <input id="quantity-input" type="number" class="form-control"  aria-describedby="quantity-input">  
+                            </div>
                         </div>
                         <div class="col-lg-3 col-md-3">
                             <!--if the product is out of stock then the add to basket will be disabled-->
@@ -130,29 +135,62 @@
                 </div>    
             </div>
 
-            <!--product description-->               
-            <div class="row">                
-                <div class="col-md-12">
-                    <strong>Product Description</strong><br/>
-                    <style>
-                        #rcorners2 {
-                            margin-top: 5px;
-                            border-radius: 5px;
-                            border: 1px solid #eee;
-                            background-color: #eee;
-                            padding: 10px; 
-                            width: auto;
-                            height: auto;    
-                        }
-                    </style>
-                    <p id="rcorners2">${product.description}</p>
-                </div>
-            </div>
 
+        </div>                
+        <!--end of product basket-->
+
+        <div class="row"> 
+            <div class="col-lg-1"></div>
+
+            <!--product description-->                           
+            <div class="col-lg-10">
+                <strong>Product Description</strong><br/>
+                <style>
+                    .rcorners2 {
+                        margin-top: 5px;
+                        border-radius: 5px;
+                        border: 1px solid #eee;
+                        background-color: #eee;
+                        padding: 10px; 
+                        width: auto;
+                        height: auto;    
+                    }
+                </style>
+                <p class="rcorners2">${product.description}</p>
+                <!--end of product description-->
+                
+                <!--rate product-->
+                <strong>Rate this product</strong><br/>                
+                <div class="row" style="margin-bottom: 10px;">
+                    <div class="col-lg-3">
+                        <div class="input-group">
+                            <div class="input-group-addon">Rate (1-5)</div>
+                            <input id="rate-input" type="number" class="form-control" aria-describedby="rate-input">  
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <a href="products" type="button" class="btn btn-success" >Rate</a>                                            
+                    </div>
+                </div>
+                <!--end of rate product-->
+                
+                <!--comment product-->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <strong>Comment this product</strong><br/> 
+                        <input type="text" class="form-control"/>
+                    </div>
+                    <div class="col-lg-1">
+                        <input type="submit" value="Submit" class="btn btn-success"/>                        
+                    </div>
+                </div>
+                <!--end of comment product-->
+
+            </div>
         </div>
     </div>
 </div>
-                    
+
 <!-- Footer -->
 
 <footer>
@@ -164,5 +202,5 @@
     </div>
     <!-- /.row -->
 </footer>                
-                    
+
 <%@include file="userShared/footer.jsp" %>
