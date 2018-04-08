@@ -110,6 +110,12 @@ public class ProductDAOImpl implements ProductDAO{
     public void deleteProduct(int productId) throws SQLException, ClassNotFoundException {
         jdbcTemplate.update(SQLConstant.Product.DELETE_PRODUCT, new Object[]{productId});
     }
+
+    @Override
+    public void rateProduct(Product product) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.productRating.RATE_PRODUCT, new Object[]{product.getUsername(),product.getProductId(),product.getProductRating()});
+    }
+
     
 
 

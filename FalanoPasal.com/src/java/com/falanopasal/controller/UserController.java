@@ -58,6 +58,7 @@ public class UserController {
     private User user; //to set session values (username)
     private User fetchSessionData; //fetch user values
     private ShoppingCart shoppingCart; //to register shopping cart
+    private Product product; //to know which user has rate a product
     
     /*
     it opens the registered user home page
@@ -139,14 +140,19 @@ public class UserController {
         }
         return new ModelAndView("redirect:/login");
     }
-        
+            
     
     /*
     it adds the products in shopping cart
     */
     @RequestMapping(value="/user/productDetail/addToCart")
-    public @ResponseBody void addToCart(@RequestParam(value="productId") int productId,@RequestParam(value="quantity") int quantity){
+    public @ResponseBody String addToCart(@RequestParam(value="productId") int productId,@RequestParam(value="quantity") int quantity) throws SQLException, ClassNotFoundException{
+        Product product = productService.getProductByProductId(productId);
+        if(quantity>product.getStockValue()){
+            return "Not enough stock";            
+        }
         shoppingCartMap.addItem(productId, quantity);
+        return null;
     }
     
     /*
@@ -254,4 +260,17 @@ public class UserController {
         
     }
     
+    /*
+    rate product    
+    */
+    @RequestMapping("/user/productDetail/rateProduct")
+    public @ResponseBody void rateProduct(@RequestParam("productId") int productId,@RequestParam("rating") int rating) throws SQLException, ClassNotFoundException{
+        sessionManager = new SessionManager();        
+        product = new Product();        
+        product.setProductId(productId);
+        product.setProductRating(rating);
+        product.setUsername(sessionManager.getAttr("username").toString());
+        productService.rateProduct(product);
+    }
+        
 }

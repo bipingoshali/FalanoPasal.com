@@ -16,4 +16,5 @@ public class TableConstant {
     public final static String CATEGORY_TABLE = "category";
     public final static String SHOPPING_CARTS_TABLE = "shoppingcarts";
     public final static String SHOPPING_CART_ITEM_TABLE = "shoppingcartitem";
+    public final static String PRODUCT_RATING_TABLE = "rating";
 }

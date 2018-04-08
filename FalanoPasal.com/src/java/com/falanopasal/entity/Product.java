@@ -15,6 +15,8 @@ public class Product {
     private int categoryId,productId,stockValue,updatedStockValue;
     private String productName,description;
     private float productPrice,calorieValue;
+    private int productRating;
+    private String username; //to find which user is rating a product
     private Category category;
     
     private MultipartFile productImage;
@@ -22,7 +24,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(int categoryId, int productId, int stockValue, int updatedStockValue, String productName, String description, float productPrice, float calorieValue, Category category, MultipartFile productImage) {
+    public Product(int categoryId, int productId, int stockValue, int updatedStockValue, String productName, String description, float productPrice, float calorieValue, int productRating, String username, Category category, MultipartFile productImage) {
         this.categoryId = categoryId;
         this.productId = productId;
         this.stockValue = stockValue;
@@ -31,9 +33,29 @@ public class Product {
         this.description = description;
         this.productPrice = productPrice;
         this.calorieValue = calorieValue;
+        this.productRating = productRating;
+        this.username = username;
         this.category = category;
         this.productImage = productImage;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+
+    public int getProductRating() {
+        return productRating;
+    }
+
+    public void setProductRating(int productRating) {
+        this.productRating = productRating;
+    }
+
 
     public MultipartFile getProductImage() {
         return productImage;

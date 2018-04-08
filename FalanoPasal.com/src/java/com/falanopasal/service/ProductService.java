@@ -38,4 +38,8 @@ public interface ProductService {
     //delete product
     void deleteProduct(int productId) throws SQLException,ClassNotFoundException;
     
+    //rate product
+    void rateProduct(Product product) throws SQLException,ClassNotFoundException;
+    
+    
 }

@@ -62,5 +62,10 @@ public class ProductServiceImpl implements ProductService{
     public void deleteProduct(int productId) throws SQLException, ClassNotFoundException {
         productDao.deleteProduct(productId);
     }
+
+    @Override
+    public void rateProduct(Product product) throws SQLException, ClassNotFoundException {
+        productDao.rateProduct(product);
+    }
     
 }

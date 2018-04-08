@@ -36,9 +36,9 @@ public interface ProductDAO {
     void updateProductCategoryId(Product product) throws SQLException,ClassNotFoundException;
     
     //delete product
-    void deleteProduct(int productId) throws SQLException,ClassNotFoundException;
+    void deleteProduct(int productId) throws SQLException,ClassNotFoundException;            
     
-    
-    
+    //rate product
+    void rateProduct(Product product) throws SQLException,ClassNotFoundException;
     
 }

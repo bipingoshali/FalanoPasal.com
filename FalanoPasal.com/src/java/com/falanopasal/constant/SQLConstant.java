@@ -108,4 +108,9 @@ public class SQLConstant {
         public final static String GET_USER_ORDER_HISTORY = "SELECT * FROM shoppingcarts sc,shoppingcartitem sci where sc.cartId=sci.cartId and sc.username=?";
     }
     
+    public class productRating{
+        public final static String RATE_PRODUCT = "INSERT INTO " + TableConstant.PRODUCT_RATING_TABLE +
+                " VALUES(?,?,?)";
+    }
+    
 }

@@ -16,21 +16,52 @@
                 data: {
                     'productId': productId,
                     'quantity': quantity
+                },
+                success: function(data){
+                    $("#quantityAlertMessage").html(data);                     
                 }
             });
-
+            
             var msg = quantity + ' items added to your cart.';
-            $("#modal-body-msg").text(msg);
-        });
+            $("#modal-body-msg").text(msg);                    
 
+        });
+                
         $("#ok-modal-button").click(function () {
             // refresh quantity input
             $("#quantity-input").val('');
         });
         
         $("#rate-input").keyup(function(){
-            
+            var rate = $(this).val();
+            if(rate>5){
+                $("#rateResponse").show();
+                $("#rateResponse").html("Invalid rate input");
+            }else{
+                $("#rateResponse").hide();                
+            }            
         });
+        
+        $("#rate_btn").click(function(){
+            var rateInput = $("#rate-input").val();
+            var productId = $(this).attr('data-product-id');
+            if(rateInput===""){
+                $("#rateResponse").show();
+                $("#rateResponse").html("Input field is null");                
+            }else{
+                $("#rateResponse").hide();
+                $("#rate-input").val('');
+            }
+            $.ajax({
+                url: 'rateProduct',                
+                data: {
+                    'productId': productId,
+                    'rating': rateInput
+                }
+                });                
+            });
+        
+        
     });
 </script>
 
@@ -77,7 +108,7 @@
                         <div class="col-lg-6 col-md-6">
                             <div class="input-group">
                                 <div class="input-group-addon">Quantity</div>
-                                <input id="quantity-input" type="number" class="form-control"  aria-describedby="quantity-input">  
+                                <input id="quantity-input" type="number" class="form-control"  aria-describedby="quantity-input">                                  
                             </div>
                         </div>
                         <div class="col-lg-3 col-md-3">
@@ -88,6 +119,9 @@
                             <c:if test="${empty message}">
                                 <button id="add-to-basket-btn" data-product-id="${product.productId}" type="button" class="btn btn-primary" data-toggle="modal" data-target="#success-modal">Add to Basket</button>
                             </c:if>
+                        </div>
+                        <div class="col-lg-3 col-md-3">
+                            <div id="quantityAlertMessage" style="color: red;" ></div> <!--not enough quantity message-->
                         </div>
                     </div>
                 </div>    
@@ -168,12 +202,16 @@
                             <input id="rate-input" type="number" class="form-control" aria-describedby="rate-input">  
                         </div>
                     </div>
+                    <div class="col-lg-1">
+                        <button id="rate_btn" data-product-id="${product.productId}" type="button" class="btn btn-success">Rate</button>                        
+                    </div>
                     <div class="col-lg-3">
-                        <a href="products" type="button" class="btn btn-success" >Rate</a>                                            
+                        <div id="rateResponse" class="alert alert-danger" role="alert" hidden="hidden">
+                        </div>                        
                     </div>
                 </div>
                 <!--end of rate product-->
-                
+
                 <!--comment product-->
                 <div class="row">
                     <div class="col-lg-12">
