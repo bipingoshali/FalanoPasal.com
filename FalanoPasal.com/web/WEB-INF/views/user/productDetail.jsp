@@ -17,51 +17,113 @@
                     'productId': productId,
                     'quantity': quantity
                 },
-                success: function(data){
-                    $("#quantityAlertMessage").html(data);                     
+                success: function (data) {
+                    $("#quantityAlertMessage").html(data);
                 }
             });
-            
+
             var msg = quantity + ' items added to your cart.';
-            $("#modal-body-msg").text(msg);                    
+            $("#modal-body-msg").text(msg);
 
         });
-                
+
         $("#ok-modal-button").click(function () {
             // refresh quantity input
             $("#quantity-input").val('');
         });
-        
-        $("#rate-input").keyup(function(){
+
+        $("#rate-input").keyup(function () {
             var rate = $(this).val();
-            if(rate>5){
+            if (rate > 5) {
                 $("#rateResponse").show();
                 $("#rateResponse").html("Invalid rate input");
-            }else{
-                $("#rateResponse").hide();                
-            }            
+            } else {
+                $("#rateResponse").hide();
+            }
         });
-        
-        $("#rate_btn").click(function(){
+
+        $("#rate_btn").click(function () {
             var rateInput = $("#rate-input").val();
             var productId = $(this).attr('data-product-id');
-            if(rateInput===""){
+            if (rateInput === "") {
                 $("#rateResponse").show();
-                $("#rateResponse").html("Input field is null");                
-            }else{
+                $("#rateResponse").html("Input field is null");
+                return;
+            } else {
                 $("#rateResponse").hide();
                 $("#rate-input").val('');
             }
             $.ajax({
-                url: 'rateProduct',                
+                url: 'rateProduct',
                 data: {
                     'productId': productId,
                     'rating': rateInput
+                },
+                success: function (data) {
+                    if (data.success === true) { // if true (1)
+                        setTimeout(function () {// wait for 5 secs(2)
+                            location.reload(); // then reload the page.(3)
+                        }, 5000);
+                    }
                 }
-                });                
             });
+        });
+
+        $("#comment_btn").click(function () {
+            var commentInput = $("#comment_txt").val();
+            var productId = $(this).attr('data-product-id');
+
+            if (commentInput === "") {
+                $("#commentResponse").show();
+                $("#commentResponse").html("Input field is null");
+                return;
+
+            } else {
+                $("#commentResponse").hide();
+                $("#comment_txt").val('');
+            }
+            $.ajax({
+                url: 'commentProduct',
+                data: {
+                    'productId': productId,
+                    'comment': commentInput
+                },
+                success: function () {
+                    setTimeout(function () {// wait for 5 secs(2)
+                        location.reload(true); // then reload the page.(3)
+                    }, 500);
+                }
+            });
+        });
         
+        $("#subscribe_btn").click(function (){
+            var productId = $(this).attr('data-product-id');
+            var quantity = $("#inputSubscribeQuantity").val();
+            var duration = $("#subscriptionOption").val();
+            
+            if (quantity === "") {
+                $("#subscribeResponse").show();
+                $("#subscribeResponse").html("Quantity field is null");
+                return;
+
+            } else {
+                $("#subscribeResponse").hide();
+                $("#inputSubscribeQuantity").val('');
+            }
+           $.ajax({
+              url: 'subscribeproduct',
+              data: {
+                  'productId': productId,
+                  'duration': duration,
+                  'quantity': quantity
+              }
+           }); 
+        });
         
+      
+
+
+
     });
 </script>
 
@@ -192,7 +254,7 @@
                 </style>
                 <p class="rcorners2">${product.description}</p>
                 <!--end of product description-->
-                
+
                 <!--rate product-->
                 <strong>Rate this product</strong><br/>                
                 <div class="row" style="margin-bottom: 10px;">
@@ -214,16 +276,65 @@
 
                 <!--comment product-->
                 <div class="row">
-                    <div class="col-lg-12">
+                    <div class="col-lg-7">
                         <strong>Comment this product</strong><br/> 
-                        <input type="text" class="form-control"/>
+                        <textarea id="comment_txt" type="text" class="form-control"></textarea>
                     </div>
-                    <div class="col-lg-1">
-                        <input type="submit" value="Submit" class="btn btn-success"/>                        
+                    <div class="col-lg-2" style="margin-top:30px;">
+                        <button id="comment_btn" data-product-id="${product.productId}" type="button" class="btn btn-success">Comment</button>                        
+                    </div>
+                    <div class="col-lg-2" style="margin-top:15px;">
+                        <div id="commentResponse" class="alert alert-danger" role="alert" hidden="hidden">
+                        </div>                        
                     </div>
                 </div>
                 <!--end of comment product-->
 
+                <hr>
+
+                <!--subscribe this product-->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4><Strong>Subscribe this product</Strong></h4>
+                        <div class="col-lg-8">
+                            <form class="form-inline">
+                                <div class="form-group">
+                                    <label for="inputSubscribeQuantity">Quantity</label>
+                                    <input type="number" class="form-control" id="inputSubscribeQuantity" />
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label" for="subscriptionOption">Subscription Option</label>								
+                                    <select class="form-control" id="subscriptionOption">
+                                        <option value="Weekly">Weekly</option>
+                                        <option value="Monthly">Monthly</option>
+                                    </select>
+                                </div>
+                                <button id="subscribe_btn" data-product-id="${product.productId}" type="button" class="btn btn-primary" >Subscribe</button>                                
+                            </form>
+                        </div>
+                        <div class="col-lg-3">
+                            <div id="subscribeResponse" class="alert alert-danger" role="alert" hidden="hidden">
+                            </div>                        
+                        </div>
+                    </div>
+                </div>
+                <!--end of subscribe this product-->
+                <hr>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h4><strong>Comments</strong></h4>
+                        <c:forEach var="productCommentEntity" items="${productComment}">
+                            <div class="row">                            
+                                <div class="col-lg-2">
+                                    <h5><strong>${productCommentEntity.username}</strong></h5>
+                                </div>
+                                <div class="col-lg-8">
+                                    <p class="rcorners2">${productCommentEntity.productComment}</p>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

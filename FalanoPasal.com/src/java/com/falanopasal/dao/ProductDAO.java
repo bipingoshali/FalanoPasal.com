@@ -41,4 +41,14 @@ public interface ProductDAO {
     //rate product
     void rateProduct(Product product) throws SQLException,ClassNotFoundException;
     
+    //comment product
+    void commentProduct(Product product) throws SQLException,ClassNotFoundException;
+    
+    //get all comment 
+    List<Product> getAllProductCommentByProductId(int productId) throws SQLException,ClassNotFoundException;
+    
+    //subscribe product
+    void subscribeProduct(Product product) throws SQLException,ClassNotFoundException;
+    
+    
 }

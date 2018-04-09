@@ -5,6 +5,7 @@
  */
 package com.falanopasal.entity;
 
+import java.util.Date;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -16,6 +17,10 @@ public class Product {
     private String productName,description;
     private float productPrice,calorieValue;
     private int productRating;
+    private String productComment;
+    private String productSubscriptionDuration;
+    private Date productCommentDate,productSubscribeDate;
+    private int subscribeProductQuantity;
     private String username; //to find which user is rating a product
     private Category category;
     
@@ -24,7 +29,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(int categoryId, int productId, int stockValue, int updatedStockValue, String productName, String description, float productPrice, float calorieValue, int productRating, String username, Category category, MultipartFile productImage) {
+    public Product(int categoryId, int productId, int stockValue, int updatedStockValue, String productName, String description, float productPrice, float calorieValue, int productRating, String productComment, String productSubscriptionDuration, Date productCommentDate, Date productSubscribeDate, int subscribeProductQuantity, String username, Category category, MultipartFile productImage) {
         this.categoryId = categoryId;
         this.productId = productId;
         this.stockValue = stockValue;
@@ -34,10 +39,64 @@ public class Product {
         this.productPrice = productPrice;
         this.calorieValue = calorieValue;
         this.productRating = productRating;
+        this.productComment = productComment;
+        this.productSubscriptionDuration = productSubscriptionDuration;
+        this.productCommentDate = productCommentDate;
+        this.productSubscribeDate = productSubscribeDate;
+        this.subscribeProductQuantity = subscribeProductQuantity;
         this.username = username;
         this.category = category;
         this.productImage = productImage;
     }
+
+    public int getSubscribeProductQuantity() {
+        return subscribeProductQuantity;
+    }
+
+    public void setSubscribeProductQuantity(int subscribeProductQuantity) {
+        this.subscribeProductQuantity = subscribeProductQuantity;
+    }
+
+
+    public String getProductSubscriptionDuration() {
+        return productSubscriptionDuration;
+    }
+
+    public void setProductSubscriptionDuration(String productSubscriptionDuration) {
+        this.productSubscriptionDuration = productSubscriptionDuration;
+    }
+
+
+    public Date getProductSubscribeDate() {
+        return productSubscribeDate;
+    }
+
+    public void setProductSubscribeDate(Date productSubscribeDate) {
+        this.productSubscribeDate = productSubscribeDate;
+    }
+
+
+
+    public Date getProductCommentDate() {
+        return productCommentDate;
+    }
+
+    public void setProductCommentDate(Date productCommentDate) {
+        this.productCommentDate = productCommentDate;
+    }
+
+
+    
+
+    public String getProductComment() {
+        return productComment;
+    }
+
+    public void setProductComment(String productComment) {
+        this.productComment = productComment;
+    }
+
+    
 
     public String getUsername() {
         return username;

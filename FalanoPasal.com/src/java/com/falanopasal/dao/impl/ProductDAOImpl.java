@@ -39,7 +39,7 @@ public class ProductDAOImpl implements ProductDAO{
     
     private Category getCategoryName(int categoryId){
         String categoryName="";
-        categoryName = jdbcTemplate.queryForObject(SQLConstant.Product.GET_CATEGORY_BY_ID, new Object[]{categoryId}, String.class);
+        categoryName = jdbcTemplate.queryForObject(SQLConstant.Category.GET_CATEGORY_NAME_BY_ID, new Object[]{categoryId}, String.class);
         return new Category(categoryId, categoryName);
     }
     
@@ -113,10 +113,46 @@ public class ProductDAOImpl implements ProductDAO{
 
     @Override
     public void rateProduct(Product product) throws SQLException, ClassNotFoundException {
-        jdbcTemplate.update(SQLConstant.productRating.RATE_PRODUCT, new Object[]{product.getUsername(),product.getProductId(),product.getProductRating()});
+        jdbcTemplate.update(SQLConstant.ProductRatingCommenting.RATE_PRODUCT, new Object[]{product.getUsername(),product.getProductId(),product.getProductRating()});
     }
 
+    @Override
+    public void commentProduct(Product product) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.ProductRatingCommenting.COMMENT_PRODUCT, new Object[]{product.getUsername(),product.getProductId(),product.getProductComment(),product.getProductComment()});
+    }
+
+    @Override
+    public List<Product> getAllProductCommentByProductId(int productId) throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.ProductRatingCommenting.GET_ALL_COMMENT_BY_PRODUCTID, new Integer[]{productId}, new RowMapper<Product>() {
+            @Override
+            public Product mapRow(ResultSet rs, int i) throws SQLException {
+                return mapProductComment(rs);
+            }
+        });
+    }
     
+    private Product mapProductComment(ResultSet rs) throws SQLException{
+        Product product = new Product();
+        product.setUsername(rs.getString("username"));
+        product.setProductName(this.getProductName(rs.getInt("productId")));
+        product.setProductComment(rs.getString("comment"));
+        return product;
+    }
+
+    private String getProductName(int productId){
+        String productName="";
+        productName = jdbcTemplate.queryForObject(SQLConstant.Product.GET_PRODUCT_NAME_BY_ID, new Object[]{productId}, String.class);
+        return productName;
+    }    
+
+    @Override
+    public void subscribeProduct(Product product) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.SubscribeProduct.SUBSCRIBE_PRODUCT, new Object[]{product.getUsername(),
+                                                product.getProductId(),
+                                                product.getProductSubscriptionDuration(),
+                                                product.getProductSubscribeDate()});
+    }
+
 
 
 }

@@ -58,14 +58,17 @@ public class SQLConstant {
         public final static String GET_ALL_CATEGORY_BY_ID = "SELECT * FROM " + TableConstant.CATEGORY_TABLE
                 + " where categoryId=?";
         
+        public final static String GET_CATEGORY_NAME_BY_ID = "SELECT categoryName from " + TableConstant.CATEGORY_TABLE
+                + " where categoryId=?";
+
     }
     
     public class Product{
         
         public final static String GET_PRODUCT = "SELECT * FROM " + TableConstant.PRODUCT_TABLE;
-        
-        public final static String GET_CATEGORY_BY_ID = "SELECT categoryName from " + TableConstant.CATEGORY_TABLE
-                + " where categoryId=?";
+
+        public final static String GET_PRODUCT_NAME_BY_ID = "SELECT productName FROM " + TableConstant.PRODUCT_TABLE + 
+                " where productId=?";
         
         public final static String GET_PRODUCT_BY_CATEGORYID = "Select * from "
                 +TableConstant.PRODUCT_TABLE+
@@ -108,9 +111,26 @@ public class SQLConstant {
         public final static String GET_USER_ORDER_HISTORY = "SELECT * FROM shoppingcarts sc,shoppingcartitem sci where sc.cartId=sci.cartId and sc.username=?";
     }
     
-    public class productRating{
+    public class ProductRatingCommenting{
         public final static String RATE_PRODUCT = "INSERT INTO " + TableConstant.PRODUCT_RATING_TABLE +
-                " VALUES(?,?,?)";
+                " (username,productId,rating) VALUES(?,?,?)";
+        
+        public final static String COMMENT_PRODUCT = "INSERT INTO " + TableConstant.PRODUCT_COMMENTING_TABLE +
+                " (username,productId,comment,date) VALUES(?,?,?,?)";
+        
+        public final static String GET_ALL_COMMENT_BY_PRODUCTID = "SELECT * FROM " + TableConstant.PRODUCT_COMMENTING_TABLE
+                + " WHERE productId=?";
+        
+        public final static String GET_COMMENT_BY_USERNAME = "SELECT * FROM " + TableConstant.PRODUCT_COMMENTING_TABLE +
+                " WHERE username=?";
+        
+        public final static String CHECK_USER_COMMENT = "SELECT * FROM " + TableConstant.PRODUCT_COMMENTING_TABLE +
+                " WHERE username=? and productId=?";
+    }
+    
+    public class SubscribeProduct{
+        public final static String SUBSCRIBE_PRODUCT = "INSERT INTO " + TableConstant.SUBSCRIBE_PRODUCT_TABLE +
+                " (username,productId,duration,date) values(?,?,?,?)";
     }
     
 }

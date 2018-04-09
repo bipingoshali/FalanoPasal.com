@@ -59,6 +59,7 @@ public class UserController {
     private User fetchSessionData; //fetch user values
     private ShoppingCart shoppingCart; //to register shopping cart
     private Product product; //to know which user has rate a product
+    private Product usernameProductComment; // current user comment is shown
     
     /*
     it opens the registered user home page
@@ -130,10 +131,13 @@ public class UserController {
             if(fetchSessionData.getRoleId()==1){
                 return new ModelAndView("redirect:/admin/home");
             }else{
-                Product product = productService.getProductByProductId(productId);
+                product = new Product();
+                product = productService.getProductByProductId(productId);
+                List<Product> productComment = productService.getAllProductCommentByProductId(productId);
                 if(product.getStockValue()==0){
                     userModel.addObject("message", "Out of stock");
                 }
+                userModel.addObject("productComment", productComment);
                 userModel.addObject("product", product);
                 return userModel;
             }           
@@ -271,6 +275,39 @@ public class UserController {
         product.setProductRating(rating);
         product.setUsername(sessionManager.getAttr("username").toString());
         productService.rateProduct(product);
+    }
+    
+    /*
+    comment product    
+    */
+    @RequestMapping("/user/productDetail/commentProduct")
+    public @ResponseBody void commentProduct(@RequestParam("productId") int productId,@RequestParam("comment") String comment) throws SQLException, ClassNotFoundException{
+        sessionManager = new SessionManager();
+        product = new Product();
+        product.setProductId(productId);
+        product.setProductComment(comment);
+        Date utilEnrollDate = new Date();
+        java.sql.Date sqlEnrollDate = new java.sql.Date(utilEnrollDate.getTime()); 
+        product.setProductCommentDate(sqlEnrollDate);
+        product.setUsername(sessionManager.getAttr("username").toString());        
+        productService.commentProduct(product);            
+    }
+    
+    /*
+    subscribe product
+    */
+    @RequestMapping("/user/productDetail/subscribeproduct")
+    public @ResponseBody void subscribeProduct(@RequestParam("productId") int productId,@RequestParam("quantity") int quantity,@RequestParam("duration") String duration) throws SQLException, ClassNotFoundException{
+        sessionManager = new SessionManager();
+        product = new Product();
+        product.setProductId(productId);
+        product.setSubscribeProductQuantity(quantity);
+        product.setUsername(sessionManager.getAttr("username").toString());
+        product.setProductSubscriptionDuration(duration);
+        Date utilEnrollDate = new Date();
+        java.sql.Date sqlEnrollDate = new java.sql.Date(utilEnrollDate.getTime()); 
+        product.setProductSubscribeDate(sqlEnrollDate);
+        productService.subscribeProduct(product);
     }
         
 }
