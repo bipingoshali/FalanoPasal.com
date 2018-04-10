@@ -48,6 +48,16 @@ public class OrderDAOImpl implements OrderDAO{
     }
 
     @Override
+    public void minusProductStock(List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) throws SQLException, ClassNotFoundException {
+        for(int i=0;i<shoppingCartHandlerEntries.size();i++){
+            jdbcTemplate.update(SQLConstant.Product.MINUS_PRODUCT_STOCK,
+                    new Object[]{shoppingCartHandlerEntries.get(i).getQuantity(),
+                                shoppingCartHandlerEntries.get(i).getProductId()});
+        }
+    }
+    
+
+    @Override
     public List<ShoppingCartHandlerEntry> getUserShoppingCarts(String username) throws SQLException,ClassNotFoundException {
         return jdbcTemplate.query(SQLConstant.OrderHistory.GET_USER_ORDER_HISTORY, new String[]{username}, new RowMapper<ShoppingCartHandlerEntry>() {
             @Override
@@ -65,6 +75,46 @@ public class OrderDAOImpl implements OrderDAO{
         s.setTotalCalorieValue(rs.getInt("productTotalCalorie"));
         return s;
     }
+
+    @Override
+    public List<ShoppingCart> getAllShoppingCart() throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.ShoppingCarts.GET_ALL_CART, new RowMapper<ShoppingCart>() {
+            @Override
+            public ShoppingCart mapRow(ResultSet rs, int i) throws SQLException {
+                return mapShoppingCartData(rs);
+            }
+        });
+    }
+
+    private ShoppingCart mapShoppingCartData(ResultSet rs) throws SQLException{
+        ShoppingCart shoppingCart = new ShoppingCart();
+        shoppingCart.setCartId(rs.getString("cartId"));
+        shoppingCart.setUsername(rs.getString("username"));
+        shoppingCart.setPurchased(rs.getBoolean("purchased"));
+        shoppingCart.setPurchasedDate(rs.getDate("purchasedDate"));
+        return shoppingCart;
+    }
+
+    @Override
+    public List<ShoppingCartHandlerEntry> getAllShoppingCartItemByCartId(String cartId) throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.ShoppingCarts.GET_ALL_CART_ITEM_BY_CARTID, new String[]{cartId}, new RowMapper<ShoppingCartHandlerEntry>() {
+            @Override
+            public ShoppingCartHandlerEntry mapRow(ResultSet rs, int i) throws SQLException {
+                return mapShoppingCartItemData(rs);
+            }
+        });
+    }
+    
+    private ShoppingCartHandlerEntry mapShoppingCartItemData(ResultSet rs) throws SQLException{
+        ShoppingCartHandlerEntry s = new ShoppingCartHandlerEntry();
+        s.setProductId(rs.getInt("productId"));
+        s.setQuantity(rs.getInt("productQuantity"));
+        s.setPrice(rs.getDouble("productPrice"));
+        s.setProductTotalPrice(rs.getDouble("productTotalPrice"));
+        s.setTotalCalorieValue(rs.getDouble("productTotalCalorie"));
+        return s;
+    }
+
 
         
 }

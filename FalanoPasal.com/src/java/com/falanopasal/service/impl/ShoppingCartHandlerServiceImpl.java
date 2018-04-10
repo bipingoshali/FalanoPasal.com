@@ -6,6 +6,7 @@
 package com.falanopasal.service.impl;
 
 import com.falanopasal.dao.ShoppingCartHandlerDAO;
+import com.falanopasal.entity.ShoppingCart;
 import com.falanopasal.entity.ShoppingCartHandlerEntry;
 import com.falanopasal.entity.ShoppingCartMap;
 import com.falanopasal.service.ShoppingCartHandlerService;
@@ -38,5 +39,6 @@ public class ShoppingCartHandlerServiceImpl implements ShoppingCartHandlerServic
     public double getTotalCalorie(List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) {
         return shoppingCartHandlerDao.getTotalCalorie(shoppingCartHandlerEntries);
     }
+
     
 }

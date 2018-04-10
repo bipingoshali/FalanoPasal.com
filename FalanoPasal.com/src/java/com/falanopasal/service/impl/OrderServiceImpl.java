@@ -38,5 +38,20 @@ public class OrderServiceImpl implements OrderService{
     public List<ShoppingCartHandlerEntry> getUserShoppingCarts(String username) throws SQLException, ClassNotFoundException {
         return orderDao.getUserShoppingCarts(username);
     }
+
+    @Override
+    public List<ShoppingCart> getAllShoppingCart() throws SQLException, ClassNotFoundException {
+        return orderDao.getAllShoppingCart();
+    }
+
+    @Override
+    public List<ShoppingCartHandlerEntry> getAllShoppingCartItemByCartId(String cartId) throws SQLException, ClassNotFoundException {
+            return orderDao.getAllShoppingCartItemByCartId(cartId);
+    }
+
+    @Override
+    public void minusProductStock(List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) throws SQLException, ClassNotFoundException {
+        orderDao.minusProductStock(shoppingCartHandlerEntries);
+    }
     
 }

@@ -71,7 +71,15 @@ public class UserDAOImpl implements UserDAO{
 
     public User mapData(ResultSet rs) throws SQLException{
         User user = new User();
-        
+        user.setFirstName(rs.getString("firstName"));
+        user.setLastName(rs.getString("lastName"));
+        user.setEmail(rs.getString("email"));
+        user.setUsername(rs.getString("username"));
+        user.setCity(rs.getString("city"));
+        user.setAddressLine1(rs.getString("addressLine1"));
+        user.setAddressLine2(rs.getString("addressLine2"));
+        user.setHouseNo(rs.getInt("houseNo"));
+        user.setBirthdateformat(rs.getTime("birthdate"));
         user.setUserId(rs.getInt("userId"));
         user.setEmailToken(rs.getString("emailToken"));
         user.setStatus(rs.getBoolean("status"));
@@ -106,6 +114,16 @@ public class UserDAOImpl implements UserDAO{
             }
         });
         return checkUsername.size() > 0 ? checkUsername.get(0):null;
+    }
+
+    @Override
+    public List<User> getAllCustomer() throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.User.GET_ALL_CUSTOMER, new RowMapper<User>() {
+            @Override
+            public User mapRow(ResultSet rs, int i) throws SQLException {
+                return mapData(rs);
+            }
+        });
     }
 
     

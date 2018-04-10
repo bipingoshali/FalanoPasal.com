@@ -9,6 +9,7 @@ import com.falanopasal.entity.Login;
 import com.falanopasal.entity.User;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.List;
 
 /**
  *
@@ -21,5 +22,6 @@ public interface UserService {
     User getByUserId(User user) throws SQLException, ClassNotFoundException;   
     void updateUserStatus(int userId) throws SQLException,ClassNotFoundException; 
     User usernameAuthentication(Login login) throws SQLException,ClassNotFoundException;
+    List<User> getAllCustomer() throws SQLException,ClassNotFoundException;
     
 }

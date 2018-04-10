@@ -5,6 +5,7 @@
  */
 package com.falanopasal.dao;
 
+import com.falanopasal.entity.ShoppingCart;
 import com.falanopasal.entity.ShoppingCartHandlerEntry;
 import com.falanopasal.entity.ShoppingCartMap;
 import java.sql.SQLException;
@@ -18,4 +19,5 @@ public interface ShoppingCartHandlerDAO {
     List<ShoppingCartHandlerEntry> getShoppingCartEntries(ShoppingCartMap shoppingCartMap) throws SQLException,ClassNotFoundException;
     double getTotalPrice(List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries);
     double getTotalCalorie(List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries);
+    
 }

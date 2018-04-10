@@ -9,6 +9,7 @@ import com.falanopasal.entity.Login;
 import com.falanopasal.entity.User;
 import java.sql.SQLException;
 import java.text.ParseException;
+import java.util.List;
 
 /**
  *
@@ -31,4 +32,7 @@ public interface UserDAO {
     
     //user authentication while login
     User usernameAuthentication(Login login) throws SQLException,ClassNotFoundException;
+    
+    //get all user
+    List<User> getAllCustomer() throws SQLException,ClassNotFoundException;
 }

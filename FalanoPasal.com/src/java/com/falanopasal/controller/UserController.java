@@ -159,6 +159,11 @@ public class UserController {
         return null;
     }
     
+    @RequestMapping(value="/user/clearCart")
+    public @ResponseBody void clearCart(){
+        shoppingCartMap.clearHashmap();
+    }
+    
     /*
     it displays the total products in shopping cart
     */
@@ -225,11 +230,15 @@ public class UserController {
                 shoppingCart.setPurchasedDate(sqlEnrollDate);
                 
                 /*
-                firstly, it registers shopping cart of the user
+                At first, it registers shopping cart of the user
                 and then, adds the products in that shopping cart id                
                 */                                
                 orderService.registerUserShoppingCart(shoppingCart);
                 orderService.registerUserShoppingCartItem(shoppingCart,shoppingCartHandlerEntries);
+                /*
+                it decrease the product stock amount
+                */
+                orderService.minusProductStock(shoppingCartHandlerEntries);
                 redirectAttributes.addFlashAttribute("orderMessage", "Congratulation! Your order will be forwarded as soon as you confirm your order confirmation.");
                 shoppingCartMap.clearHashmap(); //clearing hash map
                 return model;

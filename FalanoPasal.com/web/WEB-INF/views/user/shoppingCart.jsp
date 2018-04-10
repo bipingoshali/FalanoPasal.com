@@ -1,4 +1,19 @@
 <%@include file="userShared/header.jsp" %>
+<script>
+    $(document).ready(function () {
+       $("#clear_cart_btn").click(function (){
+           $.ajax({
+              url: 'clearCart',
+              success: function () {
+                    setTimeout(function () {// 
+                        location.reload(true); //  reload the page.
+                    }, 500);
+                }
+           });
+       }); 
+    });
+</script>
+
 <!--Page Heading-->
 <div class="row">
     <div class="col-lg-12">
@@ -27,10 +42,7 @@
                     <div class="row">
                         <div class="col-lg-12">
                             <center>
-                                <style>
-                                    img {width:150px;height: 150px;object-fit: cover;}
-                                </style>
-                                <div class="col-lg-2"><img src="<c:url value="/static/images/13.png"/>" alt="image" class="image"/></div>
+                                <div class="col-lg-1"></div>
                                 <div class="col-lg-2"><strong>${shoppingCartEntry.productName}</strong></div>
                                 <div class="col-lg-2"><strong>Price: £</strong> ${shoppingCartEntry.price}<br/><strong>Calorie Value:</strong> ${shoppingCartEntry.calorieValue} Kcal/g</div>
                                 <div class="col-lg-2"><strong>Quantity:</strong> ${shoppingCartEntry.quantity}</div>
@@ -66,6 +78,9 @@
                 <a href="${SITE_URL}/user/shoppingCartOrder" id="checkout-btn" type="button" class="btn btn-primary btn-md pull-right" onclick="return confirm('Are you sure to order?')" title="Order">Order</a>
                 </c:if>
             </div>            
+        </div>
+        <div class="col-lg-1">
+            <button id="clear_cart_btn" class="btn btn-danger" style="margin-top:25px;">Clear cart</button>
         </div>
     </div>
 </div>

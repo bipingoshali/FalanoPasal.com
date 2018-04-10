@@ -33,6 +33,8 @@ public class SQLConstant {
         
         public final static String UPDATE_USER_STATUS = "UPDATE " + TableConstant.USER_TABLE
                 + " set status=true where userId=?";
+        
+        public final static String GET_ALL_CUSTOMER = "SELECT * FROM " + TableConstant.USER_TABLE;
 
     }
 
@@ -93,6 +95,9 @@ public class SQLConstant {
         public final static String DELETE_PRODUCT = "DELETE FROM " + TableConstant.PRODUCT_TABLE +
                 " WHERE productId=?";
         
+        public final static String MINUS_PRODUCT_STOCK = "UPDATE " + TableConstant.PRODUCT_TABLE +
+                " SET stockAmount=stockAmount-? where productId=?";
+        
         
     }
     
@@ -103,7 +108,13 @@ public class SQLConstant {
         
         public final static String REGISTER_USER_SHOPPING_CART_ITEM = "INSERT INTO " + TableConstant.SHOPPING_CART_ITEM_TABLE +
                 " (cartId,productId,productQuantity,productPrice,productTotalPrice,productTotalCalorie) values(?,?,?,?,?,?)";
-               
+        
+        public final static String GET_ALL_CART = "SELECT * FROM " + TableConstant.SHOPPING_CARTS_TABLE +
+                " order by shoppingcarts.purchasedDate DESC";
+        
+        public final static String GET_ALL_CART_ITEM_BY_CARTID = "SELECT * FROM " + TableConstant.SHOPPING_CART_ITEM_TABLE +
+                " WHERE cartId=?";
+                       
     }
     
     public class OrderHistory{

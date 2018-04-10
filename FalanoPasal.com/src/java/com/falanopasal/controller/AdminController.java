@@ -7,10 +7,14 @@ package com.falanopasal.controller;
 
 import com.falanopasal.entity.Category;
 import com.falanopasal.entity.Product;
+import com.falanopasal.entity.ShoppingCart;
+import com.falanopasal.entity.ShoppingCartHandlerEntry;
 import com.falanopasal.entity.User;
 import com.falanopasal.service.CategoryService;
+import com.falanopasal.service.OrderService;
 import com.falanopasal.service.ProductService;
 import com.falanopasal.service.SessionService;
+import com.falanopasal.service.UserService;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -46,6 +50,12 @@ public class AdminController {
     
     @Autowired
     private ProductService productService;
+    
+    @Autowired
+    private UserService userService;
+    
+    @Autowired 
+    private OrderService orderService;
     
     private SessionManager sessionManager; //to manage session
     
@@ -103,7 +113,7 @@ public class AdminController {
     }
     
     /*
-    adds category
+    it adds category
     */
     @RequestMapping(value="/admin/addCategory", method=RequestMethod.POST)
     public ModelAndView adminCategoryInsert(@ModelAttribute("category") Category category) throws SQLException, ClassNotFoundException{
@@ -321,5 +331,34 @@ public class AdminController {
         return model;
     }
     
+    /*
+    it displays the total number of customer 
+    */
+    @RequestMapping("/admin/customer")
+    public ModelAndView adminCustomerList() throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("/admin/customer");
+        List<User> userList = userService.getAllCustomer();
+        model.addObject("userList", userList);
+        return model;
+    }
+    
+    /*
+    display order list
+    */
+    @RequestMapping("/admin/order")
+    public ModelAndView adminOrderList() throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("/admin/order");
+        List<ShoppingCart> shoppingCartList = orderService.getAllShoppingCart();
+        model.addObject("shoppingCartList", shoppingCartList);
+        return model;
+    }
+    
+    @RequestMapping("/admin/orderItem/{cartId}")
+    public ModelAndView adminOrderItemList(@RequestParam("cartId") String cartId) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("/admin/orderItem");
+        List<ShoppingCartHandlerEntry> ShoppingCartItemList = orderService.getAllShoppingCartItemByCartId(cartId);
+        model.addObject("ShoppingCartItemList", ShoppingCartItemList);
+        return model;
+    }
 }
 

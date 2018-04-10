@@ -13,6 +13,7 @@ import java.util.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -74,6 +75,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public User usernameAuthentication(Login login) throws SQLException, ClassNotFoundException {
         return userDao.usernameAuthentication(login);
+    }
+
+    @Override
+    public List<User> getAllCustomer() throws SQLException, ClassNotFoundException {
+        return userDao.getAllCustomer();
     }
 
    

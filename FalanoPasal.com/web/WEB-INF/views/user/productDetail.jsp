@@ -89,8 +89,8 @@
                     'comment': commentInput
                 },
                 success: function () {
-                    setTimeout(function () {// wait for 5 secs(2)
-                        location.reload(true); // then reload the page.(3)
+                    setTimeout(function () {
+                        location.reload(true); // reload the page.
                     }, 500);
                 }
             });

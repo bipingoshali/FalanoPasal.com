@@ -19,4 +19,13 @@ public interface OrderService {
     void registerUserShoppingCartItem(ShoppingCart shoppingCart,List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) throws SQLException,ClassNotFoundException;
     List<ShoppingCartHandlerEntry> getUserShoppingCarts(String username) throws SQLException,ClassNotFoundException;
     
+    //get all shopping cart list
+    List<ShoppingCart> getAllShoppingCart() throws SQLException,ClassNotFoundException;
+    
+    //get all shopping cart item by cart id
+    List<ShoppingCartHandlerEntry> getAllShoppingCartItemByCartId(String cartId) throws SQLException,ClassNotFoundException;
+    
+    //minus product stock after order
+    void minusProductStock(List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) throws SQLException,ClassNotFoundException;
+    
 }
