@@ -16,8 +16,8 @@ public class SQLConstant {
         public final static String USER_INSERT = "INSERT INTO "
                 + TableConstant.USER_TABLE
                 + " (firstName,lastName,email,username,password,city,"
-                + "addressline1,addressline2,houseno,phoneno,birthdate,roleid,status,emailToken,enrollDate)"
-                + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                + "addressline1,addressline2,houseno,familytype,phoneno,birthdate,roleid,status,emailToken,enrollDate)"
+                + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
         
         public final static String IS_USERNAME_EXIST = "SELECT COUNT(username) FROM "
                 + TableConstant.USER_TABLE +
@@ -77,17 +77,21 @@ public class SQLConstant {
                 " where categoryId=?";
 
         public final static String INSERT_PRODUCT = "INSERT INTO " + TableConstant.PRODUCT_TABLE 
-                + " (categoryId,productName,price,calorieValue,description,stockAmount)"
-                + " values(?,?,?,?,?,?)";
+                + " (categoryId,productName,price,calorieValue,description,stockAmount,manufacturername,location,manufacturedate,expirydate)"
+                + " values(?,?,?,?,?,?,?,?,?,DATE_ADD(manufacturedate, INTERVAL ? MONTH))";
         
         public final static String GET_PRODUCT_BY_ID = "SELECT * FROM " + TableConstant.PRODUCT_TABLE +
                 " WHERE productId=?";
         
         public final static String EDIT_PRODUCT = "UPDATE " + TableConstant.PRODUCT_TABLE +
-                " SET productName=?,price=?,calorieValue=?,description=? where productId=?";
+                " SET productName=?,price=?,calorieValue=?,description=?,manufacturername=?,"
+                + "location=?,manufacturedate=?,expirydate=? where productId=?";
         
         public final static String UPDATE_PRODUCT_STOCK = "UPDATE " + TableConstant.PRODUCT_TABLE +
                 " SET stockAmount=stockAmount+? where productId=?";
+        
+        public final static String UPDATE_PRODUCT_BOUGHT = "UPDATE " + TableConstant.PRODUCT_TABLE +
+                " SET productbought=productbought+? where productId=?";
 
         public final static String UPDATE_PRODUCT_CATEGORY_TYPE = "UPDATE " + TableConstant.PRODUCT_TABLE +
                 " SET categoryId=? where productId=?";

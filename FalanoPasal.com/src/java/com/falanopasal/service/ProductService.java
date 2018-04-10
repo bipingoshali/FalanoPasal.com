@@ -7,6 +7,7 @@ package com.falanopasal.service;
 
 import com.falanopasal.entity.Product;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -24,10 +25,10 @@ public interface ProductService {
     List<Product> getProductByCategoryId(int categoryId) throws SQLException,ClassNotFoundException;
     
     //insert product data 
-    void insertProduct(Product product) throws SQLException,ClassNotFoundException;
+    void insertProduct(Product product) throws SQLException,ClassNotFoundException,ParseException;
     
     //edit product data
-    void editProduct(Product product) throws SQLException,ClassNotFoundException;
+    void editProduct(Product product) throws SQLException,ClassNotFoundException,ParseException;
 
     //update stock value of any product
     void updateProductStock(Product product) throws SQLException, ClassNotFoundException;
@@ -49,6 +50,9 @@ public interface ProductService {
  
     //subscribe product
     void subscribeProduct(Product product) throws SQLException,ClassNotFoundException;
+    
+    //it stores the total amount of product bought
+    void updateProductBought(Product product) throws SQLException,ClassNotFoundException;
     
 
 }

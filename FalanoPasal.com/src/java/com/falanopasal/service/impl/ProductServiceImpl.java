@@ -9,6 +9,9 @@ import com.falanopasal.dao.ProductDAO;
 import com.falanopasal.entity.Product;
 import com.falanopasal.service.ProductService;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,7 +25,7 @@ public class ProductServiceImpl implements ProductService{
 
     @Autowired
     private ProductDAO productDao;
-    
+        
     @Override
     public List<Product> getProduct() throws SQLException, ClassNotFoundException {
         return productDao.getProduct();
@@ -39,12 +42,30 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public void insertProduct(Product product) throws SQLException, ClassNotFoundException {
+    public void insertProduct(Product product) throws SQLException, ClassNotFoundException,ParseException {
+        
+        //converting date datatype
+        Date utilDate = new SimpleDateFormat("yyyy-MM-dd").parse(product.getManufacturedDate());
+        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+        product.setManufactureDateFormat(sqlDate);
+        
         productDao.insertProduct(product);
     }
 
     @Override
-    public void editProduct(Product product) throws SQLException, ClassNotFoundException {
+    public void editProduct(Product product) throws SQLException, ClassNotFoundException,ParseException {
+                
+        //converting string into util date format
+        Date utilMDate = new SimpleDateFormat("yyyy-MM-dd").parse(product.getManufacturedDate());
+        java.sql.Date sqlMDate = new java.sql.Date(utilMDate.getTime());
+        //setting the sql date format
+        product.setManufactureDateFormat(sqlMDate);
+        
+        Date utilEDate = new SimpleDateFormat("yyyy-MM-dd").parse(product.getExpiryDateStringFormat());
+        java.sql.Date sqlEDate = new java.sql.Date(utilEDate.getTime());
+        product.setExpiryDateFormat(sqlEDate);
+        
+
         productDao.editProduct(product);
     }
 
@@ -81,6 +102,11 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public void subscribeProduct(Product product) throws SQLException, ClassNotFoundException {
         productDao.subscribeProduct(product);
+    }
+
+    @Override
+    public void updateProductBought(Product product) throws SQLException, ClassNotFoundException {
+        productDao.updateProductBought(product);
     }
 
     

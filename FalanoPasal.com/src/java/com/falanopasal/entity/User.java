@@ -13,7 +13,7 @@ import java.util.Date;
 public class User {
     
     private int userId;
-    private String firstName,lastName,email,username,password,city,addressLine1,addressLine2,phoneNo,birthdate;
+    private String firstName,lastName,email,username,password,city,addressLine1,addressLine2,phoneNo,birthdate,familyType;
     private int houseNo,roleId;
     private boolean status=false; //setting the default value
     private Date birthdateformat,enrollDate;
@@ -23,7 +23,7 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String firstName, String lastName, String email, String username, String password, String city, String addressLine1, String addressLine2, String phoneNo, String birthdate, int houseNo, int roleId, Date birthdateformat, Date enrollDate, String emailToken, String sessionValue) {
+    public User(int userId, String firstName, String lastName, String email, String username, String password, String city, String addressLine1, String addressLine2, String phoneNo, String birthdate, String familyType, int houseNo, int roleId, Date birthdateformat, Date enrollDate, String emailToken, String sessionValue) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -35,6 +35,7 @@ public class User {
         this.addressLine2 = addressLine2;
         this.phoneNo = phoneNo;
         this.birthdate = birthdate;
+        this.familyType = familyType;
         this.houseNo = houseNo;
         this.roleId = roleId;
         this.birthdateformat = birthdateformat;
@@ -42,6 +43,15 @@ public class User {
         this.emailToken = emailToken;
         this.sessionValue = sessionValue;
     }
+
+    public String getFamilyType() {
+        return familyType;
+    }
+
+    public void setFamilyType(String familyType) {
+        this.familyType = familyType;
+    }
+
 
     public Date getEnrollDate() {
         return enrollDate;

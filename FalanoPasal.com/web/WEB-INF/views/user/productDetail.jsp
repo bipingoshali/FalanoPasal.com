@@ -252,7 +252,13 @@
                         height: auto;    
                     }
                 </style>
-                <p class="rcorners2">${product.description}</p>
+                <p class="rcorners2">
+                    ${product.description} <br>
+                    <strong>Manufacturer - name: </strong>${product.manufacturerName}<br>
+                    <strong>Location: </strong>${product.location}<br>
+                    <strong>Manufactured date: </strong>${product.manufacturedDate}<br>
+                    <strong>Expiry date: </strong>${product.expiryDateStringFormat}<br>
+                </p>
                 <!--end of product description-->
 
                 <!--rate product-->

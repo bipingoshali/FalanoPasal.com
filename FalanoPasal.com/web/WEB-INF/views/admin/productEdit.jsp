@@ -28,6 +28,22 @@
             <form:textarea class="form-control" path="description" id="inputDescription" placeholder="Provide description" required="required" />                            
         </div>
         <div class="form-group">
+            <label class="control-label" for="inputManufacturerName">Manufacturer name</label>
+            <form:input class="form-control" path="manufacturerName" id="inputManufacturerName" placeholder="Manufacturer name"  type="text" required="required" />                            
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="inputLocation">Location</label>
+            <form:input class="form-control" path="location" id="inputLocation" placeholder="Location"  type="text" required="required" />                            
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="inputManufactureDate">Manufacture date</label>
+            <form:input class="form-control" path="manufacturedDate" id="inputManufactureDate" placeholder="Manufacture date"  type="date" required="required" />                            
+        </div>
+        <div class="form-group">
+            <label class="control-label" for="inputExpiryDate">Expiry date</label>
+            <form:input class="form-control" path="expiryDateStringFormat" id="inputExpiryDate" placeholder="Manufacture date"  type="date" required="required" />                            
+        </div>
+        <div class="form-group">
             <button type="submit" class="btn btn-success" title="Edit">Edit</button>
             <button type="reset" class="btn btn-warning" title="Reset">Reset</button>
         </div>

@@ -16,6 +16,9 @@ public class Product {
     private int categoryId,productId,stockValue,updatedStockValue;
     private String productName,description;
     private float productPrice,calorieValue;
+    private String manufacturerName,location,manufacturedDate,expiryDateStringFormat;
+    private Date manufactureDateFormat,expiryDateFormat;
+    private int expiryDate;    
     private int productRating;
     private String productComment;
     private String productSubscriptionDuration;
@@ -29,7 +32,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(int categoryId, int productId, int stockValue, int updatedStockValue, String productName, String description, float productPrice, float calorieValue, int productRating, String productComment, String productSubscriptionDuration, Date productCommentDate, Date productSubscribeDate, int subscribeProductQuantity, String username, Category category, MultipartFile productImage) {
+    public Product(int categoryId, int productId, int stockValue, int updatedStockValue, String productName, String description, float productPrice, float calorieValue, String manufacturerName, String location, String manufacturedDate, String expiryDateStringFormat, Date manufactureDateFormat, Date expiryDateFormat, int expiryDate, int productRating, String productComment, String productSubscriptionDuration, Date productCommentDate, Date productSubscribeDate, int subscribeProductQuantity, String username, Category category, MultipartFile productImage) {
         this.categoryId = categoryId;
         this.productId = productId;
         this.stockValue = stockValue;
@@ -38,6 +41,13 @@ public class Product {
         this.description = description;
         this.productPrice = productPrice;
         this.calorieValue = calorieValue;
+        this.manufacturerName = manufacturerName;
+        this.location = location;
+        this.manufacturedDate = manufacturedDate;
+        this.expiryDateStringFormat = expiryDateStringFormat;
+        this.manufactureDateFormat = manufactureDateFormat;
+        this.expiryDateFormat = expiryDateFormat;
+        this.expiryDate = expiryDate;
         this.productRating = productRating;
         this.productComment = productComment;
         this.productSubscriptionDuration = productSubscriptionDuration;
@@ -49,6 +59,66 @@ public class Product {
         this.productImage = productImage;
     }
 
+    public String getExpiryDateStringFormat() {
+        return expiryDateStringFormat;
+    }
+
+    public void setExpiryDateStringFormat(String expiryDateStringFormat) {
+        this.expiryDateStringFormat = expiryDateStringFormat;
+    }
+
+
+    public Date getExpiryDateFormat() {
+        return expiryDateFormat;
+    }
+
+    public void setExpiryDateFormat(Date expiryDateFormat) {
+        this.expiryDateFormat = expiryDateFormat;
+    }
+
+    
+    public Date getManufactureDateFormat() {
+        return manufactureDateFormat;
+    }
+
+    public void setManufactureDateFormat(Date manufactureDateFormat) {
+        this.manufactureDateFormat = manufactureDateFormat;
+    }
+
+
+    public String getManufacturerName() {
+        return manufacturerName;
+    }
+
+    public void setManufacturerName(String manufacturerName) {
+        this.manufacturerName = manufacturerName;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getManufacturedDate() {
+        return manufacturedDate;
+    }
+
+    public void setManufacturedDate(String manufacturedDate) {
+        this.manufacturedDate = manufacturedDate;
+    }
+
+    public int getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(int expiryDate) {
+        this.expiryDate = expiryDate;
+    }
+
+ 
     public int getSubscribeProductQuantity() {
         return subscribeProductQuantity;
     }

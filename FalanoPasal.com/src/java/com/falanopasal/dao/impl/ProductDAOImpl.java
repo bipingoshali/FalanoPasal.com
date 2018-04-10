@@ -11,6 +11,7 @@ import com.falanopasal.entity.Category;
 import com.falanopasal.entity.Product;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -52,6 +53,12 @@ public class ProductDAOImpl implements ProductDAO{
         product.setDescription(rs.getString("description"));
         product.setStockValue(rs.getInt("stockAmount"));
         product.setCategoryId(rs.getInt("categoryId"));
+        product.setManufacturerName(rs.getString("manufacturername"));
+        product.setLocation(rs.getString("location"));
+        product.setManufacturedDate(rs.getDate("manufacturedate").toString());
+        product.setExpiryDateStringFormat(rs.getDate("expirydate").toString());
+        product.setManufactureDateFormat(rs.getDate("manufacturedate"));
+        product.setExpiryDateFormat(rs.getDate("expirydate"));
         product.setCategory(this.getCategoryName(rs.getInt("categoryId")));
         return product;
     }
@@ -77,22 +84,31 @@ public class ProductDAOImpl implements ProductDAO{
     }
 
     @Override
-    public void insertProduct(Product product) throws SQLException, ClassNotFoundException {
+    public void insertProduct(Product product) throws SQLException, ClassNotFoundException,ParseException {
         jdbcTemplate.update(SQLConstant.Product.INSERT_PRODUCT, 
                 new Object[]{product.getCategoryId(),
                                 product.getProductName(),
                                 product.getProductPrice(),
                                 product.getCalorieValue(),
-                                product.getDescription(),0});        
+                                product.getDescription(),
+                                0,
+                                product.getManufacturerName(),
+                                product.getLocation(),
+                                product.getManufactureDateFormat(),
+                                product.getExpiryDate()});        
     }
 
     @Override
-    public void editProduct(Product product) throws SQLException, ClassNotFoundException {
+    public void editProduct(Product product) throws SQLException, ClassNotFoundException,ParseException {
         jdbcTemplate.update(SQLConstant.Product.EDIT_PRODUCT,
                 new Object[]{product.getProductName(),
                             product.getProductPrice(),
                             product.getCalorieValue(),
                             product.getDescription(),
+                            product.getManufacturerName(),
+                            product.getLocation(),
+                            product.getManufactureDateFormat(),
+                            product.getExpiryDateFormat(),
                             product.getProductId()});
     }
 
@@ -151,6 +167,11 @@ public class ProductDAOImpl implements ProductDAO{
                                                 product.getProductId(),
                                                 product.getProductSubscriptionDuration(),
                                                 product.getProductSubscribeDate()});
+    }
+
+    @Override
+    public void updateProductBought(Product product) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.Product.UPDATE_PRODUCT_BOUGHT, new Object[]{product.getUpdatedStockValue(),product.getProductId()});
     }
 
 

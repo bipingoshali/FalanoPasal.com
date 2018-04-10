@@ -1,13 +1,26 @@
 <%@include file="adminShared/header.jsp" %>
-<h1 class="page-header">Product</h1>
+<h1 class="page-header">Products</h1>
 
 <div class="row">    
     <!-- register new product button trigger modal -->
-    <button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#addProductModal">
+    <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#addProductModal">
         <span class="glyphicon glyphicon-plus"></span>
         Register new product
     </button>
 </div>
+<hr>
+
+<div class="row">
+    <h4>View product list by category</h4>
+    <div style="float: left;padding: 5px;">
+        <a href="${SITE_URL}/admin/product" class="btn btn-success" style="margin:15px;">All</a>
+        <c:forEach var="categoryEntity" items="${categoryList}">
+            <a href="${SITE_URL}/admin/product-by-category-${categoryEntity.categoryId}" style="margin:10px;" class="btn btn-success">${categoryEntity.categoryName}</a>
+        </c:forEach>
+    </div>
+</div>
+
+<hr>
 
 <!-- Register product modal -->
 <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -44,6 +57,22 @@
                         <label class="control-label" for="inputDescription">Description</label>
                         <form:textarea class="form-control" path="description" id="inputDescription" placeholder="Provide description" required="required" />                            
                     </div>
+                    <div class="form-group">
+                        <label class="control-label" for="inputManufacturerName">Manufacturer name</label>
+                        <form:input class="form-control" path="manufacturerName" id="inputManufacturerName" type="text" placeholder="Manufacturer name" required="required" />                            
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="inputManufacturerLocation">Manufacturer location</label>
+                        <form:input class="form-control" path="location" id="inputManufacturerLocation" type="text" placeholder="Manufacturer location" required="required" />                            
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="inputManufacturedDate">Manufactured date</label>
+                        <form:input class="form-control" path="manufacturedDate" id="inputManufacturedDate" type="date" placeholder="Manufactured date" required="required" />                            
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label" for="inputExpiryDate">Expiry date (Add month)</label>
+                        <form:input class="form-control" path="expiryDate" id="inputExpiryDate" placeholder="Expiry date" type="number" required="required" />                            
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -65,8 +94,8 @@
         <tr>
             <th>S.N.</th>
             <th>Name</th>
-            <th>Unit price</th>
-            <th>Calorie value</th>
+            <th>Unit price ($)</th>
+            <th>Calorie value (Kcal/g)</th>
             <th>Description</th>
             <th>Category</th>
             <th>Stock Value</th>
@@ -80,7 +109,13 @@
                 <td>${productEntity.productName}</td>
                 <td>${productEntity.productPrice}</td>
                 <td>${productEntity.calorieValue}</td>
-                <td>${productEntity.description}</td>
+                <td>
+                    <p style="margin-bottom: 0px;">${productEntity.description}</p><br>
+                    <strong>Manufacturer-Name:</strong> ${productEntity.manufacturerName}<br>
+                    <strong>Location:</strong> ${productEntity.location}<br>
+                    <strong>Manufacture-Date:</strong> ${productEntity.manufacturedDate}<br>
+                    <strong>Expiry-Date:</strong> ${productEntity.expiryDateStringFormat}<br>
+                </td>
                 <td>${productEntity.category.categoryName}</td>
                 <td>${productEntity.stockValue}</td>
                 <td>

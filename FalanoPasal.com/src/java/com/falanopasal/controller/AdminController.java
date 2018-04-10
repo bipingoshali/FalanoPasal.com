@@ -21,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -150,12 +151,41 @@ public class AdminController {
         }
         return new ModelAndView("redirect:/login");        
     }
+    
+    /*
+    it displays the product list by category id
+    */
+    @RequestMapping(value="/admin/product-by-category-{categoryId}")
+    public ModelAndView adminProductPageByCategory(@PathVariable("categoryId") int categoryId) throws SQLException, ClassNotFoundException{
+        ModelAndView adminModel = new ModelAndView("/admin/product");
+        ModelAndView userModel = new ModelAndView("redirect:/user/home");        
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            User user = new User();
+            user.setSessionValue(username);
+            User fetchSessionData;
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if (fetchSessionData.getRoleId() == 2) {
+                return userModel;
+            } else {
+                List<Category> categoryList = categoryService.getCategory();
+                List<Product> productList = productService.getProductByCategoryId(categoryId);
+                adminModel.addObject("categoryList", categoryList);
+                adminModel.addObject("productList", productList);
+                adminModel.addObject("product", new Product());
 
+                return adminModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");        
+    }
+    
     /*
     it saves product data
     */
     @RequestMapping(value="/admin/addProduct",method=RequestMethod.POST)
-    public ModelAndView adminProductInsert(@ModelAttribute("product") Product product) throws SQLException,ClassNotFoundException{
+    public ModelAndView adminProductInsert(@ModelAttribute("product") Product product) throws SQLException,ClassNotFoundException,ParseException{
         productService.insertProduct(product);
         return new ModelAndView("redirect:/admin/product");
     }
@@ -193,19 +223,21 @@ public class AdminController {
     it updates the product details excluding stock value and category type
     */
     @RequestMapping(value="/admin/productEditSave", method=RequestMethod.POST)
-    public ModelAndView adminProductEditSave(@ModelAttribute("product") Product product) throws SQLException,ClassNotFoundException{
+    public ModelAndView adminProductEditSave(@ModelAttribute("product") Product product) throws SQLException,ClassNotFoundException, ParseException{
         ModelAndView model = new ModelAndView("redirect:/admin/product");
-        productService.editProduct(product);
+        productService.editProduct(product);        
         return model;
     }
     
     /*
     it updates the product stock value
+    and also updates the total product bought by the pasal
     */
     @RequestMapping(value="/admin/productStockEditSave", method=RequestMethod.POST)
     public ModelAndView adminProductStockEditSave(@ModelAttribute("product") Product product) throws SQLException, ClassNotFoundException{
         ModelAndView model = new ModelAndView("redirect:/admin/product");
         productService.updateProductStock(product);
+        productService.updateProductBought(product);
         return model;
     }
  

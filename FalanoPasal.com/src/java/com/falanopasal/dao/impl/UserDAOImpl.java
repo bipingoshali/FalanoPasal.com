@@ -40,6 +40,7 @@ public class UserDAOImpl implements UserDAO{
             user.getAddressLine1(),
             user.getAddressLine2(),
             user.getHouseNo(),
+            user.getFamilyType(),
             user.getPhoneNo(),
             user.getBirthdateformat(),
             user.getRoleId(),
@@ -79,7 +80,7 @@ public class UserDAOImpl implements UserDAO{
         user.setAddressLine1(rs.getString("addressLine1"));
         user.setAddressLine2(rs.getString("addressLine2"));
         user.setHouseNo(rs.getInt("houseNo"));
-        user.setBirthdateformat(rs.getTime("birthdate"));
+        user.setBirthdateformat(rs.getDate("birthdate"));
         user.setUserId(rs.getInt("userId"));
         user.setEmailToken(rs.getString("emailToken"));
         user.setStatus(rs.getBoolean("status"));

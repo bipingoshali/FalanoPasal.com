@@ -27,7 +27,7 @@
 
     </head>
 
-    <body style="background-color: #f9f9f9;height: 1000px;">
+    <body style="background-color: #f9f9f9;height: 1100px;">
 
         <div class="container" style="padding-top: 15px;">
 
@@ -168,8 +168,15 @@
                                     <div class="panel panel-primary">
                                         <div class="panel-body">
                                             <div class="form-group">
+                                                <label class="control-label" for="selectFamilyType">Family Type</label>								
+                                                <form:select class="form-control" path="familyType" id="selectFamilyType">
+                                                    <option value="small">Small Scale Family</option>
+                                                    <option value="large">Large Scale Family</option>
+                                                </form:select>
+                                            </div>
+                                            <div class="form-group">
                                                 <label class="control-label" for="inputBirthDate">Birth date</label>
-                                                <form:input class="form-control" path="birthdate" id="inputBirthDate"  type="date" />
+                                                <form:input class="form-control" path="birthdate" id="inputBirthDate" type="date" />
                                             </div>
                                             <div class="form-group">
                                                 <label class="control-label" for="inputPhoneNumber">Phone Number</label>
