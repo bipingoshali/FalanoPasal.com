@@ -42,6 +42,13 @@ public interface ProductDAO {
     //rate product
     void rateProduct(Product product) throws SQLException,ClassNotFoundException;
     
+    //check if user has already rate the product
+    boolean checkUserRate(Product product) throws SQLException,ClassNotFoundException;
+    
+    //update user rating for those product which user has already rated 
+    //works if user want to rate again for that product
+    void updateUserRateForAProduct(Product product) throws SQLException,ClassNotFoundException;
+    
     //comment product
     void commentProduct(Product product) throws SQLException,ClassNotFoundException;
     

@@ -19,4 +19,5 @@ public class TableConstant {
     public final static String PRODUCT_RATING_TABLE = "rating";
     public final static String PRODUCT_COMMENTING_TABLE = "commenting";
     public final static String SUBSCRIBE_PRODUCT_TABLE = "subscribeproduct";
+    public final static String DELIVERY_TABLE = "delivery";
 }

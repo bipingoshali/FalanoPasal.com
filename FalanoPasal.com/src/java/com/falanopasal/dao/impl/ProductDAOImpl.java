@@ -129,12 +129,12 @@ public class ProductDAOImpl implements ProductDAO{
 
     @Override
     public void rateProduct(Product product) throws SQLException, ClassNotFoundException {
-        jdbcTemplate.update(SQLConstant.ProductRatingCommenting.RATE_PRODUCT, new Object[]{product.getUsername(),product.getProductId(),product.getProductRating()});
+        jdbcTemplate.update(SQLConstant.ProductRatingCommenting.RATE_PRODUCT, new Object[]{product.getUsername(),product.getProductId(),product.getProductRating(),product.getProductRateDate()});
     }
 
     @Override
     public void commentProduct(Product product) throws SQLException, ClassNotFoundException {
-        jdbcTemplate.update(SQLConstant.ProductRatingCommenting.COMMENT_PRODUCT, new Object[]{product.getUsername(),product.getProductId(),product.getProductComment(),product.getProductComment()});
+        jdbcTemplate.update(SQLConstant.ProductRatingCommenting.COMMENT_PRODUCT, new Object[]{product.getUsername(),product.getProductId(),product.getProductComment(),product.getProductCommentDate()});
     }
 
     @Override
@@ -152,6 +152,7 @@ public class ProductDAOImpl implements ProductDAO{
         product.setUsername(rs.getString("username"));
         product.setProductName(this.getProductName(rs.getInt("productId")));
         product.setProductComment(rs.getString("comment"));
+        product.setProductCommentDate(rs.getDate("commenteddate"));
         return product;
     }
 
@@ -172,6 +173,20 @@ public class ProductDAOImpl implements ProductDAO{
     @Override
     public void updateProductBought(Product product) throws SQLException, ClassNotFoundException {
         jdbcTemplate.update(SQLConstant.Product.UPDATE_PRODUCT_BOUGHT, new Object[]{product.getUpdatedStockValue(),product.getProductId()});
+    }
+
+    @Override
+    public boolean checkUserRate(Product product) throws SQLException, ClassNotFoundException {
+        int count=jdbcTemplate.queryForObject(SQLConstant.ProductRatingCommenting.CHECK_USER_RATING, new Object[]{product.getUsername(),product.getProductId()},Integer.class);
+        if(count==1){
+            return true; 
+        }
+        return false;
+    }
+
+    @Override
+    public void updateUserRateForAProduct(Product product) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.ProductRatingCommenting.UPDATE_USER_RATING, new Object[]{product.getProductRating(),product.getProductRateDate(),product.getUsername(),product.getProductId()});
     }
 
 

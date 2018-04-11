@@ -128,24 +128,32 @@ public class SQLConstant {
     
     public class ProductRatingCommenting{
         public final static String RATE_PRODUCT = "INSERT INTO " + TableConstant.PRODUCT_RATING_TABLE +
-                " (username,productId,rating) VALUES(?,?,?)";
+                " (username,productId,rating,ratingdate) VALUES(?,?,?,?)";
         
         public final static String COMMENT_PRODUCT = "INSERT INTO " + TableConstant.PRODUCT_COMMENTING_TABLE +
-                " (username,productId,comment,date) VALUES(?,?,?,?)";
+                " (username,productId,comment,commenteddate) VALUES(?,?,?,?)";
         
         public final static String GET_ALL_COMMENT_BY_PRODUCTID = "SELECT * FROM " + TableConstant.PRODUCT_COMMENTING_TABLE
-                + " WHERE productId=?";
+                + " WHERE productId=? order by commenteddate DESC";
         
         public final static String GET_COMMENT_BY_USERNAME = "SELECT * FROM " + TableConstant.PRODUCT_COMMENTING_TABLE +
                 " WHERE username=?";
         
-        public final static String CHECK_USER_COMMENT = "SELECT * FROM " + TableConstant.PRODUCT_COMMENTING_TABLE +
+        public final static String CHECK_USER_RATING = "SELECT COUNT(rating) FROM " + TableConstant.PRODUCT_RATING_TABLE +
                 " WHERE username=? and productId=?";
+        
+        public final static String UPDATE_USER_RATING = "UPDATE " + TableConstant.PRODUCT_RATING_TABLE +
+                " SET rating=?,ratingdate=? where username=? and productId=?";
     }
     
     public class SubscribeProduct{
         public final static String SUBSCRIBE_PRODUCT = "INSERT INTO " + TableConstant.SUBSCRIBE_PRODUCT_TABLE +
                 " (username,productId,duration,date) values(?,?,?,?)";
+    }
+    
+    public class Delivery{
+        public final static String DELIVERY_INSERT = "INSERT INTO " + TableConstant.DELIVERY_TABLE +
+                " (cartid,deliverytype,customdate,customtime) values(?,?,?,?)";
     }
     
 }

@@ -6,23 +6,28 @@
 package com.falanopasal.controller;
 
 import com.falanopasal.entity.Category;
+import com.falanopasal.entity.Delivery;
 import com.falanopasal.entity.Product;
 import com.falanopasal.entity.ShoppingCart;
 import com.falanopasal.entity.ShoppingCartHandlerEntry;
 import com.falanopasal.entity.ShoppingCartMap;
 import com.falanopasal.entity.User;
 import com.falanopasal.service.CategoryService;
+import com.falanopasal.service.DeliveryService;
 import com.falanopasal.service.OrderService;
 import com.falanopasal.service.ProductService;
 import com.falanopasal.service.SessionService;
 import com.falanopasal.service.ShoppingCartHandlerService;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -53,6 +58,9 @@ public class UserController {
     
     @Autowired
     private OrderService orderService;
+    
+    @Autowired
+    private DeliveryService deliveryService;
     
     private SessionManager sessionManager; //session values
     private User user; //to set session values (username)
@@ -181,6 +189,8 @@ public class UserController {
             if (fetchSessionData.getRoleId() == 1) {
                 return adminModel;
             } else {
+                
+                userModel.addObject("delivery", new Delivery());
                 //gets all the product list in shopping cart
                 List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries = shoppingCartHandlerService.getShoppingCartEntries(shoppingCartMap);                
                 userModel.addObject("shoppingCartHandlerEntries", shoppingCartHandlerEntries);
@@ -204,8 +214,8 @@ public class UserController {
     /*
     shopping cart order
     */
-    @RequestMapping(value="/user/shoppingCartOrder")
-    public ModelAndView order(final RedirectAttributes redirectAttributes) throws SQLException, ClassNotFoundException{
+    @RequestMapping(value="/user/shoppingCartOrder", method=RequestMethod.POST)
+    public ModelAndView order(@ModelAttribute("delivery") Delivery delivery,final RedirectAttributes redirectAttributes) throws SQLException, ClassNotFoundException, ParseException{
         ModelAndView model = new ModelAndView("redirect:/user/shoppingCart");
         sessionManager = new SessionManager();
         if(sessionManager.getAttr("username")!=null){
@@ -223,6 +233,7 @@ public class UserController {
                 //creating random cart Id
                 java.util.UUID randomUUID = java.util.UUID.randomUUID();
                 shoppingCart = new ShoppingCart();
+                delivery.setCartId(randomUUID.toString());
                 shoppingCart.setCartId(randomUUID.toString());
                 shoppingCart.setUsername(username);
                 Date utilEnrollDate = new Date();
@@ -239,6 +250,7 @@ public class UserController {
                 it decrease the product stock amount
                 */
                 orderService.minusProductStock(shoppingCartHandlerEntries);
+                deliveryService.insert(delivery);
                 redirectAttributes.addFlashAttribute("orderMessage", "Congratulation! Your order will be forwarded as soon as you confirm your order confirmation.");
                 shoppingCartMap.clearHashmap(); //clearing hash map
                 return model;
@@ -274,7 +286,9 @@ public class UserController {
     }
     
     /*
-    rate product    
+    rate product 
+    if user have already rate for a product
+    then, the user rate will be updated of that product
     */
     @RequestMapping("/user/productDetail/rateProduct")
     public @ResponseBody void rateProduct(@RequestParam("productId") int productId,@RequestParam("rating") int rating) throws SQLException, ClassNotFoundException{
@@ -283,6 +297,10 @@ public class UserController {
         product.setProductId(productId);
         product.setProductRating(rating);
         product.setUsername(sessionManager.getAttr("username").toString());
+        if(productService.checkUserRate(product)){
+            productService.updateUserRateForAProduct(product);
+            return;
+        }
         productService.rateProduct(product);
     }
     
@@ -295,9 +313,6 @@ public class UserController {
         product = new Product();
         product.setProductId(productId);
         product.setProductComment(comment);
-        Date utilEnrollDate = new Date();
-        java.sql.Date sqlEnrollDate = new java.sql.Date(utilEnrollDate.getTime()); 
-        product.setProductCommentDate(sqlEnrollDate);
         product.setUsername(sessionManager.getAttr("username").toString());        
         productService.commentProduct(product);            
     }

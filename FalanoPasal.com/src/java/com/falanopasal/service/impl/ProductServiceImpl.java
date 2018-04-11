@@ -86,11 +86,21 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public void rateProduct(Product product) throws SQLException, ClassNotFoundException {
+        //setting the default system date in rating date
+        Date utilRateDate = new Date();
+        java.sql.Date sqlRateDate = new java.sql.Date(utilRateDate.getTime());
+        product.setProductRateDate(sqlRateDate);
+        
         productDao.rateProduct(product);
     }
 
     @Override
     public void commentProduct(Product product) throws SQLException, ClassNotFoundException {
+        
+        Date utilCommentDate = new Date();
+        java.sql.Date sqlCommentDate = new java.sql.Date(utilCommentDate.getTime()); 
+        product.setProductCommentDate(sqlCommentDate);
+        
         productDao.commentProduct(product);
     }
 
@@ -107,6 +117,21 @@ public class ProductServiceImpl implements ProductService{
     @Override
     public void updateProductBought(Product product) throws SQLException, ClassNotFoundException {
         productDao.updateProductBought(product);
+    }
+
+    @Override
+    public boolean checkUserRate(Product product) throws SQLException, ClassNotFoundException {
+        return productDao.checkUserRate(product);
+    }
+
+    @Override
+    public void updateUserRateForAProduct(Product product) throws SQLException, ClassNotFoundException {
+        //setting the default system date in rating date
+        Date utilRateDate = new Date();
+        java.sql.Date sqlEnrollDate = new java.sql.Date(utilRateDate.getTime());
+        product.setProductRateDate(sqlEnrollDate);
+        
+        productDao.updateUserRateForAProduct(product);
     }
 
     

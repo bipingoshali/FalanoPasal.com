@@ -2,6 +2,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> <!--fetching jstl tag library-->
 <c:set var="SITE_URL" value="${pageContext.request.contextPath}" /> <!--access jsp file from different directories-->
 
+<!--spring form tag libraries-->
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+
 <!DOCTYPE html>
 <html>
     <head>

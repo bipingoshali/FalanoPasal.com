@@ -22,7 +22,7 @@ public class Product {
     private int productRating;
     private String productComment;
     private String productSubscriptionDuration;
-    private Date productCommentDate,productSubscribeDate;
+    private Date productCommentDate,productSubscribeDate,productRateDate;
     private int subscribeProductQuantity;
     private String username; //to find which user is rating a product
     private Category category;
@@ -32,7 +32,7 @@ public class Product {
     public Product() {
     }
 
-    public Product(int categoryId, int productId, int stockValue, int updatedStockValue, String productName, String description, float productPrice, float calorieValue, String manufacturerName, String location, String manufacturedDate, String expiryDateStringFormat, Date manufactureDateFormat, Date expiryDateFormat, int expiryDate, int productRating, String productComment, String productSubscriptionDuration, Date productCommentDate, Date productSubscribeDate, int subscribeProductQuantity, String username, Category category, MultipartFile productImage) {
+    public Product(int categoryId, int productId, int stockValue, int updatedStockValue, String productName, String description, float productPrice, float calorieValue, String manufacturerName, String location, String manufacturedDate, String expiryDateStringFormat, Date manufactureDateFormat, Date expiryDateFormat, int expiryDate, int productRating, String productComment, String productSubscriptionDuration, Date productCommentDate, Date productSubscribeDate, Date productRateDate, int subscribeProductQuantity, String username, Category category, MultipartFile productImage) {
         this.categoryId = categoryId;
         this.productId = productId;
         this.stockValue = stockValue;
@@ -53,11 +53,21 @@ public class Product {
         this.productSubscriptionDuration = productSubscriptionDuration;
         this.productCommentDate = productCommentDate;
         this.productSubscribeDate = productSubscribeDate;
+        this.productRateDate = productRateDate;
         this.subscribeProductQuantity = subscribeProductQuantity;
         this.username = username;
         this.category = category;
         this.productImage = productImage;
     }
+
+    public Date getProductRateDate() {
+        return productRateDate;
+    }
+
+    public void setProductRateDate(Date productRateDate) {
+        this.productRateDate = productRateDate;
+    }
+
 
     public String getExpiryDateStringFormat() {
         return expiryDateStringFormat;

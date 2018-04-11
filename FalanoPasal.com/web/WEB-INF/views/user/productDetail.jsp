@@ -34,7 +34,7 @@
 
         $("#rate-input").keyup(function () {
             var rate = $(this).val();
-            if (rate > 5) {
+            if (rate > 5 || rate < 0) {
                 $("#rateResponse").show();
                 $("#rateResponse").html("Invalid rate input");
             } else {
@@ -77,7 +77,6 @@
                 $("#commentResponse").show();
                 $("#commentResponse").html("Input field is null");
                 return;
-
             } else {
                 $("#commentResponse").hide();
                 $("#comment_txt").val('');
@@ -336,6 +335,9 @@
                                 </div>
                                 <div class="col-lg-8">
                                     <p class="rcorners2">${productCommentEntity.productComment}</p>
+                                </div>
+                                <div class="col-lg-2">
+                                    <p class="rcorners2">${productCommentEntity.productCommentDate}</p>
                                 </div>
                             </div>
                         </c:forEach>
