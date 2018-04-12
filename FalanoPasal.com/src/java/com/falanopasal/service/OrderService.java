@@ -7,6 +7,7 @@ package com.falanopasal.service;
 
 import com.falanopasal.entity.ShoppingCart;
 import com.falanopasal.entity.ShoppingCartHandlerEntry;
+import com.falanopasal.entity.User;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public interface OrderService {
     void registerUserShoppingCartItem(ShoppingCart shoppingCart,List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) throws SQLException,ClassNotFoundException;
     List<ShoppingCartHandlerEntry> getUserShoppingCarts(String username) throws SQLException,ClassNotFoundException;
     
+    
     //get all shopping cart list
     List<ShoppingCart> getAllShoppingCart() throws SQLException,ClassNotFoundException;
     
@@ -27,5 +29,8 @@ public interface OrderService {
     
     //minus product stock after order
     void minusProductStock(List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) throws SQLException,ClassNotFoundException;
+    
+    //update order status
+    void updateOrderStatus(User user) throws SQLException,ClassNotFoundException; 
     
 }

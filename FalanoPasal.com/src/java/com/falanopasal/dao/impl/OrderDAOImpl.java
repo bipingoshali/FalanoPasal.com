@@ -6,13 +6,12 @@
 package com.falanopasal.dao.impl;
 
 import com.falanopasal.constant.SQLConstant;
-import com.falanopasal.controller.SessionManager;
 import com.falanopasal.dao.OrderDAO;
 import com.falanopasal.entity.ShoppingCart;
 import com.falanopasal.entity.ShoppingCartHandlerEntry;
+import com.falanopasal.entity.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,7 +30,12 @@ public class OrderDAOImpl implements OrderDAO{
         
     @Override
     public void registerUserShoppingCart(ShoppingCart shoppingCart) throws SQLException, ClassNotFoundException {        
-        jdbcTemplate.update(SQLConstant.ShoppingCarts.REGISTER_USER_SHOPPING_CART, new Object[]{shoppingCart.getCartId(),shoppingCart.getUsername(),shoppingCart.getPurchasedDate()});
+        jdbcTemplate.update(SQLConstant.ShoppingCarts.REGISTER_USER_SHOPPING_CART,
+                new Object[]{shoppingCart.getCartId(),
+                    shoppingCart.getUsername(),
+                    shoppingCart.getPaymentMethod(),
+                    shoppingCart.getGrandTotal(),
+                    shoppingCart.getPurchasedDate()});
     }
 
     @Override
@@ -47,6 +51,8 @@ public class OrderDAOImpl implements OrderDAO{
         }
     }
 
+
+    
     @Override
     public void minusProductStock(List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) throws SQLException, ClassNotFoundException {
         for(int i=0;i<shoppingCartHandlerEntries.size();i++){
@@ -114,6 +120,12 @@ public class OrderDAOImpl implements OrderDAO{
         s.setTotalCalorieValue(rs.getDouble("productTotalCalorie"));
         return s;
     }
+
+    @Override
+    public void updateOrderStatus(User user) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.ShoppingCarts.UPDATE_ORDER_STATUS, new Object[]{user.getCartId(),user.getUsername()});
+    }
+
 
 
         

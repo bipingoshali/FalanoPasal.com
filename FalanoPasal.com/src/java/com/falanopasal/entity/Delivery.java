@@ -19,11 +19,12 @@ public class Delivery {
     private String customDate,customTime;
     private Date customDateFormat;
     private Time customTimeFormat;
+    private String payment;
 
     public Delivery() {
     }
 
-    public Delivery(int deliveryId, String cartId, String deliveryType, String customDate, String customTime, Date customDateFormat, Time customTimeFormat) {
+    public Delivery(int deliveryId, String cartId, String deliveryType, String customDate, String customTime, Date customDateFormat, Time customTimeFormat, String payment) {
         this.deliveryId = deliveryId;
         this.cartId = cartId;
         this.deliveryType = deliveryType;
@@ -31,6 +32,15 @@ public class Delivery {
         this.customTime = customTime;
         this.customDateFormat = customDateFormat;
         this.customTimeFormat = customTimeFormat;
+        this.payment = payment;
+    }
+
+    public String getPayment() {
+        return payment;
+    }
+
+    public void setPayment(String payment) {
+        this.payment = payment;
     }
 
     public String getCustomDate() {

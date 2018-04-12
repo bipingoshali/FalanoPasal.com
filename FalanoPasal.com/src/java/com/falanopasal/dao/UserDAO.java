@@ -35,4 +35,8 @@ public interface UserDAO {
     
     //get all user
     List<User> getAllCustomer() throws SQLException,ClassNotFoundException;
+    
+    //update debit amount
+    void updateDebitAmount(User user) throws SQLException,ClassNotFoundException;
+
 }

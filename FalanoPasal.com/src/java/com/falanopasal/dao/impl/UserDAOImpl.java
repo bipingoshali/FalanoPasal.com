@@ -83,10 +83,10 @@ public class UserDAOImpl implements UserDAO{
         user.setBirthdateformat(rs.getDate("birthdate"));
         user.setUserId(rs.getInt("userId"));
         user.setEmailToken(rs.getString("emailToken"));
-        user.setStatus(rs.getBoolean("status"));
-        
+        user.setStatus(rs.getBoolean("status"));        
         user.setPassword(rs.getString("password"));
         user.setRoleId(rs.getInt("roleId"));
+        user.setDebitAmount(rs.getDouble("debitamount"));
         return user;
     }
 
@@ -126,6 +126,12 @@ public class UserDAOImpl implements UserDAO{
             }
         });
     }
+
+    @Override
+    public void updateDebitAmount(User user) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.User.MINUS_DEBIT_AMOUNT, new Object[]{user.getDebitAmount(),user.getUsername()});
+    }
+
 
     
 

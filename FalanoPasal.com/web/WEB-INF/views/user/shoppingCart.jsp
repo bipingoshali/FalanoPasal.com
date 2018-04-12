@@ -126,6 +126,40 @@
                     </div>
                 </div>
 
+                <hr>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 style="margin-bottom: 30px;">Choose payment method</h3>
+                        <div class="row">
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <center>
+                                        <form:radiobutton path="payment" id="normalRadio" value="Normal" checked="checked"/>
+                                        <label for="normalRadio"><strong>Normal</strong></label>
+                                    </center>
+                                </div>                                
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <center>
+                                        <form:radiobutton path="payment" id="creditRadio" value="Credit"/>
+                                        <label for="creditRadio"><strong>Credit</strong></label>
+                                    </center>
+                                </div>                                
+                            </div>                                        
+                            <div class="col-lg-4">
+                                <div class="form-group">
+                                    <center>
+                                        <form:radiobutton path="payment" id="debitRadio" value="Debit"/>
+                                        <label for="debitRadio"><strong>Debit</strong></label>
+                                    </center>
+                                </div>                                
+                            </div>                                        
+                        </div>
+                    </div>
+
+                </div>
+
                 <div class="row">
                     <c:if test="${not empty shoppingCartHandlerEntries}">
                         <!--<a href="/user/shoppingCartOrder" id="checkout-btn" type="button" class="btn btn-primary btn-md pull-right" onclick="return confirm('Are you sure to order?')" title="Order">Order</a>-->

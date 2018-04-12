@@ -8,6 +8,7 @@ package com.falanopasal.service.impl;
 import com.falanopasal.dao.OrderDAO;
 import com.falanopasal.entity.ShoppingCart;
 import com.falanopasal.entity.ShoppingCartHandlerEntry;
+import com.falanopasal.entity.User;
 import com.falanopasal.service.OrderService;
 import java.sql.SQLException;
 import java.util.List;
@@ -52,6 +53,11 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public void minusProductStock(List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) throws SQLException, ClassNotFoundException {
         orderDao.minusProductStock(shoppingCartHandlerEntries);
+    }
+
+    @Override
+    public void updateOrderStatus(User user) throws SQLException, ClassNotFoundException {
+        orderDao.updateOrderStatus(user);
     }
     
 }

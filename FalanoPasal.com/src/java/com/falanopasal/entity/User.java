@@ -19,11 +19,13 @@ public class User {
     private Date birthdateformat,enrollDate;
     private String emailToken; //carries email token
     private String sessionValue; //caries session value
+    private double debitAmount;
+    private String cartId;
 
     public User() {
     }
 
-    public User(int userId, String firstName, String lastName, String email, String username, String password, String city, String addressLine1, String addressLine2, String phoneNo, String birthdate, String familyType, int houseNo, int roleId, Date birthdateformat, Date enrollDate, String emailToken, String sessionValue) {
+    public User(int userId, String firstName, String lastName, String email, String username, String password, String city, String addressLine1, String addressLine2, String phoneNo, String birthdate, String familyType, int houseNo, int roleId, Date birthdateformat, Date enrollDate, String emailToken, String sessionValue, double debitAmount, String cartId) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -42,7 +44,28 @@ public class User {
         this.enrollDate = enrollDate;
         this.emailToken = emailToken;
         this.sessionValue = sessionValue;
+        this.debitAmount = debitAmount;
+        this.cartId = cartId;
     }
+
+    public String getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(String cartId) {
+        this.cartId = cartId;
+    }
+
+
+    
+    public double getDebitAmount() {
+        return debitAmount;
+    }
+
+    public void setDebitAmount(double debitAmount) {
+        this.debitAmount = debitAmount;
+    }
+
 
     public String getFamilyType() {
         return familyType;

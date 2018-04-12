@@ -18,11 +18,13 @@ import com.falanopasal.service.OrderService;
 import com.falanopasal.service.ProductService;
 import com.falanopasal.service.SessionService;
 import com.falanopasal.service.ShoppingCartHandlerService;
+import com.falanopasal.service.UserService;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -61,6 +63,12 @@ public class UserController {
     
     @Autowired
     private DeliveryService deliveryService;
+    
+    @Autowired
+    private UserService userService;
+    
+    @Autowired
+    private ApplicationContext appContext;
     
     private SessionManager sessionManager; //session values
     private User user; //to set session values (username)
@@ -233,17 +241,45 @@ public class UserController {
                 //creating random cart Id
                 java.util.UUID randomUUID = java.util.UUID.randomUUID();
                 shoppingCart = new ShoppingCart();
-                delivery.setCartId(randomUUID.toString());
+                delivery.setCartId(randomUUID.toString());                
+                shoppingCart.setPaymentMethod(delivery.getPayment());
                 shoppingCart.setCartId(randomUUID.toString());
                 shoppingCart.setUsername(username);
+                shoppingCart.setGrandTotal(shoppingCartHandlerService.getTotalPrice(shoppingCartHandlerEntries));
                 Date utilEnrollDate = new Date();
                 java.sql.Date sqlEnrollDate = new java.sql.Date(utilEnrollDate.getTime());
                 shoppingCart.setPurchasedDate(sqlEnrollDate);
                 
                 /*
+                checking the debit amount of the customer
+                */
+                if(delivery.getPayment().equals("Debit")){
+                    user = new User();
+                    user.setUsername(username); //setting username in userService.getByUsername
+
+                    fetchSessionData = new User();
+                    fetchSessionData = userService.getByUsername(user); //fetch value of the provided username
+                    String userEmail = fetchSessionData.getEmail(); //fetch email which will be used for sending email if the customer wants to buy the products in credit
+                    if(shoppingCartHandlerService.getTotalPrice(shoppingCartHandlerEntries)>fetchSessionData.getDebitAmount()){
+                        redirectAttributes.addFlashAttribute("orderMessage", "Sorry! You do not have enough debit amount.");
+                        return model;                    
+                    }else{
+                        /*
+                        if the debit amount is enough to finish the transaction
+                        it will update the debit amount of the customer
+                        */
+                        fetchSessionData=new User(); 
+                        fetchSessionData.setUsername(username);
+                        fetchSessionData.setDebitAmount(shoppingCartHandlerService.getTotalPrice(shoppingCartHandlerEntries)); //setting the grand total of the shopping cart
+                        fetchSessionData.setEmail(userEmail);
+                        userService.updateDebitAmount(fetchSessionData);
+                    }                    
+                }
+                
+                /*
                 At first, it registers shopping cart of the user
                 and then, adds the products in that shopping cart id                
-                */                                
+                */
                 orderService.registerUserShoppingCart(shoppingCart);
                 orderService.registerUserShoppingCartItem(shoppingCart,shoppingCartHandlerEntries);
                 /*
@@ -252,6 +288,30 @@ public class UserController {
                 orderService.minusProductStock(shoppingCartHandlerEntries);
                 deliveryService.insert(delivery);
                 redirectAttributes.addFlashAttribute("orderMessage", "Congratulation! Your order will be forwarded as soon as you confirm your order confirmation.");
+                
+                /*
+                send order confirmation email
+                */
+                String msg = "Congratulation "+sessionManager.getAttr("username").toString()+"! You have ordered following list of item from FalanoPasal.com \n";
+                for(int i=0;i<shoppingCartHandlerEntries.size();i++){
+                    msg+= "Product name: "+shoppingCartHandlerEntries.get(i).getProductName()+
+                            " | Price: "+shoppingCartHandlerEntries.get(i).getPrice()+
+                            " | Quantity: "+shoppingCartHandlerEntries.get(i).getQuantity()+
+                            " | Total Price: "+shoppingCartHandlerEntries.get(i).getProductTotalPrice()+" \n";                    
+                }
+                msg+= "Grand Total: "+shoppingCartHandlerService.getTotalPrice(shoppingCartHandlerEntries)+" \n";
+                msg+= "Payment method: "+delivery.getPayment()+" \n";
+                if(delivery.getDeliveryType().equals("custom")){
+                    msg+="Delivery type: "+delivery.getDeliveryType()+" \n";
+                    msg+="Date: "+delivery.getCustomDate()+" \n";
+                    msg+="Time: "+delivery.getCustomTime()+" \n";
+                }else{
+                    msg+="Delivery type: "+delivery.getDeliveryType()+" \n";                    
+                }
+                msg+= "Please click the link below to verify your order. \n";
+                msg+= "http://localhost:8080/FalanoPasal.com/confirmOrder?token="+randomUUID.toString()+"&username="+sessionManager.getAttr("username").toString();
+                Mail sMail = (Mail) appContext.getBean("mail");
+//                sMail.sendMail("bipingoshali2527@gmail.com", fetchSessionData.getEmail(), "FalanoPasal.com", msg);
                 shoppingCartMap.clearHashmap(); //clearing hash map
                 return model;
             }                       
@@ -259,6 +319,21 @@ public class UserController {
         return new ModelAndView("redirect:/login");
     }
     
+    /*
+    it updates the user order status
+    */
+    @RequestMapping(value="/confirmOrder")
+    public ModelAndView confirmOrder(@RequestParam("token") String token,@RequestParam("username") String username) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("redirect:/user/home");
+        sessionManager = new SessionManager();
+        user = new User();
+        user.setCartId(token);
+        user.setUsername(username);
+        //assigning session value
+        sessionManager.setData(new String[]{"username"}, new String[]{username});
+        orderService.updateOrderStatus(user);
+        return model;
+    }
     /*
     get order history
     */
