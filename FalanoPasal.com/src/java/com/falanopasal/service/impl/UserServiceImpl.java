@@ -87,6 +87,11 @@ public class UserServiceImpl implements UserService {
         userDao.updateDebitAmount(user);
     }
 
+    @Override
+    public void updateOrderCount(String username) throws SQLException, ClassNotFoundException {
+        userDao.updateOrderCount(username);
+    }
+
 
    
 

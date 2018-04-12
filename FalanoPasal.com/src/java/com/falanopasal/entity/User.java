@@ -21,11 +21,12 @@ public class User {
     private String sessionValue; //caries session value
     private double debitAmount;
     private String cartId;
+    private int orderCount;
 
     public User() {
     }
 
-    public User(int userId, String firstName, String lastName, String email, String username, String password, String city, String addressLine1, String addressLine2, String phoneNo, String birthdate, String familyType, int houseNo, int roleId, Date birthdateformat, Date enrollDate, String emailToken, String sessionValue, double debitAmount, String cartId) {
+    public User(int userId, String firstName, String lastName, String email, String username, String password, String city, String addressLine1, String addressLine2, String phoneNo, String birthdate, String familyType, int houseNo, int roleId, Date birthdateformat, Date enrollDate, String emailToken, String sessionValue, double debitAmount, String cartId, int orderCount) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -46,7 +47,17 @@ public class User {
         this.sessionValue = sessionValue;
         this.debitAmount = debitAmount;
         this.cartId = cartId;
+        this.orderCount = orderCount;
     }
+
+    public int getOrderCount() {
+        return orderCount;
+    }
+
+    public void setOrderCount(int orderCount) {
+        this.orderCount = orderCount;
+    }
+
 
     public String getCartId() {
         return cartId;

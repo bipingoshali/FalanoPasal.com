@@ -132,6 +132,11 @@ public class UserDAOImpl implements UserDAO{
         jdbcTemplate.update(SQLConstant.User.MINUS_DEBIT_AMOUNT, new Object[]{user.getDebitAmount(),user.getUsername()});
     }
 
+    @Override
+    public void updateOrderCount(String username) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.User.UPDATE_ORDER_COUNT, new Object[]{username});
+    }
+
 
     
 

@@ -6,11 +6,13 @@
 package com.falanopasal.controller;
 
 import com.falanopasal.entity.Category;
+import com.falanopasal.entity.Offer;
 import com.falanopasal.entity.Product;
 import com.falanopasal.entity.ShoppingCart;
 import com.falanopasal.entity.ShoppingCartHandlerEntry;
 import com.falanopasal.entity.User;
 import com.falanopasal.service.CategoryService;
+import com.falanopasal.service.OfferService;
 import com.falanopasal.service.OrderService;
 import com.falanopasal.service.ProductService;
 import com.falanopasal.service.SessionService;
@@ -57,6 +59,9 @@ public class AdminController {
     
     @Autowired 
     private OrderService orderService;
+    
+    @Autowired
+    private OfferService offerService;
     
     private SessionManager sessionManager; //to manage session
     
@@ -390,6 +395,42 @@ public class AdminController {
         ModelAndView model = new ModelAndView("/admin/orderItem");
         List<ShoppingCartHandlerEntry> ShoppingCartItemList = orderService.getAllShoppingCartItemByCartId(cartId);
         model.addObject("ShoppingCartItemList", ShoppingCartItemList);
+        return model;
+    }
+    
+    /*
+    admin set offers     
+    */
+    @RequestMapping("/admin/offer")
+    public ModelAndView offerPage() throws SQLException, ClassNotFoundException{
+        ModelAndView adminModel = new ModelAndView("/admin/offer");
+        ModelAndView userModel = new ModelAndView("redirect:/user/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            User user = new User();
+            user.setSessionValue(username);
+            User fetchSessionData;
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==2){
+                return userModel;
+            }else{
+                List<Product> productList = productService.getProduct();
+                adminModel.addObject("offer", new Offer());
+                adminModel.addObject("productList", productList);
+                return adminModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");        
+    }
+    
+    /*
+    saves the offer
+    */
+    @RequestMapping(value="/admin/offerSave",method=RequestMethod.POST)
+    public ModelAndView offerSave(@ModelAttribute("offer") Offer offer) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("/admin/offer");
+        offerService.insertOffer(offer);
         return model;
     }
 }

@@ -38,5 +38,8 @@ public interface UserDAO {
     
     //update debit amount
     void updateDebitAmount(User user) throws SQLException,ClassNotFoundException;
+    
+    //update order count
+    void updateOrderCount(String username) throws SQLException,ClassNotFoundException;
 
 }

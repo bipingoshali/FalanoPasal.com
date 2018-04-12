@@ -39,6 +39,9 @@ public class SQLConstant {
         public final static String MINUS_DEBIT_AMOUNT = "UPDATE " + TableConstant.USER_TABLE +
                 " SET debitamount=debitamount-? WHERE username=?";
         
+        public final static String UPDATE_ORDER_COUNT = "UPDATE " + TableConstant.USER_TABLE +
+                " SET ordercount=ordercount+1 where username=?";
+        
 
     }
 
@@ -161,6 +164,15 @@ public class SQLConstant {
     public class Delivery{
         public final static String DELIVERY_INSERT = "INSERT INTO " + TableConstant.DELIVERY_TABLE +
                 " (cartid,deliverytype,customdate,customtime) values(?,?,?,?)";
+    }
+    
+    public class Offer{
+        
+        public final static String OFFER_INSERT = "INSERT INTO " + TableConstant.OFFER_TABLE + 
+                " (type,ordercount,productid,pricetag) VALUES(?,?,?,?)";
+        
+        public final static String GET_ALL_OFFER_BY_ORDERCOUNT = "SELECT * FROM " + TableConstant.OFFER_TABLE +
+                " WHERE ordercount<=?";;
     }
     
 }

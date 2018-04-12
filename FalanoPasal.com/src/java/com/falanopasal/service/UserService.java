@@ -24,5 +24,5 @@ public interface UserService {
     User usernameAuthentication(Login login) throws SQLException,ClassNotFoundException;
     List<User> getAllCustomer() throws SQLException,ClassNotFoundException;
     void updateDebitAmount(User user) throws SQLException,ClassNotFoundException;
-    
+    void updateOrderCount(String username) throws SQLException,ClassNotFoundException;   
 }

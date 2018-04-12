@@ -44,6 +44,7 @@ public class SessionDAOImpl implements SessionDAO{
         user.setUsername(rs.getString("username"));
         user.setEmail(rs.getString("email"));
         user.setRoleId(rs.getInt("roleId"));
+        user.setOrderCount(rs.getInt("ordercount"));
         return user;
     }
 

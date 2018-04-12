@@ -7,6 +7,7 @@ package com.falanopasal.controller;
 
 import com.falanopasal.entity.Category;
 import com.falanopasal.entity.Delivery;
+import com.falanopasal.entity.Offer;
 import com.falanopasal.entity.Product;
 import com.falanopasal.entity.ShoppingCart;
 import com.falanopasal.entity.ShoppingCartHandlerEntry;
@@ -14,6 +15,7 @@ import com.falanopasal.entity.ShoppingCartMap;
 import com.falanopasal.entity.User;
 import com.falanopasal.service.CategoryService;
 import com.falanopasal.service.DeliveryService;
+import com.falanopasal.service.OfferService;
 import com.falanopasal.service.OrderService;
 import com.falanopasal.service.ProductService;
 import com.falanopasal.service.SessionService;
@@ -26,6 +28,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -69,6 +72,9 @@ public class UserController {
     
     @Autowired
     private ApplicationContext appContext;
+    
+    @Autowired
+    private OfferService offerService;
     
     private SessionManager sessionManager; //session values
     private User user; //to set session values (username)
@@ -312,6 +318,11 @@ public class UserController {
                 msg+= "http://localhost:8080/FalanoPasal.com/confirmOrder?token="+randomUUID.toString()+"&username="+sessionManager.getAttr("username").toString();
                 Mail sMail = (Mail) appContext.getBean("mail");
 //                sMail.sendMail("bipingoshali2527@gmail.com", fetchSessionData.getEmail(), "FalanoPasal.com", msg);
+
+                /*
+                update user order count
+                */
+                userService.updateOrderCount(username);
                 shoppingCartMap.clearHashmap(); //clearing hash map
                 return model;
             }                       
@@ -408,5 +419,42 @@ public class UserController {
         product.setProductSubscribeDate(sqlEnrollDate);
         productService.subscribeProduct(product);
     }
+    
+    /*
+    it opens offer page
+    */
+    @RequestMapping("/user/offer")
+    public ModelAndView offerPage(ModelMap mm) throws SQLException, ClassNotFoundException{
+        ModelAndView userModel = new ModelAndView("/user/offer");
+        ModelAndView adminModel = new ModelAndView("redirect:/admin/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            user = new User();
+            user.setSessionValue(username); //setting the session value in User entity
+            fetchSessionData = new User();
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==1){                
+                return adminModel;
+            }else{
+                /*
+                checking if the user is elgible to receive offers and discounts
+                */
+                List<Offer> offerList = offerService.getAllOffer(fetchSessionData.getOrderCount());
+                if(offerList == null || offerList.isEmpty()){
+                    mm.addAttribute("offermessage", "Sorry! there are not any special offers for you.");
+                    return userModel;                    
+                }
+//                if(offerList != null && !offerList.isEmpty()){
+//                    redirectAttributes.addFlashAttribute("offermessage", "Sorry! there is no special offers for you.");
+//                    return userModel;
+//                }
+                userModel.addObject("offerList", offerList);
+                return userModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");
+    }
+    
         
 }
