@@ -7,12 +7,15 @@ package com.falanopasal.controller;
 
 import com.falanopasal.entity.Category;
 import com.falanopasal.entity.Offer;
+import com.falanopasal.entity.PackageMap;
+import com.falanopasal.entity.Package;
 import com.falanopasal.entity.Product;
 import com.falanopasal.entity.ShoppingCart;
 import com.falanopasal.entity.ShoppingCartHandlerEntry;
 import com.falanopasal.entity.User;
 import com.falanopasal.service.CategoryService;
 import com.falanopasal.service.OfferService;
+import com.falanopasal.service.PackageService;
 import com.falanopasal.service.OrderService;
 import com.falanopasal.service.ProductService;
 import com.falanopasal.service.SessionService;
@@ -62,6 +65,12 @@ public class AdminController {
     
     @Autowired
     private OfferService offerService;
+    
+    @Autowired
+    private PackageMap packageMap;
+    
+    @Autowired
+    private PackageService packageService;
     
     private SessionManager sessionManager; //to manage session
     
@@ -433,5 +442,27 @@ public class AdminController {
         offerService.insertOffer(offer);
         return model;
     }
+    
+    /*
+    create packages
+    */
+    @RequestMapping("/admin/package")
+    public ModelAndView adminPackage() throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("/admin/package");
+        List<Product> productList = productService.getProduct();
+        model.addObject("productList", productList);
+        model.addObject("packages", new Package());
+        List<Package> p = packageService.getMappedPackageProduct(packageMap);                
+                model.addObject("s", p);
+        
+        return model;
+    }
+    
+    @RequestMapping(value="/admin/package/addToPackage",method =RequestMethod.POST )
+    public ModelAndView addPackage(@ModelAttribute("packages") Package packages){
+        packageMap.addPackageProduct(packages.getProductId(), packages.getNewPrice());
+        return new ModelAndView("redirect:/admin/product");
+    }
+
 }
 

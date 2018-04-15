@@ -58,7 +58,7 @@
                         <li><a href="${SITE_URL}/admin/order">Order</a></li>
                         <li><a href="${SITE_URL}/admin/customer">Customer</a></li>
                         <li><a href="${SITE_URL}/admin/offer">Offer and Discount</a></li>
-                        <li><a href="">Another nav item</a></li>
+                        <li><a href="${SITE_URL}/admin/package">Package</a></li>
                         <li><a href="">More navigation</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">
