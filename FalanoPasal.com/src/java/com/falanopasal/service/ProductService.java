@@ -24,6 +24,12 @@ public interface ProductService {
     //get product data by category id
     List<Product> getProductByCategoryId(int categoryId) throws SQLException,ClassNotFoundException;
     
+    //get product by price
+    List<Product> getProductByPrice() throws SQLException,ClassNotFoundException;    
+    
+    //get product by popularity
+    List<Product> getProductByPopularity() throws SQLException,ClassNotFoundException;
+    
     //insert product data 
     void insertProduct(Product product) throws SQLException,ClassNotFoundException,ParseException;
     
@@ -51,6 +57,12 @@ public interface ProductService {
     //subscribe product
     void subscribeProduct(Product product) throws SQLException,ClassNotFoundException;
     
+    //get subscribed product by username
+    List<Product> getSubscriptionListByUsername(String username) throws SQLException,ClassNotFoundException;
+    
+    //get all subscription list
+    List<Product> getAllSubscriptionList() throws SQLException,ClassNotFoundException;    
+    
     //it stores the total amount of product bought
     void updateProductBought(Product product) throws SQLException,ClassNotFoundException;
     
@@ -61,5 +73,10 @@ public interface ProductService {
     //works if user want to rate again for that product
     void updateUserRateForAProduct(Product product) throws SQLException,ClassNotFoundException;
     
+    //get user rating
+    int getUserRating(Product product) throws SQLException,ClassNotFoundException;
 
+    //get product total rating
+    float getProductRating() throws SQLException,ClassNotFoundException;
+    
 }

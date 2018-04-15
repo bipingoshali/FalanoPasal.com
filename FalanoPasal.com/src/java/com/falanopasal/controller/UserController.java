@@ -138,6 +138,60 @@ public class UserController {
     }
     
     /*
+    search product by price
+    */
+    @RequestMapping(value="/user/home-product-by-price")
+    public ModelAndView userHomePageSearchByPrice() throws SQLException, ClassNotFoundException{
+        ModelAndView userModel =  new ModelAndView("/user/home");
+        ModelAndView adminModel = new ModelAndView("redirect:/admin/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            user = new User();
+            user.setSessionValue(username); //setting the session value in User entity
+            fetchSessionData = new User();
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==1){                
+                return adminModel;
+            }else{
+                List<Category> categoryList = categoryService.getCategory();
+                List<Product> productList = productService.getProductByPrice(); //search product based on category
+                userModel.addObject("categoryList", categoryList);
+                userModel.addObject("productList", productList);
+                return userModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");
+    }
+    
+    /*
+    search product by popularity
+    */
+    @RequestMapping(value="/user/home-product-by-popularity")
+    public ModelAndView userHomePageSearchByPopularity() throws SQLException, ClassNotFoundException{
+        ModelAndView userModel =  new ModelAndView("/user/home");
+        ModelAndView adminModel = new ModelAndView("redirect:/admin/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            user = new User();
+            user.setSessionValue(username); //setting the session value in User entity
+            fetchSessionData = new User();
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==1){                
+                return adminModel;
+            }else{
+                List<Category> categoryList = categoryService.getCategory();
+                List<Product> productList = productService.getProductByPopularity(); //search product based on category
+                userModel.addObject("categoryList", categoryList);
+                userModel.addObject("productList", productList);
+                return userModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");
+    }
+    
+    /*
     view product details
     */
     @RequestMapping("/user/productDetail/{productId}")
@@ -155,12 +209,22 @@ public class UserController {
             }else{
                 product = new Product();
                 product = productService.getProductByProductId(productId);
-                List<Product> productComment = productService.getAllProductCommentByProductId(productId);
                 if(product.getStockValue()==0){
                     userModel.addObject("message", "Out of stock");
                 }
-                userModel.addObject("productComment", productComment);
                 userModel.addObject("product", product);
+                
+                List<Product> productComment = productService.getAllProductCommentByProductId(productId);
+                userModel.addObject("productComment", productComment);
+                
+                product.setUsername(username);
+                product.setProductId(productId);
+                if(productService.checkUserRate(product)){
+                    int userRatingOnProduct = productService.getUserRating(product); 
+                    float productRating = productService.getProductRating();
+                    userModel.addObject("userRating", userRatingOnProduct);
+                    userModel.addObject("productRating", productRating);
+                }                
                 return userModel;
             }           
         }
@@ -252,6 +316,7 @@ public class UserController {
                 shoppingCart.setCartId(randomUUID.toString());
                 shoppingCart.setUsername(username);
                 shoppingCart.setGrandTotal(shoppingCartHandlerService.getTotalPrice(shoppingCartHandlerEntries));
+                shoppingCart.setTotalCalorieValue(shoppingCartHandlerService.getTotalCalorie(shoppingCartHandlerEntries));
                 Date utilEnrollDate = new Date();
                 java.sql.Date sqlEnrollDate = new java.sql.Date(utilEnrollDate.getTime());
                 shoppingCart.setPurchasedDate(sqlEnrollDate);
@@ -306,6 +371,7 @@ public class UserController {
                             " | Total Price: "+shoppingCartHandlerEntries.get(i).getProductTotalPrice()+" \n";                    
                 }
                 msg+= "Grand Total: "+shoppingCartHandlerService.getTotalPrice(shoppingCartHandlerEntries)+" \n";
+                msg+= "Total Calorie: "+shoppingCartHandlerService.getTotalCalorie(shoppingCartHandlerEntries)+" \n";
                 msg+= "Payment method: "+delivery.getPayment()+" \n";
                 if(delivery.getDeliveryType().equals("custom")){
                     msg+="Delivery type: "+delivery.getDeliveryType()+" \n";
@@ -362,7 +428,7 @@ public class UserController {
             if(fetchSessionData.getRoleId()==1){                
                 return adminModel;
             }else{
-                List<ShoppingCartHandlerEntry> s = orderService.getUserShoppingCarts(username);
+                List<ShoppingCart> s = orderService.getUserShoppingCarts(username);
                 userModel.addObject("s", s);
                 return userModel;
             }
@@ -370,6 +436,33 @@ public class UserController {
         return new ModelAndView("redirect:/login");
         
     }
+    
+    /*
+    view order history by cart id
+    */
+    @RequestMapping("/user/orderList/{cartId}")
+    public ModelAndView orderHistoryByCartId(@PathVariable("cartId") String cartId) throws SQLException, ClassNotFoundException{
+        ModelAndView userModel = new ModelAndView("/user/orderList");
+        ModelAndView adminModel = new ModelAndView("redirect:/admin/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            user = new User();
+            user.setSessionValue(username); //setting the session value in User entity
+            fetchSessionData = new User();
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==1){                
+                return adminModel;
+            }else{
+                List<ShoppingCartHandlerEntry> s = orderService.getAllShoppingCartItemByCartId(cartId);
+                userModel.addObject("s", s);
+                return userModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");
+        
+    }
+    
     
     /*
     rate product 
@@ -418,6 +511,33 @@ public class UserController {
         java.sql.Date sqlEnrollDate = new java.sql.Date(utilEnrollDate.getTime()); 
         product.setProductSubscribeDate(sqlEnrollDate);
         productService.subscribeProduct(product);
+    }
+    
+    /*
+    view subscription list
+    */
+    @RequestMapping("/user/subscription")
+    public ModelAndView subscriptionPage() throws SQLException, ClassNotFoundException{
+        ModelAndView userModel = new ModelAndView("/user/subscription");
+        ModelAndView adminModel = new ModelAndView("redirect:/admin/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            user = new User();
+            user.setSessionValue(username); //setting the session value in User entity
+            fetchSessionData = new User();
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==1){                
+                return adminModel;
+            }else{
+                List<Product> subscribedProductList = productService.getSubscriptionListByUsername(username);
+                if(subscribedProductList!=null){
+                    userModel.addObject("subscribedProductList", subscribedProductList);                    
+                }
+                return userModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");        
     }
     
     /*

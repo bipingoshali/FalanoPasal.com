@@ -166,6 +166,7 @@ public class ProductDAOImpl implements ProductDAO{
     public void subscribeProduct(Product product) throws SQLException, ClassNotFoundException {
         jdbcTemplate.update(SQLConstant.SubscribeProduct.SUBSCRIBE_PRODUCT, new Object[]{product.getUsername(),
                                                 product.getProductId(),
+                                                product.getSubscribeProductQuantity(),
                                                 product.getProductSubscriptionDuration(),
                                                 product.getProductSubscribeDate()});
     }
@@ -188,6 +189,70 @@ public class ProductDAOImpl implements ProductDAO{
     public void updateUserRateForAProduct(Product product) throws SQLException, ClassNotFoundException {
         jdbcTemplate.update(SQLConstant.ProductRatingCommenting.UPDATE_USER_RATING, new Object[]{product.getProductRating(),product.getProductRateDate(),product.getUsername(),product.getProductId()});
     }
+
+    @Override
+    public int getUserRating(Product product) throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.queryForObject(SQLConstant.ProductRatingCommenting.GET_USER_RATING, new Object[]{product.getUsername(),product.getProductId()}, Integer.class);
+    }
+
+    @Override
+    public float getProductRating() throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.queryForObject(SQLConstant.ProductRatingCommenting.GET_PRODUCT_RATING, Integer.class);
+    }
+
+    @Override
+    public List<Product> getProductByPrice() throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.Product.GET_PRODUCT_BY_PRICE, new RowMapper<Product>() {
+            @Override
+            public Product mapRow(ResultSet rs, int i) throws SQLException {
+                return mapProductData(rs);
+            }
+        });        
+    }
+
+    @Override
+    public List<Product> getProductByPopularity() throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.Product.GET_PRODUCT_BY_POPULARITY, new RowMapper<Product>() {
+            @Override
+            public Product mapRow(ResultSet rs, int i) throws SQLException {
+                return mapProductData(rs);
+            }
+        });                
+    }
+
+    @Override
+    public List<Product> getSubscriptionListByUsername(String username) throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.SubscribeProduct.GET_ALL_SUBSCRIBE_PRODUCT_BY_USERNAME, new Object[]{username}, new RowMapper<Product>() {
+            @Override
+            public Product mapRow(ResultSet rs, int i) throws SQLException {
+                return mapSubscribedProductData(rs);
+            }
+        });
+    }
+    
+    private Product mapSubscribedProductData(ResultSet rs) throws SQLException{
+        Product product = new Product();
+        product.setProductSubscribedId(rs.getInt("subscribeId"));
+        product.setProductName(this.getProductName(rs.getInt("productId")));
+        product.setSubscribeProductQuantity(rs.getInt("quantity"));
+        product.setProductSubscriptionDuration(rs.getString("duration"));
+        product.setSubscribedProductStatus(rs.getBoolean("status"));
+        product.setProductSubscribeDate(rs.getDate("date"));
+        product.setUsername(rs.getString("username"));
+        return product;
+    }
+
+    @Override
+    public List<Product> getAllSubscriptionList() throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.SubscribeProduct.GET_ALL_SUBSCRIBE_PRODUCT,  new RowMapper<Product>() {
+            @Override
+            public Product mapRow(ResultSet rs, int i) throws SQLException {
+                return mapSubscribedProductData(rs);
+            }
+        });
+    }
+    
+    
 
 
 

@@ -13,11 +13,12 @@ public class ShoppingCartHandlerEntry {
     private int productId,quantity;
     private String productName;
     private double price,productTotalPrice,calorieValue,totalCalorieValue;
+    private Product product;
 
     public ShoppingCartHandlerEntry() {
     }
 
-    public ShoppingCartHandlerEntry(int productId, int quantity, String productName, double price, double productTotalPrice, double calorieValue, double totalCalorieValue) {
+    public ShoppingCartHandlerEntry(int productId, int quantity, String productName, double price, double productTotalPrice, double calorieValue, double totalCalorieValue, Product product) {
         this.productId = productId;
         this.quantity = quantity;
         this.productName = productName;
@@ -25,7 +26,17 @@ public class ShoppingCartHandlerEntry {
         this.productTotalPrice = productTotalPrice;
         this.calorieValue = calorieValue;
         this.totalCalorieValue = totalCalorieValue;
+        this.product = product;
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
 
     public String getProductName() {
         return productName;

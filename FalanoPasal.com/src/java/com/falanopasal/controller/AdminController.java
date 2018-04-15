@@ -393,18 +393,48 @@ public class AdminController {
     */
     @RequestMapping("/admin/order")
     public ModelAndView adminOrderList() throws SQLException, ClassNotFoundException{
-        ModelAndView model = new ModelAndView("/admin/order");
-        List<ShoppingCart> shoppingCartList = orderService.getAllShoppingCart();
-        model.addObject("shoppingCartList", shoppingCartList);
-        return model;
+        ModelAndView adminModel = new ModelAndView("/admin/order");
+        ModelAndView userModel = new ModelAndView("redirect:/user/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            User user = new User();
+            user.setSessionValue(username);
+            User fetchSessionData;
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==2){
+                return userModel;
+            }else{
+                List<ShoppingCart> shoppingCartList = orderService.getAllShoppingCart();
+                adminModel.addObject("shoppingCartList", shoppingCartList);
+                return adminModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");
+        
     }
     
     @RequestMapping("/admin/orderItem/{cartId}")
-    public ModelAndView adminOrderItemList(@RequestParam("cartId") String cartId) throws SQLException, ClassNotFoundException{
-        ModelAndView model = new ModelAndView("/admin/orderItem");
-        List<ShoppingCartHandlerEntry> ShoppingCartItemList = orderService.getAllShoppingCartItemByCartId(cartId);
-        model.addObject("ShoppingCartItemList", ShoppingCartItemList);
-        return model;
+    public ModelAndView adminOrderItemList(@PathVariable("cartId") String cartId) throws SQLException, ClassNotFoundException{
+        ModelAndView adminModel = new ModelAndView("/admin/orderItem");
+        ModelAndView userModel = new ModelAndView("redirect:/user/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            User user = new User();
+            user.setSessionValue(username);
+            User fetchSessionData;
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==2){
+                return userModel;
+            }else{
+                List<ShoppingCartHandlerEntry> ShoppingCartItemList = orderService.getAllShoppingCartItemByCartId(cartId);
+                adminModel.addObject("ShoppingCartItemList", ShoppingCartItemList);
+                return adminModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");
+                
     }
     
     /*
@@ -462,6 +492,31 @@ public class AdminController {
     public ModelAndView addPackage(@ModelAttribute("packages") Package packages){
         packageMap.addPackageProduct(packages.getProductId(), packages.getNewPrice());
         return new ModelAndView("redirect:/admin/product");
+    }
+    
+    /*
+    view subscription list
+    */
+    @RequestMapping("/admin/subscription")
+    public ModelAndView subscriptionPage() throws SQLException, ClassNotFoundException{
+        ModelAndView adminModel = new ModelAndView("/admin/subscription");
+        ModelAndView userModel = new ModelAndView("redirect:/user/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            User user = new User();
+            user.setSessionValue(username);
+            User fetchSessionData;
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==2){
+                return userModel;
+            }else{
+                List<Product> allSubscribeProductList = productService.getAllSubscriptionList();
+                adminModel.addObject("allSubscribeProductList", allSubscribeProductList);
+                return adminModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");
     }
 
 }

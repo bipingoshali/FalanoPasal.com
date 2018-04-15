@@ -60,11 +60,9 @@
                     'rating': rateInput
                 },
                 success: function (data) {
-                    if (data.success === true) { // if true (1)
-                        setTimeout(function () {// wait for 5 secs(2)
-                            location.reload(); // then reload the page.(3)
-                        }, 5000);
-                    }
+                    setTimeout(function () {// wait for 5 secs(2)
+                        location.reload(); // then reload the page.(3)
+                    }, 500);
                 }
             });
         });
@@ -224,6 +222,24 @@
                             <tr>
                                 <td>Calorie Value:</td>
                                 <td>${product.calorieValue} Kcal/g</td>
+                            </tr>
+                            <tr>
+                                <td>Your Rating:</td>
+                                <c:if test="${not empty userRating}">
+                                <td>${userRating}</td>
+                                </c:if>
+                                <c:if test="${empty userRating}">
+                                    <td><i>No rating</i></td>
+                                </c:if>
+                            </tr>
+                            <tr>
+                                <td>Total Rating:</td>
+                                <c:if test="${not empty productRating}">
+                                <td>${productRating}</td>
+                                </c:if>
+                                <c:if test="${empty productRating}">
+                                    <td><i>No rating</i></td>
+                                </c:if>
                             </tr>
                         </tbody>
                     </table>

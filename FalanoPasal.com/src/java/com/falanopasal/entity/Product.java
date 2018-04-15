@@ -18,21 +18,22 @@ public class Product {
     private float productPrice,calorieValue;
     private String manufacturerName,location,manufacturedDate,expiryDateStringFormat;
     private Date manufactureDateFormat,expiryDateFormat;
-    private int expiryDate;    
-    private int productRating;
+    private int expiryDate; //providing the number of month and system automatically assigns the date    
+    private int productRating,productSubscribedId;
     private String productComment;
     private String productSubscriptionDuration;
     private Date productCommentDate,productSubscribeDate,productRateDate;
     private int subscribeProductQuantity;
     private String username; //to find which user is rating a product
     private Category category;
+    private boolean subscribedProductStatus;
     
     private MultipartFile productImage;
 
     public Product() {
     }
 
-    public Product(int categoryId, int productId, int stockValue, int updatedStockValue, String productName, String description, float productPrice, float calorieValue, String manufacturerName, String location, String manufacturedDate, String expiryDateStringFormat, Date manufactureDateFormat, Date expiryDateFormat, int expiryDate, int productRating, String productComment, String productSubscriptionDuration, Date productCommentDate, Date productSubscribeDate, Date productRateDate, int subscribeProductQuantity, String username, Category category, MultipartFile productImage) {
+    public Product(int categoryId, int productId, int stockValue, int updatedStockValue, String productName, String description, float productPrice, float calorieValue, String manufacturerName, String location, String manufacturedDate, String expiryDateStringFormat, Date manufactureDateFormat, Date expiryDateFormat, int expiryDate, int productRating, int productSubscribedId, String productComment, String productSubscriptionDuration, Date productCommentDate, Date productSubscribeDate, Date productRateDate, int subscribeProductQuantity, String username, Category category, boolean subscribedProductStatus, MultipartFile productImage) {
         this.categoryId = categoryId;
         this.productId = productId;
         this.stockValue = stockValue;
@@ -49,6 +50,7 @@ public class Product {
         this.expiryDateFormat = expiryDateFormat;
         this.expiryDate = expiryDate;
         this.productRating = productRating;
+        this.productSubscribedId = productSubscribedId;
         this.productComment = productComment;
         this.productSubscriptionDuration = productSubscriptionDuration;
         this.productCommentDate = productCommentDate;
@@ -57,8 +59,27 @@ public class Product {
         this.subscribeProductQuantity = subscribeProductQuantity;
         this.username = username;
         this.category = category;
+        this.subscribedProductStatus = subscribedProductStatus;
         this.productImage = productImage;
     }
+
+    public boolean isSubscribedProductStatus() {
+        return subscribedProductStatus;
+    }
+
+    public void setSubscribedProductStatus(boolean subscribedProductStatus) {
+        this.subscribedProductStatus = subscribedProductStatus;
+    }
+
+
+    public int getProductSubscribedId() {
+        return productSubscribedId;
+    }
+
+    public void setProductSubscribedId(int productSubscribedId) {
+        this.productSubscribedId = productSubscribedId;
+    }
+
 
     public Date getProductRateDate() {
         return productRateDate;

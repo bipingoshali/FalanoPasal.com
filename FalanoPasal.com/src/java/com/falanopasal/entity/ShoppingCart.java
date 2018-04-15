@@ -18,19 +18,29 @@ public class ShoppingCart {
     private Date purchasedDate;
     private String paymentMethod;
     private double grandTotal;
+    private double totalCalorieValue;
     private ShoppingCartHandlerEntry shoppingCartHandlerEntry;
 
     public ShoppingCart() {
     }
 
-    public ShoppingCart(String cartId, String username, boolean purchased, Date purchasedDate, String paymentMethod, double grandTotal, ShoppingCartHandlerEntry shoppingCartHandlerEntry) {
+    public ShoppingCart(String cartId, String username, boolean purchased, Date purchasedDate, String paymentMethod, double grandTotal, double totalCalorieValue, ShoppingCartHandlerEntry shoppingCartHandlerEntry) {
         this.cartId = cartId;
         this.username = username;
         this.purchased = purchased;
         this.purchasedDate = purchasedDate;
         this.paymentMethod = paymentMethod;
         this.grandTotal = grandTotal;
+        this.totalCalorieValue = totalCalorieValue;
         this.shoppingCartHandlerEntry = shoppingCartHandlerEntry;
+    }
+
+    public double getTotalCalorieValue() {
+        return totalCalorieValue;
+    }
+
+    public void setTotalCalorieValue(double totalCalorieValue) {
+        this.totalCalorieValue = totalCalorieValue;
     }
 
     public double getGrandTotal() {

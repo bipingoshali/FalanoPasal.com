@@ -36,7 +36,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
-    public List<ShoppingCartHandlerEntry> getUserShoppingCarts(String username) throws SQLException, ClassNotFoundException {
+    public List<ShoppingCart> getUserShoppingCarts(String username) throws SQLException, ClassNotFoundException {
         return orderDao.getUserShoppingCarts(username);
     }
 

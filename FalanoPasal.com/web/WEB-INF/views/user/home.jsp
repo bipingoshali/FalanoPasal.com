@@ -8,6 +8,8 @@
         <h1 class="page-header" style="margin-top: 0px;">
             Product
             <small>Select product</small>
+            <a href="<c:url value='/user/home-product-by-popularity' />" class="btn btn-default btn-sm pull-right">Search by Popularity</a>                                    
+            <a href="<c:url value='/user/home-product-by-price' />" class="btn btn-default btn-sm pull-right">Search by Price</a>                                    
         </h1>
     </div>
 </div>
@@ -25,6 +27,8 @@
                 </c:forEach>                            
             </div>
         </div>
+        
+        <!--product image-->
         <div class="col-md-9" style="padding: 20px;">
             <div class="row">
                 <style>

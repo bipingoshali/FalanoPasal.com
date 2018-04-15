@@ -39,6 +39,7 @@
                     <li><a href="${SITE_URL}/user/home">Home</a></li>
                     <li><a href="${SITE_URL}/user/orderHistory">Order History</a></li>
                     <li><a href="${SITE_URL}/user/offer">Offer</a></li>
+                    <li><a href="${SITE_URL}/user/subscription">Subscription</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown<span class="caret"></span></a>
                         <ul class="dropdown-menu">

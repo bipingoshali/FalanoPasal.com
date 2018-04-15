@@ -39,8 +39,11 @@ public class DefaultController {
     @Autowired
     private SessionService sessionService;
     
-//    @Autowired
-//    private ApplicationContext appContext;
+    @Autowired
+    private ApplicationContext appContext;
+    
+    
+    
     
     private SessionManager sessionManager; //session data    
     private User userCookie; // to store user data obtained from cookie value
@@ -50,43 +53,87 @@ public class DefaultController {
     int counter=0; // to count the login Attempt
     
     
+    
+    
+    
     /*
     main home page controller
     it opens the index page    
     */
     @RequestMapping(value= {"/","/index"})
-    public String index(){
-        return "index";
+    public ModelAndView index(@CookieValue(value="falanoPasal",defaultValue="defaultValue") String cookieValue) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("/index");
+        ModelAndView userModel =  new ModelAndView("redirect:/user/home");
+        ModelAndView adminModel = new ModelAndView("redirect:/admin/home");
+        
+        sessionManager = new SessionManager();
+        
+        userCookie = new User();
+        userCookie = sessionService.rememberMe(cookieValue);
+        
+        //if a cookie is present
+        if(userCookie!=null){
+            sessionManager.setData(new String[]{"username"},new String[]{userCookie.getUsername()});
+            return userModel; //default redirect page
+        }else{
+            if (sessionManager.getAttr("username") != null) {
+                String username = sessionManager.getAttr("username").toString();
+                userSessionSet = new User();
+                userSessionSet.setSessionValue(username); //setting username to find out the user role ID
+                userSessionGet = new User();
+                userSessionGet = sessionService.getDataFromSessionValue(userSessionSet); // userSessionGet holds all the value of the User
+                
+                if(userSessionGet.getRoleId()==1){
+                    return adminModel;
+                } else {
+                    return userModel;
+                }
+            }            
+        }        
+        return model;        
     }
 
+    
+    
+    
+    
     /*
     registration page controller
     it opens register page
     */
     @RequestMapping("/register")
-    public ModelAndView register() throws SQLException, ClassNotFoundException {
+    public ModelAndView register(@CookieValue(value="falanoPasal",defaultValue="defaultValue") String cookieValue) throws SQLException, ClassNotFoundException {
         ModelAndView model = new ModelAndView("/register");
         ModelAndView userModel =  new ModelAndView("redirect:/user/home");
         ModelAndView adminModel = new ModelAndView("redirect:/admin/home");        
         sessionManager = new SessionManager();
-        if (sessionManager.getAttr("username") != null) {
-            String username = sessionManager.getAttr("username").toString();
-            userSessionSet = new User();
-            userSessionSet.setSessionValue(username); //setting username to find out the user role ID
-            userSessionGet = new User();
-            userSessionGet = sessionService.getDataFromSessionValue(userSessionSet); // userSessionGet holds all the value of the User
+        userCookie = new User();
+        userCookie = sessionService.rememberMe(cookieValue);
+        
+        //if a cookie is present
+        if(userCookie!=null){
+            sessionManager.setData(new String[]{"username"},new String[]{userCookie.getUsername()});
+            return userModel; //default redirect page
+        }else{
+            if (sessionManager.getAttr("username") != null) {
+                String username = sessionManager.getAttr("username").toString();
+                userSessionSet = new User();
+                userSessionSet.setSessionValue(username); //setting username to find out the user role ID
+                userSessionGet = new User();
+                userSessionGet = sessionService.getDataFromSessionValue(userSessionSet); // userSessionGet holds all the value of the User
 
-            if (userSessionGet.getRoleId() == 1) {
-                return adminModel;
-            } else {
-                return userModel;
-            }
+                if (userSessionGet.getRoleId() == 1) {
+                    return adminModel;
+                } else {
+                    return userModel;
+                }
+            }            
         }
 
         model.addObject("user", new User());
         return model;
     }
-        
+             
     /*
     it saves the user data 
     it fetch the user data after insertion which will be used while sending mail
@@ -97,19 +144,16 @@ public class DefaultController {
         fetchUserList = new User();
         fetchUserList = userService.getByUsername(user);
         
-//        //creating a random user id 
-//        java.util.UUID randomUUID = java.util.UUID.randomUUID();
-//        String emailToken = randomUUID.toString();
-//        
-//        //update token value in user table
-//        userService.updateEmailToken(emailToken, user.getUsername()); it might not be required
-
-//        String msg = "Congratulation "+user.getUsername()+"! Your account has been created. \n";
-//        msg+= "Your Address :"+user.getCity()+", "+user.getAddressLine1()+", "+user.getAddressLine2()+" "+user.getHouseNo()+" \n";
-//        msg+= "Please click the link below to verify your email address. \n";
-//        msg+= "http://localhost:8080/FalanoPasal.com/confirmEmail?token="+fetchUserList.getEmailToken()+"&userId="+fetchUserList.getUserId();
-//        Mail sMail = (Mail) appContext.getBean("mail");
-//        sMail.sendMail("bipingoshali2527@gmail.com", user.getEmail(), "FalanoPasal.com", msg);
+        //creating a random user id 
+        java.util.UUID randomUUID = java.util.UUID.randomUUID();
+        String emailToken = randomUUID.toString();
+        
+        String msg = "Congratulation "+user.getUsername()+"! Your account has been created. \n";
+        msg+= "Your Address :"+user.getCity()+", "+user.getAddressLine1()+", "+user.getAddressLine2()+" "+user.getHouseNo()+" \n";
+        msg+= "Please click the link below to verify your email address. \n";
+        msg+= "http://localhost:8080/FalanoPasal.com/confirmEmail?token="+fetchUserList.getEmailToken()+"&userId="+fetchUserList.getUserId();
+        Mail sMail = (Mail) appContext.getBean("mail");
+        sMail.sendMail("bipingoshali2527@gmail.com", user.getEmail(), "FalanoPasal.com", msg);
         redirectAttributes.addFlashAttribute("message", "Congratulation! Your account has been created. Please verify your email address.");        
         return "redirect:/register";
     }
@@ -151,6 +195,11 @@ public class DefaultController {
     }
     
 //    end of registration page controller
+    
+    
+    
+    
+    
     
     /*
     login page controller

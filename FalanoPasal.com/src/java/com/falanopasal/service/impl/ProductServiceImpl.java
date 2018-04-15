@@ -134,5 +134,35 @@ public class ProductServiceImpl implements ProductService{
         productDao.updateUserRateForAProduct(product);
     }
 
+    @Override
+    public int getUserRating(Product product) throws SQLException, ClassNotFoundException {
+        return productDao.getUserRating(product);
+    }
+
+    @Override
+    public float getProductRating() throws SQLException, ClassNotFoundException {
+        return productDao.getProductRating();
+    }
+
+    @Override
+    public List<Product> getProductByPrice() throws SQLException, ClassNotFoundException {
+        return productDao.getProductByPrice();
+    }
+
+    @Override
+    public List<Product> getProductByPopularity() throws SQLException, ClassNotFoundException {
+        return productDao.getProductByPopularity();
+    }
+
+    @Override
+    public List<Product> getSubscriptionListByUsername(String username) throws SQLException, ClassNotFoundException {
+        return productDao.getSubscriptionListByUsername(username);
+    }
+
+    @Override
+    public List<Product> getAllSubscriptionList() throws SQLException, ClassNotFoundException {
+        return productDao.getAllSubscriptionList();
+    }
+
     
 }

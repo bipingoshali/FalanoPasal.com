@@ -16,8 +16,8 @@ public class SQLConstant {
         public final static String USER_INSERT = "INSERT INTO "
                 + TableConstant.USER_TABLE
                 + " (firstName,lastName,email,username,password,city,"
-                + "addressline1,addressline2,houseno,familytype,phoneno,birthdate,roleid,status,emailToken,enrollDate)"
-                + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                + "addressline1,addressline2,houseno,familytype,phoneno,birthdate,roleid,status,emailToken,debitamount,ordercount,enrollDate)"
+                + " values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,0,0,?)";
         
         public final static String IS_USERNAME_EXIST = "SELECT COUNT(username) FROM "
                 + TableConstant.USER_TABLE +
@@ -109,13 +109,18 @@ public class SQLConstant {
         public final static String MINUS_PRODUCT_STOCK = "UPDATE " + TableConstant.PRODUCT_TABLE +
                 " SET stockAmount=stockAmount-? where productId=?";
         
+        public final static String GET_PRODUCT_BY_PRICE = "SELECT * FROM " + TableConstant.PRODUCT_TABLE +
+                " ORDER BY price DESC";
+
+        public final static String GET_PRODUCT_BY_POPULARITY = "select * from rating r,product p where p.productId=r.productId order by rating desc";
+        
         
     }
     
     public class ShoppingCarts{
         
         public final static String REGISTER_USER_SHOPPING_CART = "INSERT INTO " + TableConstant.SHOPPING_CARTS_TABLE +
-                " (cartId,username,purchased,paymentMethod,grandtotal,purchasedDate) values (?,?,false,?,?,?)";
+                " (cartId,username,purchased,paymentMethod,grandtotal,totalCalorie,purchasedDate) values (?,?,false,?,?,?,?)";
         
         public final static String REGISTER_USER_SHOPPING_CART_ITEM = "INSERT INTO " + TableConstant.SHOPPING_CART_ITEM_TABLE +
                 " (cartId,productId,productQuantity,productPrice,productTotalPrice,productTotalCalorie) values(?,?,?,?,?,?)";
@@ -133,7 +138,8 @@ public class SQLConstant {
     
     public class OrderHistory{
         
-        public final static String GET_USER_ORDER_HISTORY = "SELECT * FROM shoppingcarts sc,shoppingcartitem sci where sc.cartId=sci.cartId and sc.username=?";
+        public final static String GET_USER_ORDER_HISTORY = "SELECT * FROM " + TableConstant.SHOPPING_CARTS_TABLE+
+                " where username=? order by purchasedDate desc" ;
     }
     
     public class ProductRatingCommenting{
@@ -154,11 +160,22 @@ public class SQLConstant {
         
         public final static String UPDATE_USER_RATING = "UPDATE " + TableConstant.PRODUCT_RATING_TABLE +
                 " SET rating=?,ratingdate=? where username=? and productId=?";
+        
+        public final static String GET_USER_RATING = "SELECT rating from " + TableConstant.PRODUCT_RATING_TABLE +
+                " where username=? and productId=?";
+        
+        public final static String GET_PRODUCT_RATING = "SELECT AVG(rating) from " + TableConstant.PRODUCT_RATING_TABLE;
     }
     
     public class SubscribeProduct{
+        
         public final static String SUBSCRIBE_PRODUCT = "INSERT INTO " + TableConstant.SUBSCRIBE_PRODUCT_TABLE +
-                " (username,productId,duration,date) values(?,?,?,?)";
+                " (username,productId,quantity,duration,status,date) values(?,?,?,?,true,?)";
+        
+        public final static String GET_ALL_SUBSCRIBE_PRODUCT_BY_USERNAME = "SELECT * FROM " + TableConstant.SUBSCRIBE_PRODUCT_TABLE +
+                " WHERE username=?";
+        
+        public final static String GET_ALL_SUBSCRIBE_PRODUCT = "SELECT * FROM " + TableConstant.SUBSCRIBE_PRODUCT_TABLE;
     }
     
     public class Delivery{

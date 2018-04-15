@@ -35,6 +35,7 @@ public class OrderDAOImpl implements OrderDAO{
                     shoppingCart.getUsername(),
                     shoppingCart.getPaymentMethod(),
                     shoppingCart.getGrandTotal(),
+                    shoppingCart.getTotalCalorieValue(),
                     shoppingCart.getPurchasedDate()});
     }
 
@@ -64,23 +65,15 @@ public class OrderDAOImpl implements OrderDAO{
     
 
     @Override
-    public List<ShoppingCartHandlerEntry> getUserShoppingCarts(String username) throws SQLException,ClassNotFoundException {
-        return jdbcTemplate.query(SQLConstant.OrderHistory.GET_USER_ORDER_HISTORY, new String[]{username}, new RowMapper<ShoppingCartHandlerEntry>() {
+    public List<ShoppingCart> getUserShoppingCarts(String username) throws SQLException,ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.OrderHistory.GET_USER_ORDER_HISTORY, new String[]{username}, new RowMapper<ShoppingCart>() {
             @Override
-            public ShoppingCartHandlerEntry mapRow(ResultSet rs, int i) throws SQLException {
-                return mapShoppingCartHandlerEntryData(rs);
+            public ShoppingCart mapRow(ResultSet rs, int i) throws SQLException {
+                return mapShoppingCartData(rs);
             }
         });
     }
     
-    private ShoppingCartHandlerEntry mapShoppingCartHandlerEntryData(ResultSet rs) throws SQLException{
-        ShoppingCartHandlerEntry s = new ShoppingCartHandlerEntry();
-        s.setProductId(rs.getInt("productId"));
-        s.setQuantity(rs.getInt("productQuantity"));
-        s.setProductTotalPrice(rs.getDouble("productTotalPrice"));
-        s.setTotalCalorieValue(rs.getInt("productTotalCalorie"));
-        return s;
-    }
 
     @Override
     public List<ShoppingCart> getAllShoppingCart() throws SQLException, ClassNotFoundException {
@@ -97,6 +90,9 @@ public class OrderDAOImpl implements OrderDAO{
         shoppingCart.setCartId(rs.getString("cartId"));
         shoppingCart.setUsername(rs.getString("username"));
         shoppingCart.setPurchased(rs.getBoolean("purchased"));
+        shoppingCart.setPaymentMethod(rs.getString("paymentMethod"));
+        shoppingCart.setGrandTotal(rs.getDouble("grandtotal"));
+        shoppingCart.setTotalCalorieValue(rs.getDouble("totalCalorie"));
         shoppingCart.setPurchasedDate(rs.getDate("purchasedDate"));
         return shoppingCart;
     }
@@ -113,6 +109,7 @@ public class OrderDAOImpl implements OrderDAO{
     
     private ShoppingCartHandlerEntry mapShoppingCartItemData(ResultSet rs) throws SQLException{
         ShoppingCartHandlerEntry s = new ShoppingCartHandlerEntry();
+        s.setProductName(this.getProductName(rs.getInt("productId")));
         s.setProductId(rs.getInt("productId"));
         s.setQuantity(rs.getInt("productQuantity"));
         s.setPrice(rs.getDouble("productPrice"));
@@ -120,6 +117,12 @@ public class OrderDAOImpl implements OrderDAO{
         s.setTotalCalorieValue(rs.getDouble("productTotalCalorie"));
         return s;
     }
+    
+    public String getProductName(int productId){
+        String productName="";
+        productName = jdbcTemplate.queryForObject(SQLConstant.Product.GET_PRODUCT_NAME_BY_ID, new Object[]{productId}, String.class);
+        return productName;
+    }    
 
     @Override
     public void updateOrderStatus(User user) throws SQLException, ClassNotFoundException {

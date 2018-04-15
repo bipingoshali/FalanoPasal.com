@@ -18,7 +18,7 @@ import java.util.List;
 public interface OrderService {
     void registerUserShoppingCart(ShoppingCart shoppingCart) throws SQLException,ClassNotFoundException;
     void registerUserShoppingCartItem(ShoppingCart shoppingCart,List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) throws SQLException,ClassNotFoundException;
-    List<ShoppingCartHandlerEntry> getUserShoppingCarts(String username) throws SQLException,ClassNotFoundException;
+    List<ShoppingCart> getUserShoppingCarts(String username) throws SQLException,ClassNotFoundException;
     
     
     //get all shopping cart list

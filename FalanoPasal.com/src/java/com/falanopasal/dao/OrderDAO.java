@@ -23,7 +23,7 @@ public interface OrderDAO {
     void registerUserShoppingCartItem(ShoppingCart shoppingCart,List<ShoppingCartHandlerEntry> shoppingCartHandlerEntries) throws SQLException,ClassNotFoundException;
         
     //get order history
-    List<ShoppingCartHandlerEntry> getUserShoppingCarts(String username) throws SQLException,ClassNotFoundException;
+    List<ShoppingCart> getUserShoppingCarts(String username) throws SQLException,ClassNotFoundException;
     
     //get all shopping cart list
     List<ShoppingCart> getAllShoppingCart() throws SQLException,ClassNotFoundException;
