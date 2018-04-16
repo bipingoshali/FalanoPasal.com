@@ -15,6 +15,7 @@ public class User {
     private int userId;
     private String firstName,lastName,email,username,password,city,addressLine1,addressLine2,phoneNo,birthdate,familyType;
     private int houseNo,roleId;
+    private String oldPassword,confirmPassword;
     private boolean status=false; //setting the default value
     private Date birthdateformat,enrollDate;
     private String emailToken; //carries email token
@@ -26,7 +27,7 @@ public class User {
     public User() {
     }
 
-    public User(int userId, String firstName, String lastName, String email, String username, String password, String city, String addressLine1, String addressLine2, String phoneNo, String birthdate, String familyType, int houseNo, int roleId, Date birthdateformat, Date enrollDate, String emailToken, String sessionValue, double debitAmount, String cartId, int orderCount) {
+    public User(int userId, String firstName, String lastName, String email, String username, String password, String city, String addressLine1, String addressLine2, String phoneNo, String birthdate, String familyType, int houseNo, int roleId, String oldPassword, String confirmPassword, Date birthdateformat, Date enrollDate, String emailToken, String sessionValue, double debitAmount, String cartId, int orderCount) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -41,6 +42,8 @@ public class User {
         this.familyType = familyType;
         this.houseNo = houseNo;
         this.roleId = roleId;
+        this.oldPassword = oldPassword;
+        this.confirmPassword = confirmPassword;
         this.birthdateformat = birthdateformat;
         this.enrollDate = enrollDate;
         this.emailToken = emailToken;
@@ -49,6 +52,24 @@ public class User {
         this.cartId = cartId;
         this.orderCount = orderCount;
     }
+
+    public String getOldPassword() {
+        return oldPassword;
+    }
+
+    public void setOldPassword(String oldPassword) {
+        this.oldPassword = oldPassword;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+    }
+
+
 
     public int getOrderCount() {
         return orderCount;

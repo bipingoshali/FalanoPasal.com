@@ -25,4 +25,7 @@ public interface UserService {
     List<User> getAllCustomer() throws SQLException,ClassNotFoundException;
     void updateDebitAmount(User user) throws SQLException,ClassNotFoundException;
     void updateOrderCount(String username) throws SQLException,ClassNotFoundException;   
+    void updateUserPassword(User user) throws SQLException,ClassNotFoundException;  
+    int getTotalCalorieValue(String username) throws SQLException,ClassNotFoundException;    
+    boolean isUsernameShopped(String username) throws SQLException,ClassNotFoundException;    
 }

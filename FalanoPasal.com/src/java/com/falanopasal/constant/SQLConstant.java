@@ -42,6 +42,9 @@ public class SQLConstant {
         public final static String UPDATE_ORDER_COUNT = "UPDATE " + TableConstant.USER_TABLE +
                 " SET ordercount=ordercount+1 where username=?";
         
+        public final static String UPDATE_PASSWORD = "UPDATE " + TableConstant.USER_TABLE + 
+                " SET password=? where username=?";
+        
 
     }
 
@@ -112,7 +115,8 @@ public class SQLConstant {
         public final static String GET_PRODUCT_BY_PRICE = "SELECT * FROM " + TableConstant.PRODUCT_TABLE +
                 " ORDER BY price DESC";
 
-        public final static String GET_PRODUCT_BY_POPULARITY = "select * from rating r,product p where p.productId=r.productId order by rating desc";
+        public final static String GET_PRODUCT_BY_POPULARITY = "select p.productId,p.categoryId,p.productName,p.price,p.calorieValue,p.description,p.stockAmount,p.manufacturername,p.location,p.manufacturedate,p.expirydate "
+                + "from rating r,product p where p.productId=r.productId order by rating desc";
         
         
     }
@@ -133,6 +137,12 @@ public class SQLConstant {
         
         public final static String UPDATE_ORDER_STATUS = "UPDATE " + TableConstant.SHOPPING_CARTS_TABLE +
                 " SET purchased=true where cartId=? and username=?";
+        
+        public final static String GET_TOTAL_CALORIE_VALUE = "SELECT SUM(totalCalorie) from " + TableConstant.SHOPPING_CARTS_TABLE +
+                " where username=?";
+        
+        public final static String CHECK_USERNAME_IN_SHOPPING_CART = "SELECT COUNT(username) FROM " + TableConstant.SHOPPING_CARTS_TABLE+
+                " WHERE username=?";
                        
     }
     
@@ -176,6 +186,16 @@ public class SQLConstant {
                 " WHERE username=?";
         
         public final static String GET_ALL_SUBSCRIBE_PRODUCT = "SELECT * FROM " + TableConstant.SUBSCRIBE_PRODUCT_TABLE;
+        
+        public final static String PAUSE_SUBSCRIPTION = "UPDATE " + TableConstant.SUBSCRIBE_PRODUCT_TABLE +
+                " SET status=false where username=? and productId=?";
+        
+        public final static String START_SUBSCRIPTION = "UPDATE " + TableConstant.SUBSCRIBE_PRODUCT_TABLE + 
+                " SET status=true where username=? and productId=?";
+        
+        public final static String CANCEL_SUBSCRIPTION = "DELETE FROM " + TableConstant.SUBSCRIBE_PRODUCT_TABLE +
+                " WHERE username=? and productId=?";
+        
     }
     
     public class Delivery{

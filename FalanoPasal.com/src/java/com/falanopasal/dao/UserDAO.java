@@ -41,5 +41,15 @@ public interface UserDAO {
     
     //update order count
     void updateOrderCount(String username) throws SQLException,ClassNotFoundException;
+    
+    //update user password
+    void updateUserPassword(User user) throws SQLException,ClassNotFoundException;
+    
+    //get total calorie value
+    int getTotalCalorieValue(String username) throws SQLException,ClassNotFoundException;
+    
+    //check whether the user has shopped from the website or not
+    boolean isUsernameShopped(String username) throws SQLException,ClassNotFoundException;
+    
 
 }

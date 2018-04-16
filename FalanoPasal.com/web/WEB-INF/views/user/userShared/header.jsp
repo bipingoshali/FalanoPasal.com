@@ -55,7 +55,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="${SITE_URL}/user/shoppingCart" ><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</a></li>
-                    <li><a href="#">Hy ${username}</a></li>
+                    <li><a href="${SITE_URL}/user/profile">Hy ${username}</a></li>
                     <li><a href="${SITE_URL}/logout">Logout</a></li>
                     <!--<li class="active"><a href="abc.html">Welcome <span class="sr-only">(current)</span></a></li>-->
                 </ul>

@@ -47,9 +47,9 @@
                         </c:if>                        
                     </td>
                     <td>
-                        <a href="${SITE_URL}/user/orderList/" class="btn btn-success btn-sm">Start</a>
-                        <a href="${SITE_URL}/user/orderList/" class="btn btn-warning btn-sm">Pause</a>
-                        <a href="${SITE_URL}/user/orderList/" class="btn btn-danger btn-sm">Cancel</a>
+                        <a href="${SITE_URL}/user/startSubscription?username=${splEntity.username}&productId=${splEntity.productId}" class="btn btn-success btn-sm">Start</a>
+                        <a href="${SITE_URL}/user/pauseSubscription?username=${splEntity.username}&productId=${splEntity.productId}" class="btn btn-warning btn-sm">Pause</a>
+                        <a href="${SITE_URL}/user/cancelSubscription?username=${splEntity.username}&productId=${splEntity.productId}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure to cancel your subscription?')">Cancel</a>
                     </td>
                 </tr>
             </c:forEach>

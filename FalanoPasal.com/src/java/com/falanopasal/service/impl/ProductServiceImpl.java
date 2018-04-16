@@ -164,5 +164,20 @@ public class ProductServiceImpl implements ProductService{
         return productDao.getAllSubscriptionList();
     }
 
+    @Override
+    public void pauseSubscription(Product product) throws SQLException, ClassNotFoundException {
+        productDao.pauseSubscription(product);
+    }
+
+    @Override
+    public void startSubscription(Product product) throws SQLException, ClassNotFoundException {
+        productDao.startSubscription(product);
+    }
+
+    @Override
+    public void cancelSubscription(Product product) throws SQLException, ClassNotFoundException {
+        productDao.cancelSubscription(product);
+    }
+
     
 }

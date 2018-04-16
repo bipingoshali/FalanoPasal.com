@@ -239,6 +239,7 @@ public class ProductDAOImpl implements ProductDAO{
         product.setSubscribedProductStatus(rs.getBoolean("status"));
         product.setProductSubscribeDate(rs.getDate("date"));
         product.setUsername(rs.getString("username"));
+        product.setProductId(rs.getInt("productId"));
         return product;
     }
 
@@ -250,6 +251,21 @@ public class ProductDAOImpl implements ProductDAO{
                 return mapSubscribedProductData(rs);
             }
         });
+    }
+
+    @Override
+    public void pauseSubscription(Product product) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.SubscribeProduct.PAUSE_SUBSCRIPTION, new Object[]{product.getUsername(),product.getProductId()});
+    }
+
+    @Override
+    public void startSubscription(Product product) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.SubscribeProduct.START_SUBSCRIPTION, new Object[]{product.getUsername(),product.getProductId()});
+    }
+
+    @Override
+    public void cancelSubscription(Product product) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.SubscribeProduct.CANCEL_SUBSCRIPTION, new Object[]{product.getUsername(),product.getProductId()});
     }
     
     

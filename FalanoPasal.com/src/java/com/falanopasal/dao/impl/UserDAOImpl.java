@@ -137,6 +137,26 @@ public class UserDAOImpl implements UserDAO{
         jdbcTemplate.update(SQLConstant.User.UPDATE_ORDER_COUNT, new Object[]{username});
     }
 
+    @Override
+    public void updateUserPassword(User user) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.User.UPDATE_PASSWORD, new Object[]{user.getPassword(),user.getUsername()});
+    }
+
+    @Override
+    public int getTotalCalorieValue(String username) throws SQLException, ClassNotFoundException {
+        int totalCalorie = jdbcTemplate.queryForObject(SQLConstant.ShoppingCarts.GET_TOTAL_CALORIE_VALUE, new Object[]{username},Integer.class);
+        return totalCalorie;
+    }
+
+    @Override
+    public boolean isUsernameShopped(String username) throws SQLException, ClassNotFoundException {
+        int count = jdbcTemplate.queryForObject(SQLConstant.ShoppingCarts.CHECK_USERNAME_IN_SHOPPING_CART, new Object[]{username}, Integer.class);
+        if(count>=1){
+            return true;
+        }
+        return false;
+    }
+
 
     
 

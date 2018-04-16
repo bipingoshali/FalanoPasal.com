@@ -76,6 +76,15 @@ public interface ProductDAO {
     //get all subscription list
     List<Product> getAllSubscriptionList() throws SQLException,ClassNotFoundException;
     
+    //pause subscription
+    void pauseSubscription(Product product) throws SQLException,ClassNotFoundException;
+    
+    //start subcription 
+    void startSubscription(Product product) throws SQLException,ClassNotFoundException;
+    
+    //cancel subscription
+    void cancelSubscription(Product product) throws SQLException,ClassNotFoundException;
+    
     //it stores the total amount of product bought
     void updateProductBought(Product product) throws SQLException,ClassNotFoundException;
     

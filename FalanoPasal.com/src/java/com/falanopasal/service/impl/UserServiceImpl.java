@@ -92,6 +92,21 @@ public class UserServiceImpl implements UserService {
         userDao.updateOrderCount(username);
     }
 
+    @Override
+    public void updateUserPassword(User user) throws SQLException, ClassNotFoundException {
+        userDao.updateUserPassword(user);
+    }
+
+    @Override
+    public int getTotalCalorieValue(String username) throws SQLException, ClassNotFoundException {
+        return userDao.getTotalCalorieValue(username);
+    }
+
+    @Override
+    public boolean isUsernameShopped(String username) throws SQLException, ClassNotFoundException {
+        return userDao.isUsernameShopped(username);
+    }
+
 
    
 

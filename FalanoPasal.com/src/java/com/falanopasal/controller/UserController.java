@@ -541,6 +541,46 @@ public class UserController {
     }
     
     /*
+    pause the subscription
+    */
+    @RequestMapping("/user/pauseSubscription")
+    public ModelAndView pauseSubscription(@RequestParam("username") String username,@RequestParam("productId") int productId) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("redirect:/user/subscription");
+        product = new Product();
+        product.setUsername(username);
+        product.setProductId(productId);
+        productService.pauseSubscription(product);
+        return model;
+    }
+    
+    /*
+    start the subscription
+    */
+    @RequestMapping("/user/startSubscription")
+    public ModelAndView startSubscription(@RequestParam("username") String username,@RequestParam("productId") int productId) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("redirect:/user/subscription");
+        product = new Product();
+        product.setUsername(username);
+        product.setProductId(productId);
+        productService.startSubscription(product);
+        return model;
+    }
+    
+    /*
+    cancel subscription
+    */
+    @RequestMapping("/user/cancelSubscription")
+    public ModelAndView cancelSubscription(@RequestParam("username") String username,@RequestParam("productId") int productId) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("redirect:/user/subscription");
+        product = new Product();
+        product.setUsername(username);
+        product.setProductId(productId);
+        productService.cancelSubscription(product);
+        return model;
+    }
+    
+    
+    /*
     it opens offer page
     */
     @RequestMapping("/user/offer")
@@ -574,6 +614,57 @@ public class UserController {
             }
         }
         return new ModelAndView("redirect:/login");
+    }
+    
+    /*
+    view profile
+    */
+    @RequestMapping("/user/profile")
+    public ModelAndView profile() throws SQLException, ClassNotFoundException{
+        ModelAndView userModel = new ModelAndView("/user/profile");
+        ModelAndView adminModel = new ModelAndView("redirect:/admin/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            user = new User();
+            user.setSessionValue(username); //setting the session value in User entity
+            fetchSessionData = new User();
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==1){                
+                return adminModel;
+            }else{
+                userModel.addObject("user", new User());
+                if(userService.isUsernameShopped(username)){
+                    int totalCalorie = userService.getTotalCalorieValue(username);
+                    userModel.addObject("totalCalorieValue",totalCalorie );                                        
+                }
+                return userModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");
+    }
+    
+    @RequestMapping(value="/user/changePassword",method=RequestMethod.POST)
+    public ModelAndView changePassword(@ModelAttribute("user") User user,final RedirectAttributes redirectAttributes) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("redirect:/user/profile");
+        sessionManager = new SessionManager();
+        User userSession = new User(); //for setting username
+        userSession.setUsername(sessionManager.getAttr("username").toString());
+        fetchSessionData = new User(); //to store username data
+        fetchSessionData = userService.getByUsername(userSession);
+        if(!fetchSessionData.getPassword().equals(user.getOldPassword())){
+            redirectAttributes.addFlashAttribute("changePasswordMessage", "Your previous password does not match");
+            return model;            
+        }
+        if(!user.getPassword().equals(user.getConfirmPassword())){
+            redirectAttributes.addFlashAttribute("changePasswordMessage", "Password and confirm password does not match");
+            return model;                        
+        }
+        fetchSessionData = new User();
+        fetchSessionData.setUsername(sessionManager.getAttr("username").toString());            
+        fetchSessionData.setPassword(user.getPassword());
+        userService.updateUserPassword(fetchSessionData);        
+        return model;
     }
     
         
