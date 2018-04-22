@@ -36,6 +36,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -483,16 +484,49 @@ public class AdminController {
         model.addObject("productList", productList);
         model.addObject("packages", new Package());
         List<Package> p = packageService.getMappedPackageProduct(packageMap);                
-                model.addObject("s", p);
+        model.addObject("s", p);
         
         return model;
     }
     
+    /*
+    adds product in the package
+    */
     @RequestMapping(value="/admin/package/addToPackage",method =RequestMethod.POST )
     public ModelAndView addPackage(@ModelAttribute("packages") Package packages){
         packageMap.addPackageProduct(packages.getProductId(), packages.getNewPrice());
-        return new ModelAndView("redirect:/admin/product");
+        return new ModelAndView("redirect:/admin/package");
     }
+    
+    /*
+    clear product list in package
+    */
+    @RequestMapping(value="/admin/clearPackage")
+    public @ResponseBody void clearPackage(){
+        packageMap.clearPackageProduct();
+    }
+    
+    /*
+    create package
+    */
+    @RequestMapping(value="/admin/createPackage")
+    public @ResponseBody ModelAndView createPackage(@RequestParam("packageName") String packageName) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("redirect:/admin/package");
+        List<Package> packageItemList = packageService.getMappedPackageProduct(packageMap);                
+
+        //creating random package Id
+        java.util.UUID randomUUID = java.util.UUID.randomUUID();
+        Package pack = new Package();
+        pack.setPackageId(randomUUID.toString());
+        pack.setPackageName(packageName);
+        pack.setGrandTotalOld(packageService.getOldTotalPrice(packageItemList));
+        pack.setGrandTotalNew(packageService.getNewTotalPrice(packageItemList));
+        packageService.insertPackage(pack);
+        packageService.insertPackageItem(pack, packageItemList);
+        packageMap.clearPackageProduct();
+        return model;
+    }
+    
     
     /*
     view subscription list

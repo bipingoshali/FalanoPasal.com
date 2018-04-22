@@ -16,5 +16,11 @@ import java.util.List;
  */
 public interface PackageHandlerDAO {
     List<Package> getMappedPackageProduct(PackageMap packageMap) throws SQLException,ClassNotFoundException;
-    
+    float getOldTotalPrice(List<Package> packageItemList);
+    float getNewTotalPrice(List<Package> packageItemList);  
+    void insertPackage(Package pack) throws SQLException,ClassNotFoundException;
+    void insertPackageItem(Package pack,List<Package> packageItemList) throws SQLException,ClassNotFoundException;
+    List<Package> getAllPackage() throws SQLException,ClassNotFoundException;
+    List<Package> getPackageById(String packageId) throws SQLException,ClassNotFoundException;
+    void insertUserPackage(Package pack) throws SQLException,SQLException;
 }

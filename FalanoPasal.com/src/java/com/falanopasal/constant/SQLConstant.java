@@ -212,4 +212,24 @@ public class SQLConstant {
                 " WHERE ordercount<=?";;
     }
     
+    public class Package{
+        
+        public final static String PACKAGE_INSERT = "insert into " + TableConstant.PACKAGE_TABLE +
+                " values(?,?,?,?)";
+        
+        public final static String PACKAGE_ITEM_INSERT = "INSERT INTO " + TableConstant.PACKAGE_ITEM_TABLE +
+                " (packageId,productId,oldPrice,newPrice) values(?,?,?,?)";
+        
+        public final static String GET_ALL_PACKAGE = "SELECT * FROM " + TableConstant.PACKAGE_TABLE;
+        
+        public final static String GET_PACKAGE_BY_ID = "select * from " + TableConstant.PACKAGE_ITEM_TABLE+
+                " where packageId=?";
+    }
+    
+    public class PackageBought{
+        
+        public final static String INSERT_PACKAGE_BOUGHT = "INSERT INTO " + TableConstant.PACKAGE_BOUGHT+
+                " values(?,?,?)";
+    }
+    
 }

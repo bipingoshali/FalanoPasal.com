@@ -63,6 +63,7 @@ public class Product {
         this.productImage = productImage;
     }
 
+
     public boolean isSubscribedProductStatus() {
         return subscribedProductStatus;
     }

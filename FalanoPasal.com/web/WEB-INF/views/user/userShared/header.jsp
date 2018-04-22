@@ -40,18 +40,7 @@
                     <li><a href="${SITE_URL}/user/orderHistory">Order History</a></li>
                     <li><a href="${SITE_URL}/user/offer">Offer</a></li>
                     <li><a href="${SITE_URL}/user/subscription">Subscription</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown<span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="${SITE_URL}/my-page">Action</a></li>
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li class="dropdown-header">Nav header</li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated link</a></li>
-                        </ul>
-                    </li>
+                    <li><a href="${SITE_URL}/user/package">Package</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="${SITE_URL}/user/shoppingCart" ><span class="glyphicon glyphicon-shopping-cart"></span> Shopping Cart</a></li>

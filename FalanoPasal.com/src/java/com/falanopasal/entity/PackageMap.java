@@ -16,27 +16,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class PackageMap {
     int productCount;
-    Map<Integer,Integer> packageProducts;
+    Map<Integer,Float> packageProducts;
     
     public PackageMap(){
         productCount=0;
         packageProducts = new HashMap<>();
     }
 
-    public void addPackageProduct(int productId,int newprice){
+    public void addPackageProduct(int productId,float newprice){
         if(!packageProducts.containsKey(productId)){
             packageProducts.put(productId, newprice); //product id and its quantity is register in here
         }else{
-            packageProducts.put(productId, newprice); //works when quantity is added agian in the same product Id
+            packageProducts.put(productId, newprice); //works when new price is assigned agian in the same product Id
         }
         productCount+=1;           
     }
     
-    public Map<Integer, Integer> getPackageProduct(){
+    public Map<Integer, Float> getPackageProduct(){
         return packageProducts;
     }
     
-    public int getProductInPackage(int productId){
+    public Float getProductFromPackage(int productId){
         return packageProducts.get(productId);
     }
     

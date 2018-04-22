@@ -13,10 +13,12 @@ import com.falanopasal.entity.ShoppingCart;
 import com.falanopasal.entity.ShoppingCartHandlerEntry;
 import com.falanopasal.entity.ShoppingCartMap;
 import com.falanopasal.entity.User;
+import com.falanopasal.entity.Package;
 import com.falanopasal.service.CategoryService;
 import com.falanopasal.service.DeliveryService;
 import com.falanopasal.service.OfferService;
 import com.falanopasal.service.OrderService;
+import com.falanopasal.service.PackageService;
 import com.falanopasal.service.ProductService;
 import com.falanopasal.service.SessionService;
 import com.falanopasal.service.ShoppingCartHandlerService;
@@ -75,6 +77,9 @@ public class UserController {
     
     @Autowired
     private OfferService offerService;
+    
+    @Autowired  
+    private PackageService packageService;    
     
     private SessionManager sessionManager; //session values
     private User user; //to set session values (username)
@@ -666,6 +671,73 @@ public class UserController {
         userService.updateUserPassword(fetchSessionData);        
         return model;
     }
+    
+    /*
+    it opens package page
+    */
+    @RequestMapping(value="/user/package")
+    public ModelAndView pack() throws SQLException, ClassNotFoundException{
+        ModelAndView userModel = new ModelAndView("/user/package");
+        ModelAndView adminModel = new ModelAndView("redirect:/admin/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            user = new User();
+            user.setSessionValue(username); //setting the session value in User entity
+            fetchSessionData = new User();
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==1){                
+                return adminModel;
+            }else{
+                List<Package> packageList = packageService.getAllPackage();
+                userModel.addObject("packageList", packageList);
+                return userModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");
+    }
+    
+    /*
+    it opens package item list 
+    */
+    @RequestMapping(value="/user/packageItem/{packageId}")
+    public ModelAndView packItem(@PathVariable("packageId") String packageId) throws SQLException, ClassNotFoundException{
+        ModelAndView userModel = new ModelAndView("/user/packageItem");
+        ModelAndView adminModel = new ModelAndView("redirect:/admin/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            user = new User();
+            user.setSessionValue(username); //setting the session value in User entity
+            fetchSessionData = new User();
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==1){                
+                return adminModel;
+            }else{
+                List<Package> packageItemList = packageService.getPackageById(packageId);
+                userModel.addObject("packageItemList", packageItemList);
+                return userModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");
+    }
+    
+    /*
+    buy package
+    */
+    @RequestMapping(value="/user/buyPackage/{packageId}")
+    public ModelAndView buyPackItem(@PathVariable("packageId") String packageId,final RedirectAttributes redirectAttributes) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("redirect:/user/package");
+        sessionManager = new SessionManager();
+        String username = sessionManager.getAttr("username").toString();
+        Package pack = new Package();
+        pack.setPackageId(packageId);
+        pack.setUsername(username);
+        packageService.insertUserPackage(pack);   
+        redirectAttributes.addFlashAttribute("packageMessage", "Congratulation! You package will be delivered soon.");
+        return model;
+    }
+    
     
         
 }
