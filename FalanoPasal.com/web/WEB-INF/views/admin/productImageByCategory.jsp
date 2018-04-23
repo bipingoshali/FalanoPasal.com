@@ -47,8 +47,8 @@
                 </div>
                 <div class="modal-body">
                     <div class="form-group">
-                        <label class="control-label" for="selectProduct">Select Product</label>
-                        <form:select path="categoryId" class="form-control" id="selectProduct">
+                        <label class="control-label" for="selectCategory">Select Category</label>
+                        <form:select path="categoryId" class="form-control" id="selectCategory">
                             <c:forEach var="productEntity" items="${productList}">
                                 <option value="${productEntity.categoryId}">${productEntity.category.categoryName}</option>
                             </c:forEach>

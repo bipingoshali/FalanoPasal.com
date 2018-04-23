@@ -87,6 +87,7 @@ public class UserDAOImpl implements UserDAO{
         user.setPassword(rs.getString("password"));
         user.setRoleId(rs.getInt("roleId"));
         user.setDebitAmount(rs.getDouble("debitamount"));
+        user.setOrderCount(rs.getInt("ordercount"));
         return user;
     }
 

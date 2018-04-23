@@ -5,22 +5,58 @@
  */
 package com.falanopasal.entity;
 
+import java.util.Date;
+
 /**
  *
  * @author bipin
  */
 public class Offer {
     private int offerId,orderCount,productId;
+    private String productName;
     private String type;
     private double priceTag;
+    private String username;
+    private Date offerBoughtDate;
 
-    public Offer(int offerId, int orderCount, int productId, String type, double priceTag) {
+    public Offer(int offerId, int orderCount, int productId, String productName, String type, double priceTag, String username, Date offerBoughtDate) {
         this.offerId = offerId;
         this.orderCount = orderCount;
         this.productId = productId;
+        this.productName = productName;
         this.type = type;
         this.priceTag = priceTag;
+        this.username = username;
+        this.offerBoughtDate = offerBoughtDate;
     }
+
+    public Date getOfferBoughtDate() {
+        return offerBoughtDate;
+    }
+
+    public void setOfferBoughtDate(Date offerBoughtDate) {
+        this.offerBoughtDate = offerBoughtDate;
+    }
+
+    
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
 
     public Offer() {
     }

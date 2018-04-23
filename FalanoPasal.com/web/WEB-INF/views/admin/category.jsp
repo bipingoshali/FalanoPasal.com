@@ -44,7 +44,6 @@
             <tr>
                 <th>S.N.</th>
                 <th>Name</th>
-                <th>Action</th>                        
             </tr>
             <c:set var="count" value="0" scope="page"/>
             <c:forEach var="categoryEntity" items="${categoryList}">
@@ -52,10 +51,6 @@
                     <c:set var="count" value="${count+1}" scope="page"/>
                     <td>${count}</td>
                     <td>${categoryEntity.categoryName}</td>
-                    <td>
-                        <a class="btn btn-success btn-sm" href="${addProductURL}/adminProduct" title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
-                        <button class="btn btn-danger btn-sm" title="Delete"><span class="glyphicon glyphicon-trash"></span></button>
-                    </td>
                 </tr>
             </c:forEach>
         </table>

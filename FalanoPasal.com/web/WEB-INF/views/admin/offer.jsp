@@ -52,5 +52,34 @@
 </div>
 <!--end of register product modal-->            
 
+<div class="row">
+    <div class="col-lg-12">
+        <table class="table table-striped table-hover">
+            <th>S.N.</th>
+            <th>Type</th>
+            <th>Order Count</th>
+            <th>Product name</th>
+            <th>Price tag</th>
+            <th>Action</th>
+            <c:set var="count" value="0" scope="page"/>
+            <c:forEach var="offerEntity" items="${offerList}">
+            <tr>
+                <c:set var="count" value="${count+1}" scope="page"/>
+                <td>${count}</td>
+                <td>${offerEntity.type}</td>
+                <td>${offerEntity.orderCount}</td>
+                <td>${offerEntity.productName}</td>
+                <td>${offerEntity.priceTag}</td>
+                <td>
+                    <a class="btn btn-success btn-sm" href="${SITE_URL}/admin/offerEdit/${offerEntity.offerId}" title="Edit"><span class="glyphicon glyphicon-edit"></span></a>
+                    <a class="btn btn-danger btn-sm" href="${SITE_URL}/admin/offerDelete/${offerEntity.offerId}" title="Delete" onclick="return confirm('Are you sure to delete?')">
+                        <span class="glyphicon glyphicon-trash"></span>
+                    </a>                    
+                </td>
+            </tr>
+            </c:forEach>
+        </table>
+    </div>
+</div>
 
 <%@include file="adminShared/footer.jsp" %>

@@ -21,6 +21,7 @@ public class TableConstant {
     public final static String SUBSCRIBE_PRODUCT_TABLE = "subscribeproduct";
     public final static String DELIVERY_TABLE = "delivery";
     public final static String OFFER_TABLE = "offers";
+    public final static String OFFER_USERS_TABLE="offers_users";
     public final static String PACKAGE_TABLE = "package";
     public final static String PACKAGE_ITEM_TABLE = "packageitem";
     public final static String PACKAGE_BOUGHT = "packagebought";

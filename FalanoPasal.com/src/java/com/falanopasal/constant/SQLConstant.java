@@ -143,7 +143,7 @@ public class SQLConstant {
         
         public final static String CHECK_USERNAME_IN_SHOPPING_CART = "SELECT COUNT(username) FROM " + TableConstant.SHOPPING_CARTS_TABLE+
                 " WHERE username=?";
-                       
+                               
     }
     
     public class OrderHistory{
@@ -210,6 +210,26 @@ public class SQLConstant {
         
         public final static String GET_ALL_OFFER_BY_ORDERCOUNT = "SELECT * FROM " + TableConstant.OFFER_TABLE +
                 " WHERE ordercount<=?";;
+        
+        public final static String GET_ALL_OFFER = "SELECT * FROM " + TableConstant.OFFER_TABLE;
+        
+        public final static String GET_ALL_OFFER_BY_ID = " SELECT * FROM " + TableConstant.OFFER_TABLE+
+                " WHERE offerid=?";
+        public final static String UPDATE_OFFER_DETAILS = "UPDATE " + TableConstant.OFFER_TABLE+
+                " SET type=?,ordercount=?,pricetag=? where offerid=?";
+        
+        public final static String DELETE_OFFER = "DELETE FROM " + TableConstant.OFFER_TABLE+
+                " WHERE offerid=?";
+    }
+    
+    public class Offers_Users{
+        
+        public final static String OFFERS_USERS_INSERT = " INSERT INTO " + TableConstant.OFFER_USERS_TABLE+
+                " VALUES(?,?,?)";
+        
+        public final static String GET_USER_OFFER_BOUGHT = " SELECT * FROM " + TableConstant.OFFER_USERS_TABLE+
+                " WHERE username=? and offerid=?";
+        
     }
     
     public class Package{
@@ -230,6 +250,7 @@ public class SQLConstant {
         
         public final static String INSERT_PACKAGE_BOUGHT = "INSERT INTO " + TableConstant.PACKAGE_BOUGHT+
                 " values(?,?,?)";
+        
     }
     
 }

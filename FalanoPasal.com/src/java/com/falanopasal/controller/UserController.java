@@ -622,6 +622,27 @@ public class UserController {
     }
     
     /*
+    buy offers and discounts
+    */
+    @RequestMapping(value="/user/buyOffersDiscounts/{offerId}")
+    public ModelAndView buyOffersDiscounts(@PathVariable("offerId") int offerId,final RedirectAttributes redirectAttributes) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("redirect:/user/offer");
+        sessionManager = new SessionManager();
+        String username = sessionManager.getAttr("username").toString();
+        Offer offer = new Offer();
+        offer.setUsername(username);
+        offer.setOfferId(offerId);
+        Offer checkUser = offerService.getUserBoughtOffers(offer);
+        if(checkUser==null){
+            offerService.insertUsersOffers(offer);
+            redirectAttributes.addFlashAttribute("offerBoughtMessage", "Congratulation! Offers will be delivered soon");            
+        }else{
+            redirectAttributes.addFlashAttribute("offerBoughtMessage", "Sorry! You have already bought this offer");                        
+        }
+        return model;
+    }
+    
+    /*
     view profile
     */
     @RequestMapping("/user/profile")
@@ -643,6 +664,11 @@ public class UserController {
                     int totalCalorie = userService.getTotalCalorieValue(username);
                     userModel.addObject("totalCalorieValue",totalCalorie );                                        
                 }
+                user = new User();
+                user.setUsername(sessionManager.getAttr("username").toString());
+                fetchSessionData = new User();
+                fetchSessionData = userService.getByUsername(user);
+                userModel.addObject("userData", fetchSessionData);
                 return userModel;
             }
         }

@@ -456,6 +456,8 @@ public class AdminController {
                 return userModel;
             }else{
                 List<Product> productList = productService.getProduct();
+                List<Offer> offerList = offerService.getOffer();
+                adminModel.addObject("offerList", offerList);
                 adminModel.addObject("offer", new Offer());
                 adminModel.addObject("productList", productList);
                 return adminModel;
@@ -469,11 +471,51 @@ public class AdminController {
     */
     @RequestMapping(value="/admin/offerSave",method=RequestMethod.POST)
     public ModelAndView offerSave(@ModelAttribute("offer") Offer offer) throws SQLException, ClassNotFoundException{
-        ModelAndView model = new ModelAndView("/admin/offer");
+        ModelAndView model = new ModelAndView("redirect:/admin/offer");
         offerService.insertOffer(offer);
+        return model;
+    }        
+    
+    /*
+    edit offer details
+    */
+    @RequestMapping(value="/admin/offerEdit/{offerId}")
+    public ModelAndView offerEdit(@PathVariable("offerId") int offerId) throws SQLException, ClassNotFoundException{
+        ModelAndView adminModel = new ModelAndView("/admin/offerEdit");
+        ModelAndView userModel = new ModelAndView("redirect:/user/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            User user = new User();
+            user.setSessionValue(username);
+            User fetchSessionData;
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==2){
+                return userModel;
+            }else{
+                List<Product> productList = productService.getProduct();
+                Offer offer = offerService.getOfferById(offerId);
+                adminModel.addObject(offer);
+                adminModel.addObject("productList", productList);
+                return adminModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");        
+    }
+    
+    @RequestMapping(value="/admin/offerEditSave", method=RequestMethod.POST)
+    public ModelAndView offerEditSave(@ModelAttribute("offer") Offer offer) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("redirect:/admin/offer");
+        offerService.updateOffer(offer);
         return model;
     }
     
+    @RequestMapping(value="/admin/offerDelete/{offerId}")
+    public ModelAndView offerDelete(@PathVariable("offerId") int offerId) throws SQLException, ClassNotFoundException{
+        ModelAndView model= new ModelAndView("redirect:/admin/offer");
+        offerService.deleteOffer(offerId);
+        return model;
+    }
     /*
     create packages
     */

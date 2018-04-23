@@ -13,20 +13,20 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="row">
-                            <c:forEach var="offerEntity" items="${offerList}">
-
-            <div class="col-lg-3">
-                <!--<center><img src=""/>" alt="image" class="image"/></center>-->
-                <h4 style="text-align: center;">${offerEntity.orderCount}</h4>
-                <center>
-                    <h4>
-                        <small>Calorie Value: ${offerEntity.type}</small><br/>
-                        <small>Rs. ${offerEntity.priceTag}</small>
-                    </h4>
-                    <a href="<c:url value="/user/productDetail/${offerEntity.offerId}"/>" class="btn btn-default">View details</a>
-                </center>                
-            </div>
-                            </c:forEach>
+            <h3>${offerBoughtMessage}</h3>
+            <c:forEach var="offerEntity" items="${offerList}">
+                <div class="col-lg-3">
+                    <!--<center><img src=""/>" alt="image" class="image"/></center>-->
+                    <h4 style="text-align: center;">${offerEntity.productName}</h4>
+                    <center>
+                        <h4>
+                            <small>Calorie Value: ${offerEntity.type}</small><br/>
+                            <small>Rs. ${offerEntity.priceTag}</small>
+                        </h4>
+                            <a href="<c:url value="/user/buyOffersDiscounts/${offerEntity.offerId}"/>" class="btn btn-success" onclick="return confirm('Are you sure to buy?')">Buy</a>
+                    </center>                
+                </div>
+            </c:forEach>
         </div>
     </div>
 </div>

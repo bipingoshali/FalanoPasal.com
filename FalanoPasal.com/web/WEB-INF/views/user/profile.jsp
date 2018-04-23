@@ -61,6 +61,13 @@
                         </c:if>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3>Total Order Count</h3>
+                        <hr>
+                        <center><h3><b>${userData.orderCount}</b></h3></center>
+                   </div>
+                </div>
             </div>
         </div>
     </div>            
