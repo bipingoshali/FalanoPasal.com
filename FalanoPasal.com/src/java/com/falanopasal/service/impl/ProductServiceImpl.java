@@ -179,5 +179,15 @@ public class ProductServiceImpl implements ProductService{
         productDao.cancelSubscription(product);
     }
 
+    @Override
+    public List<Product> getHighestProductBought() throws SQLException, ClassNotFoundException {
+        return productDao.getHighestProductBought();
+    }
+
+    @Override
+    public List<Product> getHighestCustomerBought() throws SQLException, ClassNotFoundException {
+        return productDao.getHighestCustomerBought();
+    }
+
     
 }

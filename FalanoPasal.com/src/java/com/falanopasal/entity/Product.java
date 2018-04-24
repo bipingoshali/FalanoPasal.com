@@ -27,13 +27,14 @@ public class Product {
     private String username; //to find which user is rating a product
     private Category category;
     private boolean subscribedProductStatus;
+    private int boughtCount;
     
     private MultipartFile productImage;
 
     public Product() {
     }
 
-    public Product(int categoryId, int productId, int stockValue, int updatedStockValue, String productName, String description, float productPrice, float calorieValue, String manufacturerName, String location, String manufacturedDate, String expiryDateStringFormat, Date manufactureDateFormat, Date expiryDateFormat, int expiryDate, int productRating, int productSubscribedId, String productComment, String productSubscriptionDuration, Date productCommentDate, Date productSubscribeDate, Date productRateDate, int subscribeProductQuantity, String username, Category category, boolean subscribedProductStatus, MultipartFile productImage) {
+    public Product(int categoryId, int productId, int stockValue, int updatedStockValue, String productName, String description, float productPrice, float calorieValue, String manufacturerName, String location, String manufacturedDate, String expiryDateStringFormat, Date manufactureDateFormat, Date expiryDateFormat, int expiryDate, int productRating, int productSubscribedId, String productComment, String productSubscriptionDuration, Date productCommentDate, Date productSubscribeDate, Date productRateDate, int subscribeProductQuantity, String username, Category category, boolean subscribedProductStatus, int boughtCount, MultipartFile productImage) {
         this.categoryId = categoryId;
         this.productId = productId;
         this.stockValue = stockValue;
@@ -60,8 +61,23 @@ public class Product {
         this.username = username;
         this.category = category;
         this.subscribedProductStatus = subscribedProductStatus;
+        this.boughtCount = boughtCount;
         this.productImage = productImage;
     }
+
+    public int getBoughtCount() {
+        return boughtCount;
+    }
+
+    public void setBoughtCount(int boughtCount) {
+        this.boughtCount = boughtCount;
+    }
+
+    public Product(String productName, int boughtCount) {
+        this.productName = productName;
+        this.boughtCount = boughtCount;
+    }
+
 
 
     public boolean isSubscribedProductStatus() {

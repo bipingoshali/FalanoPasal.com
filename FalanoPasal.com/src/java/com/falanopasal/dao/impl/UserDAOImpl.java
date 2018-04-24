@@ -182,7 +182,26 @@ public class UserDAOImpl implements UserDAO{
     @Override
     public int getTotalExpense(String username) throws SQLException, ClassNotFoundException {
         int totalExpenses = jdbcTemplate.queryForObject(SQLConstant.User.GET_TOTAL_EXPENSES, new Object[]{username}, Integer.class);
-        return totalExpenses;
+        if(totalExpenses==0){
+            return totalExpenses=0;
+        }else{
+           return totalExpenses; 
+        }
+    }
+
+    @Override
+    public int getCreditAmount(String username) throws SQLException, ClassNotFoundException {
+        int creditAmount = jdbcTemplate.queryForObject(SQLConstant.User.GET_USER_CREDIT_AMOUNT, new String[]{username}, Integer.class);
+            return creditAmount=0;
+    }
+
+    @Override
+    public boolean checkUserCredit(String username) throws SQLException, ClassNotFoundException {
+        Integer count = jdbcTemplate.queryForObject(SQLConstant.User.CHECK_USER_CREDIT, new String[]{username}, Integer.class);
+        if(count>=1){
+            return true;
+        }
+        return false;
     }
 
 

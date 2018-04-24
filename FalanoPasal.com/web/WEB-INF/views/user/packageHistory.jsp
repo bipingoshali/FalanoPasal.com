@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-lg-12">
         <h1 class="page-header" style="margin-top: 0px;">
-            Offer List
+            Package List
             <small>Bought list</small>
         </h1>
     </div>
@@ -13,8 +13,8 @@
 
 <ol class="breadcrumb">
     <li><a href="${SITE_URL}/user/home">Home</a></li>
-    <li><a href="${SITE_URL}/user/offer">Offers</a></li>
-    <li class="active">Offer List</li>
+    <li><a href="${SITE_URL}/user/offer">Packages</a></li>
+    <li class="active">Packages List</li>
 </ol>
 
 <div class="row">

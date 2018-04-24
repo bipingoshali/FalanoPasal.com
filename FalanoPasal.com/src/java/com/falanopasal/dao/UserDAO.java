@@ -66,5 +66,11 @@ public interface UserDAO {
     //get total expense of user
     int getTotalExpense(String username) throws SQLException,ClassNotFoundException;
     
-
+    //get user credit amount
+    int getCreditAmount(String username) throws SQLException,ClassNotFoundException;
+    
+    //check if user has bought any product in credit
+    boolean checkUserCredit(String username) throws SQLException,ClassNotFoundException;
+    
+    
 }

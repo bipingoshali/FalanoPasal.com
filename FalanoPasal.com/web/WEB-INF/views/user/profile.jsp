@@ -142,13 +142,25 @@
                     <div class="col-lg-12">
                         <h3>Your credit amount (£)</h3>
                         <hr>
-                        <center><h3><b>300</b></h3></center>
+                        <center><h3><b>${creditAmount}</b></h3></center>
                     </div>
                 </div>
             </div>
         </div>
     </div>            
 </div>
+
+                    <!-- Footer -->
+
+<footer>
+    <div class="row">
+        <div class="col-lg-12">
+            <hr>
+            <p>Copyright &copy; FalanoPasal.com 2018</p>
+        </div>
+    </div>
+    <!-- /.row -->
+</footer>                
 
 
 <%@include file="userShared/footer.jsp" %>

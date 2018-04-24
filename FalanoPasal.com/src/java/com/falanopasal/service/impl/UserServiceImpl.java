@@ -132,6 +132,16 @@ public class UserServiceImpl implements UserService {
         return userDao.getTotalExpense(username);
     }
 
+    @Override
+    public int getCreditAmount(String username) throws SQLException, ClassNotFoundException {
+        return userDao.getCreditAmount(username);
+    }
+
+    @Override
+    public boolean checkUserCredit(String username) throws SQLException, ClassNotFoundException {
+        return userDao.checkUserCredit(username);
+    }
+
 
    
 

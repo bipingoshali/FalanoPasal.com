@@ -153,6 +153,9 @@ public class DefaultController {
         msg+= "Please click the link below to verify your email address. \n";
         msg+= "http://localhost:8080/FalanoPasal.com/confirmEmail?token="+fetchUserList.getEmailToken()+"&userId="+fetchUserList.getUserId();
         Mail sMail = (Mail) appContext.getBean("mail");
+        
+        
+        //comment this line if you don't want to send mail
         sMail.sendMail("bipingoshali2527@gmail.com", user.getEmail(), "FalanoPasal.com", msg);
         redirectAttributes.addFlashAttribute("message", "Congratulation! Your account has been created. Please verify your email address.");        
         return "redirect:/register";

@@ -33,4 +33,6 @@ public interface UserService {
     void updateUserDebitAmount(User user) throws SQLException,ClassNotFoundException;
     void updatePinStatus(String rechargeToken) throws SQLException,ClassNotFoundException;
     int getTotalExpense(String username) throws SQLException,ClassNotFoundException;    
+    int getCreditAmount(String username) throws SQLException,ClassNotFoundException;    
+    boolean checkUserCredit(String username) throws SQLException,ClassNotFoundException;
 }

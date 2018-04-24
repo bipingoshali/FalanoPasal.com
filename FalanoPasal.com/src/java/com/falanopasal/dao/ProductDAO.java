@@ -88,5 +88,10 @@ public interface ProductDAO {
     //it stores the total amount of product bought
     void updateProductBought(Product product) throws SQLException,ClassNotFoundException;
     
+    //get highest product bought by customer
+    List<Product> getHighestProductBought() throws SQLException,ClassNotFoundException;
+    
+    //get highest product bought by customer
+    List<Product> getHighestCustomerBought() throws SQLException,ClassNotFoundException;
     
 }

@@ -30,8 +30,10 @@
     <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl" >
         <property name="host" value="smtp.gmail.com" />
         <property name="port" value="587" />
+        <!--change email address-->
         <property name="username" value="bipingoshali2527@gmail.com" />
-        <property name="password" value="gm@ilbipingm@il" />
+        <!--change email password-->
+        <property name="password" value="****************************************" />
         
         <property name="javaMailProperties">
             <props>

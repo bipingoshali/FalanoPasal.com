@@ -14,6 +14,7 @@
                 <th>Address</th>
                 <th>Birth date</th>
                 <th>Order count</th>
+                <th>Debit amount</th>
                 <th>Status</th>                        
             </tr>
             <c:set var="count" value="0" scope="page"/>
@@ -28,6 +29,7 @@
                 <td>${userEntity.addressLine1}, ${userEntity.addressLine2} ${userEntity.houseNo}</td>  
                 <td>${userEntity.birthdateformat}</td>
                 <td>${userEntity.orderCount}</td>
+                <td>${userEntity.debitAmount}</td>
                 <td>
                     <c:if test="${userEntity.status}">
                         <span class="label label-success">Active</span>                        

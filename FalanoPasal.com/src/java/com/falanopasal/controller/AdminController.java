@@ -696,6 +696,56 @@ public class AdminController {
         }
         return new ModelAndView("redirect:/login");
     }
+    
+    /*
+    view product order count
+    */
+    @RequestMapping(value="/admin/productOrderCount")
+    public ModelAndView productOrderCount() throws SQLException, ClassNotFoundException{
+        ModelAndView adminModel = new ModelAndView("/admin/productOrderCount");
+        ModelAndView userModel = new ModelAndView("redirect:/user/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            User user = new User();
+            user.setSessionValue(username);
+            User fetchSessionData;
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==2){
+                return userModel;
+            }else{
+                List<Product> productList = productService.getHighestProductBought();
+                adminModel.addObject("productList", productList);
+                return adminModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");        
+    }
+
+    /*
+    view customer order count
+    */
+    @RequestMapping(value="/admin/customerOrderCount")
+    public ModelAndView customerOrderCount() throws SQLException, ClassNotFoundException{
+        ModelAndView adminModel = new ModelAndView("/admin/customerOrderCount");
+        ModelAndView userModel = new ModelAndView("redirect:/user/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            User user = new User();
+            user.setSessionValue(username);
+            User fetchSessionData;
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==2){
+                return userModel;
+            }else{
+                List<Product> productList = productService.getHighestCustomerBought();
+                adminModel.addObject("productList", productList);
+                return adminModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");        
+    }
 
 }
 

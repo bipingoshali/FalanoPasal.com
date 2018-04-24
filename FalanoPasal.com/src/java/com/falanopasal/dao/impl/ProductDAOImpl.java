@@ -267,6 +267,40 @@ public class ProductDAOImpl implements ProductDAO{
     public void cancelSubscription(Product product) throws SQLException, ClassNotFoundException {
         jdbcTemplate.update(SQLConstant.SubscribeProduct.CANCEL_SUBSCRIPTION, new Object[]{product.getUsername(),product.getProductId()});
     }
+
+    @Override
+    public List<Product> getHighestProductBought() throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.ShoppingCarts.CHECK_PRODUCT_BOUGHT_RATE_BY_CUSTOMER, new RowMapper<Product>() {
+            @Override
+            public Product mapRow(ResultSet rs, int i) throws SQLException {
+                return mapHighestProductData(rs);
+            }
+        });
+    }
+    
+    private Product mapHighestProductData(ResultSet rs) throws SQLException{
+        Product product = new Product();
+        product.setProductName(this.getProductName(rs.getInt("productId")));
+        product.setBoughtCount(rs.getInt("Mode"));
+        return new Product(product.getProductName(),product.getBoughtCount());
+    }
+
+    @Override
+    public List<Product> getHighestCustomerBought() throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.ShoppingCarts.CHECK_CUSTOMER_BOUGHT_RATE, new RowMapper<Product>() {
+            @Override
+            public Product mapRow(ResultSet rs, int i) throws SQLException {
+                return mapHighestCustomerData(rs);
+            }
+        });
+    }
+    
+    private Product mapHighestCustomerData(ResultSet rs) throws SQLException{
+        Product product = new Product();
+        product.setUsername(rs.getString("username"));
+        product.setBoughtCount(rs.getInt("Mode"));
+        return new Product(product.getUsername(),product.getBoughtCount());
+    }
     
     
 

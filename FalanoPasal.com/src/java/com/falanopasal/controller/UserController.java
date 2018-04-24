@@ -388,7 +388,9 @@ public class UserController {
                 msg+= "Please click the link below to verify your order. \n";
                 msg+= "http://localhost:8080/FalanoPasal.com/confirmOrder?token="+randomUUID.toString()+"&username="+sessionManager.getAttr("username").toString();
                 Mail sMail = (Mail) appContext.getBean("mail");
-//                sMail.sendMail("bipingoshali2527@gmail.com", fetchSessionData.getEmail(), "FalanoPasal.com", msg);
+                
+                //comment this line if you don't want to send mail
+                sMail.sendMail("bipingoshali2527@gmail.com", fetchSessionData.getEmail(), "FalanoPasal.com", msg);
 
                 /*
                 update user order count
@@ -611,7 +613,7 @@ public class UserController {
                     return userModel;                    
                 }
 //                if(offerList != null && !offerList.isEmpty()){
-//                    redirectAttributes.addFlashAttribute("offermessage", "Sorry! there is no special offers for you.");
+//                    redirectAttributes.addFlashAttribute("offermessage", "Sorry! there are not any special offers for you.");
 //                    return userModel;
 //                }
                 userModel.addObject("offerList", offerList);
@@ -690,13 +692,18 @@ public class UserController {
                     int totalCalorie = userService.getTotalCalorieValue(username);
                     userModel.addObject("totalCalorieValue",totalCalorie );                                        
                 }
-                user = new User();
                 user.setUsername(sessionManager.getAttr("username").toString());
                 fetchSessionData = new User();
                 fetchSessionData = userService.getByUsername(user);
-                userModel.addObject("userData", fetchSessionData);
-                int totalExpense = userService.getTotalExpense(username);
-                userModel.addObject("totalExpense",totalExpense);
+                userModel.addObject("userData", fetchSessionData); 
+                if(userService.isUsernameShopped(username)){
+                    int totalExpense = userService.getTotalExpense(user.getUsername());
+                    userModel.addObject("totalExpense",totalExpense);                  
+                }
+                if(userService.checkUserCredit(username)){
+                    int creditAmount = userService.getCreditAmount(user.getUsername());
+                    userModel.addObject("creditAmount", creditAmount);                    
+                }
                 return userModel;
             }
         }

@@ -23,6 +23,10 @@ public class SQLConstant {
                 + TableConstant.USER_TABLE +
                 " WHERE username=?";
         
+        public final static String CHECK_USER_CREDIT = "SELECT COUNT(username) FROM "
+                + TableConstant.SHOPPING_CARTS_TABLE +
+                " WHERE username=? and paymentMethod='Credit'";
+        
         public final static String GET_BY_USERNAME = "SELECT * FROM "
                 + TableConstant.USER_TABLE +
                 " WHERE username=?";
@@ -46,6 +50,8 @@ public class SQLConstant {
                 " SET password=? where username=?";
         
         public final static String GET_TOTAL_EXPENSES="SELECT SUM(grandtotal) from SHOPPINGCARTS where username=?";
+        
+        public final static String GET_USER_CREDIT_AMOUNT = "select sum(grandtotal) from shoppingcarts where username=? and paymentMethod='Credit'";
         
 
     }
@@ -89,8 +95,8 @@ public class SQLConstant {
                 " where categoryId=?";
 
         public final static String INSERT_PRODUCT = "INSERT INTO " + TableConstant.PRODUCT_TABLE 
-                + " (categoryId,productName,price,calorieValue,description,stockAmount,manufacturername,location,manufacturedate,expirydate)"
-                + " values(?,?,?,?,?,?,?,?,?,DATE_ADD(manufacturedate, INTERVAL ? MONTH))";
+                + " (categoryId,productName,price,calorieValue,description,stockAmount,manufacturername,location,manufacturedate,expirydate,productbought)"
+                + " values(?,?,?,?,?,?,?,?,?,DATE_ADD(manufacturedate, INTERVAL ? MONTH),0)";
         
         public final static String GET_PRODUCT_BY_ID = "SELECT * FROM " + TableConstant.PRODUCT_TABLE +
                 " WHERE productId=?";
@@ -145,6 +151,11 @@ public class SQLConstant {
         
         public final static String CHECK_USERNAME_IN_SHOPPING_CART = "SELECT COUNT(username) FROM " + TableConstant.SHOPPING_CARTS_TABLE+
                 " WHERE username=?";
+        
+        public final static String CHECK_PRODUCT_BOUGHT_RATE_BY_CUSTOMER = "SELECT productId, COUNT(*) AS Mode FROM shoppingcartitem GROUP BY productId ORDER BY COUNT(*) DESC";
+        
+        public final static String CHECK_CUSTOMER_BOUGHT_RATE = "SELECT username, COUNT(*) AS Mode FROM shoppingcarts GROUP BY username ORDER BY COUNT(*) DESC";
+        
                                
     }
     
