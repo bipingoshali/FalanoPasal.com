@@ -23,4 +23,7 @@ public interface PackageService {
     List<Package> getAllPackage() throws SQLException,ClassNotFoundException;    
     List<Package> getPackageById(String packageId) throws SQLException,ClassNotFoundException;    
     void insertUserPackage(Package pack) throws SQLException,SQLException;    
+    List<Package> getUserBoughtPackage(String username) throws SQLException,ClassNotFoundException;    
+    List<Package> getAllBoughtPackage() throws SQLException,ClassNotFoundException;
+    
 }

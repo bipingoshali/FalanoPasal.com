@@ -28,4 +28,9 @@ public interface UserService {
     void updateUserPassword(User user) throws SQLException,ClassNotFoundException;  
     int getTotalCalorieValue(String username) throws SQLException,ClassNotFoundException;    
     boolean isUsernameShopped(String username) throws SQLException,ClassNotFoundException;    
+    void registerDebitAmount(User user) throws SQLException,ClassNotFoundException;
+    int getRechargeAmount(String rechargeToken) throws SQLException,ClassNotFoundException;
+    void updateUserDebitAmount(User user) throws SQLException,ClassNotFoundException;
+    void updatePinStatus(String rechargeToken) throws SQLException,ClassNotFoundException;
+    int getTotalExpense(String username) throws SQLException,ClassNotFoundException;    
 }

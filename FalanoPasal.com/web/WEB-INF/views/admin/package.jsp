@@ -53,7 +53,13 @@
     });
 </script>
 
-<h1 class="page-header">Package</h1>
+<h1 class="page-header">Package
+
+    <div class="pull-right">
+        <a class="btn btn-danger" href="${SITE_URL}/admin/packageList">Back</a>
+    </div>
+</h1>
+
 
 <div class="row">
     <div class="col-lg-12">

@@ -23,11 +23,12 @@ public class User {
     private double debitAmount;
     private String cartId;
     private int orderCount;
+    private String rechargeToken;
 
     public User() {
     }
 
-    public User(int userId, String firstName, String lastName, String email, String username, String password, String city, String addressLine1, String addressLine2, String phoneNo, String birthdate, String familyType, int houseNo, int roleId, String oldPassword, String confirmPassword, Date birthdateformat, Date enrollDate, String emailToken, String sessionValue, double debitAmount, String cartId, int orderCount) {
+    public User(int userId, String firstName, String lastName, String email, String username, String password, String city, String addressLine1, String addressLine2, String phoneNo, String birthdate, String familyType, int houseNo, int roleId, String oldPassword, String confirmPassword, Date birthdateformat, Date enrollDate, String emailToken, String sessionValue, double debitAmount, String cartId, int orderCount, String rechargeToken) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -51,7 +52,17 @@ public class User {
         this.debitAmount = debitAmount;
         this.cartId = cartId;
         this.orderCount = orderCount;
+        this.rechargeToken = rechargeToken;
     }
+
+    public String getRechargeToken() {
+        return rechargeToken;
+    }
+
+    public void setRechargeToken(String rechargeToken) {
+        this.rechargeToken = rechargeToken;
+    }
+
 
     public String getOldPassword() {
         return oldPassword;

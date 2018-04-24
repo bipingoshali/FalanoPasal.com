@@ -140,7 +140,37 @@ public class PackageHandlerDAOImpl implements PackageHandlerDAO{
         jdbcTemplate.update(SQLConstant.PackageBought.INSERT_PACKAGE_BOUGHT,
                 new Object[]{pack.getUsername(),pack.getPackageId(),pack.getPackageBoughtDate()});
     }
+
+    @Override
+    public List<Package> getUserBoughtPackage(String username) throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.PackageBought.GET_ALL_USER_BOUGHT_PACAKGE, new String[]{username}, new RowMapper<Package>() {
+            @Override
+            public Package mapRow(ResultSet rs, int i) throws SQLException {
+                return mapBoughtPackageData(rs);
+            }
+        });
+    }
     
+    private Package mapBoughtPackageData(ResultSet rs) throws SQLException{
+        Package pack = new Package();
+        pack.setUsername(rs.getString("username"));
+        pack.setPackageId(rs.getString("packageid"));
+        pack.setPackageName(rs.getString("packagename"));
+        pack.setGrandTotalOld(rs.getFloat("grandTotalOld"));
+        pack.setGrandTotalNew(rs.getFloat("grandTotalNew"));
+        pack.setPackageBoughtDate(rs.getDate("date"));
+        return pack;
+    }
+
+    @Override
+    public List<Package> getAllBoughtPackage() throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.PackageBought.GET_ALL_BOUGHT_PACAKGE, new RowMapper<Package>() {
+            @Override
+            public Package mapRow(ResultSet rs, int i) throws SQLException {
+                return mapBoughtPackageData(rs);
+            }
+        });
+    }
 
     
 }

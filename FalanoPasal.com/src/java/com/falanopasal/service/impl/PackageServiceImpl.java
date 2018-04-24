@@ -69,5 +69,15 @@ public class PackageServiceImpl implements PackageService{
         
         packageDao.insertUserPackage(pack);
     }
+
+    @Override
+    public List<Package> getUserBoughtPackage(String username) throws SQLException, ClassNotFoundException {
+        return packageDao.getUserBoughtPackage(username);
+    }
+
+    @Override
+    public List<Package> getAllBoughtPackage() throws SQLException, ClassNotFoundException {
+        return packageDao.getAllBoughtPackage();
+    }
     
 }

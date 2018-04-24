@@ -58,7 +58,7 @@
                         <li><a href="${SITE_URL}/admin/order">Order</a></li>
                         <li><a href="${SITE_URL}/admin/customer">Customer</a></li>
                         <li><a href="${SITE_URL}/admin/offer">Offer and Discount</a></li>
-                        <li><a href="${SITE_URL}/admin/package">Package</a></li>
+                        <li><a href="${SITE_URL}/admin/packageList">Package</a></li>
                         <li><a href="${SITE_URL}/admin/subscription">Subscription</a></li>
                     </ul>
                     <ul class="nav nav-sidebar">

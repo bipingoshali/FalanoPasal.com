@@ -8,6 +8,7 @@ package com.falanopasal.dao.impl;
 import com.falanopasal.constant.SQLConstant;
 import com.falanopasal.dao.OfferDAO;
 import com.falanopasal.entity.Offer;
+import com.falanopasal.entity.Product;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -116,5 +117,37 @@ public class OfferDAOImpl implements OfferDAO{
         offer.setOfferBoughtDate(rs.getDate("date"));
         return offer;
     }
+
+    private Offer mapUserOffersDataHistory(ResultSet rs) throws SQLException{
+        Offer offer = new Offer();
+        offer.setUsername(rs.getString("username"));
+        offer.setOfferId(rs.getInt("offerid"));
+        offer.setOfferBoughtDate(rs.getDate("date"));
+        offer.setType(rs.getString("type"));
+        offer.setPriceTag(rs.getDouble("pricetag"));
+        offer.setProductName(this.getProductName(rs.getInt("productid")));        
+        return offer;
+    }
+
+    @Override
+    public List<Offer> getUserOffersHistory(String username) throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.Offers_Users.GET_USER_OFFER, new String[]{username}, new RowMapper<Offer>() {
+            @Override
+            public Offer mapRow(ResultSet rs, int i) throws SQLException {
+                return mapUserOffersDataHistory(rs);
+            }
+        });
+    }
+
+    @Override
+    public List<Offer> getAllOffersBought() throws SQLException, ClassNotFoundException {
+        return jdbcTemplate.query(SQLConstant.Offers_Users.GET_ALL_USER_OFFER, new RowMapper<Offer>() {
+            @Override
+            public Offer mapRow(ResultSet rs, int i) throws SQLException {
+                return mapUserOffersDataHistory(rs);
+            }
+        });
+    }
+    
     
 }

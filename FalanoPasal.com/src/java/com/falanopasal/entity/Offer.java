@@ -18,8 +18,9 @@ public class Offer {
     private double priceTag;
     private String username;
     private Date offerBoughtDate;
+    private Product product;
 
-    public Offer(int offerId, int orderCount, int productId, String productName, String type, double priceTag, String username, Date offerBoughtDate) {
+    public Offer(int offerId, int orderCount, int productId, String productName, String type, double priceTag, String username, Date offerBoughtDate, Product product) {
         this.offerId = offerId;
         this.orderCount = orderCount;
         this.productId = productId;
@@ -28,7 +29,18 @@ public class Offer {
         this.priceTag = priceTag;
         this.username = username;
         this.offerBoughtDate = offerBoughtDate;
+        this.product = product;
     }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    
 
     public Date getOfferBoughtDate() {
         return offerBoughtDate;

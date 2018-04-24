@@ -25,4 +25,5 @@ public class TableConstant {
     public final static String PACKAGE_TABLE = "package";
     public final static String PACKAGE_ITEM_TABLE = "packageitem";
     public final static String PACKAGE_BOUGHT = "packagebought";
+    public final static String RECHARGE_DEBIT_AMOUNT_TABLE = "rechargedebitamount";
 }

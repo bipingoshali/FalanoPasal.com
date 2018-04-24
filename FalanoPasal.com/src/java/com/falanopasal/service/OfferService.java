@@ -35,7 +35,13 @@ public interface OfferService {
     //works when user buys any offers
     void insertUsersOffers(Offer offer) throws SQLException,ClassNotFoundException;
     
-    //get those offers that were bought by users
+    //check if user has already bought offers
     Offer getUserBoughtOffers(Offer offer) throws SQLException,ClassNotFoundException;
+        
+    //get offer bought list by user
+    List<Offer> getUserOffersHistory(String username) throws SQLException,ClassNotFoundException;
+    
+    //get all offers bought
+    List<Offer> getAllOffersBought()throws SQLException,ClassNotFoundException;
     
 }

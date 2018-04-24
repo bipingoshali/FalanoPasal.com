@@ -45,6 +45,8 @@ public class SQLConstant {
         public final static String UPDATE_PASSWORD = "UPDATE " + TableConstant.USER_TABLE + 
                 " SET password=? where username=?";
         
+        public final static String GET_TOTAL_EXPENSES="SELECT SUM(grandtotal) from SHOPPINGCARTS where username=?";
+        
 
     }
 
@@ -220,6 +222,8 @@ public class SQLConstant {
         
         public final static String DELETE_OFFER = "DELETE FROM " + TableConstant.OFFER_TABLE+
                 " WHERE offerid=?";
+        
+        
     }
     
     public class Offers_Users{
@@ -229,6 +233,10 @@ public class SQLConstant {
         
         public final static String GET_USER_OFFER_BOUGHT = " SELECT * FROM " + TableConstant.OFFER_USERS_TABLE+
                 " WHERE username=? and offerid=?";
+        
+        public final static String GET_USER_OFFER = "select * from offers_users ou, offers o where o.offerid=ou.offerid and username=?";
+
+        public final static String GET_ALL_USER_OFFER = "select * from offers_users ou, offers o where o.offerid=ou.offerid";
         
     }
     
@@ -251,6 +259,27 @@ public class SQLConstant {
         public final static String INSERT_PACKAGE_BOUGHT = "INSERT INTO " + TableConstant.PACKAGE_BOUGHT+
                 " values(?,?,?)";
         
+       public final static String GET_ALL_USER_BOUGHT_PACAKGE = "SELECT * FROM packagebought pb,package p where pb.packageId=p.packageid and username=?";
+       
+       public final static String GET_ALL_BOUGHT_PACAKGE = "SELECT * FROM packagebought pb,package p where pb.packageId=p.packageid order by date desc";
+       
+       public final static String GET_ALL_PACKAGE = "SELECT * FROM " +TableConstant.PACKAGE_TABLE;
+
+       
+    }
+    
+    public class RechargeDebitAmount{
+        public final static String REGISTER_DEBIT_AMOUNT="INSERT INTO " + TableConstant.RECHARGE_DEBIT_AMOUNT_TABLE+
+                " (rechargeAmount,rechargeToken,status) values(?,?,false)";
+        
+        public final static String PLUS_DEBIT_AMOUNT = "UPDATE " + TableConstant.USER_TABLE +
+                " SET debitamount=debitamount+? WHERE username=?";
+        
+        public final static String GET_PIN_AMOUNT = " SELECT rechargeAmount FROM " + TableConstant.RECHARGE_DEBIT_AMOUNT_TABLE+
+                " WHERE rechargeToken=?";
+        
+        public final static String UPDATE_PIN_STATUS = "UPDATE " + TableConstant.RECHARGE_DEBIT_AMOUNT_TABLE+
+                " SET status=true where rechargeToken=?";
     }
     
 }

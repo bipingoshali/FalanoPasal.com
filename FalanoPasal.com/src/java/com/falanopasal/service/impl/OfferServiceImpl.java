@@ -68,5 +68,15 @@ public class OfferServiceImpl implements OfferService{
     public Offer getUserBoughtOffers(Offer offer) throws SQLException, ClassNotFoundException {
         return offerDao.getUserBoughtOffers(offer);
     }
+
+    @Override
+    public List<Offer> getUserOffersHistory(String username) throws SQLException, ClassNotFoundException {
+        return offerDao.getUserOffersHistory(username);
+    }
+
+    @Override
+    public List<Offer> getAllOffersBought() throws SQLException, ClassNotFoundException {
+        return offerDao.getAllOffersBought();
+    }
     
 }

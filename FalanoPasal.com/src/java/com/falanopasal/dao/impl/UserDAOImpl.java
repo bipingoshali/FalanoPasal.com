@@ -158,6 +158,33 @@ public class UserDAOImpl implements UserDAO{
         return false;
     }
 
+    @Override
+    public void registerDebitAmount(User user) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.RechargeDebitAmount.REGISTER_DEBIT_AMOUNT, new Object[]{user.getDebitAmount(),user.getRechargeToken()});
+    }
+
+    @Override
+    public int getRechargeAmount(String rechargeToken) throws SQLException, ClassNotFoundException {
+        int debitAmount = jdbcTemplate.queryForObject(SQLConstant.RechargeDebitAmount.GET_PIN_AMOUNT, new Object[]{rechargeToken},Integer.class);
+        return debitAmount;
+    }
+
+    @Override
+    public void updateUserDebitAmount(User user) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.RechargeDebitAmount.PLUS_DEBIT_AMOUNT, new Object[]{user.getDebitAmount(),user.getUsername()});
+    }
+
+    @Override
+    public void updatePinStatus(String rechargeToken) throws SQLException, ClassNotFoundException {
+        jdbcTemplate.update(SQLConstant.RechargeDebitAmount.UPDATE_PIN_STATUS, new Object[]{rechargeToken});
+    }
+
+    @Override
+    public int getTotalExpense(String username) throws SQLException, ClassNotFoundException {
+        int totalExpenses = jdbcTemplate.queryForObject(SQLConstant.User.GET_TOTAL_EXPENSES, new Object[]{username}, Integer.class);
+        return totalExpenses;
+    }
+
 
     
 

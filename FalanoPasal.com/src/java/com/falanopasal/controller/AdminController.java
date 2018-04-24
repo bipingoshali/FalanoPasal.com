@@ -516,6 +516,108 @@ public class AdminController {
         offerService.deleteOffer(offerId);
         return model;
     }
+    
+    /*
+    view bought offer list
+    */
+    @RequestMapping(value="/admin/offerHistory")
+    public ModelAndView offerBoughtHistory() throws SQLException, ClassNotFoundException{
+        ModelAndView adminModel = new ModelAndView("/admin/offerHistory");
+        ModelAndView userModel = new ModelAndView("redirect:/user/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            User user = new User();
+            user.setSessionValue(username);
+            User fetchSessionData;
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==2){
+                return userModel;
+            }else{
+                List<Offer> boughtOfferList = offerService.getAllOffersBought();
+                adminModel.addObject("boughtOfferList", boughtOfferList);
+                return adminModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");                
+    }
+    
+    /*
+    view package list
+    */
+    @RequestMapping(value="/admin/packageList")
+    public ModelAndView packageList() throws SQLException, ClassNotFoundException{
+        ModelAndView adminModel = new ModelAndView("/admin/packageList");
+        ModelAndView userModel = new ModelAndView("redirect:/user/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            User user = new User();
+            user.setSessionValue(username);
+            User fetchSessionData;
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==2){
+                return userModel;
+            }else{
+                List<Package> packageList = packageService.getAllPackage();
+                adminModel.addObject("packageList", packageList);
+                return adminModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");                
+        
+    }
+    
+    /*
+    view bought package list
+    */
+    @RequestMapping(value="/admin/packageBoughtList")
+    public ModelAndView packageBoughtList() throws SQLException, ClassNotFoundException{
+        ModelAndView adminModel = new ModelAndView("/admin/packageBoughtList");
+        ModelAndView userModel = new ModelAndView("redirect:/user/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            User user = new User();
+            user.setSessionValue(username);
+            User fetchSessionData;
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==2){
+                return userModel;
+            }else{
+                List<Package> packageBoughtList = packageService.getAllBoughtPackage();
+                adminModel.addObject("packageBoughtList", packageBoughtList);
+                return adminModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");                
+    }
+    
+    /*
+    view  package item list
+    */
+    @RequestMapping(value="/admin/packageItemList/{packageId}")
+    public ModelAndView packageItemList(@PathVariable("packageId") String packageId) throws SQLException, ClassNotFoundException{
+        ModelAndView adminModel = new ModelAndView("/admin/packageItemList");
+        ModelAndView userModel = new ModelAndView("redirect:/user/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            User user = new User();
+            user.setSessionValue(username);
+            User fetchSessionData;
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==2){
+                return userModel;
+            }else{
+                List<Package> packageItemList = packageService.getPackageById(packageId);
+                adminModel.addObject("packageItemList", packageItemList);
+                return adminModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");                
+    }
+    
     /*
     create packages
     */

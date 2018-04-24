@@ -622,6 +622,32 @@ public class UserController {
     }
     
     /*
+    offer history
+    */
+    @RequestMapping(value="/user/offerHistory")
+    public ModelAndView offerHistory() throws SQLException, ClassNotFoundException{
+        ModelAndView userModel = new ModelAndView("/user/offerHistory");
+        ModelAndView adminModel = new ModelAndView("redirect:/admin/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            user = new User();
+            user.setSessionValue(username); //setting the session value in User entity
+            fetchSessionData = new User();
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==1){                
+                return adminModel;
+            }else{
+                List<Offer> offerList = offerService.getUserOffersHistory(username);
+                userModel.addObject("offerList", offerList);
+                return userModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");
+        
+    }
+    
+    /*
     buy offers and discounts
     */
     @RequestMapping(value="/user/buyOffersDiscounts/{offerId}")
@@ -669,6 +695,8 @@ public class UserController {
                 fetchSessionData = new User();
                 fetchSessionData = userService.getByUsername(user);
                 userModel.addObject("userData", fetchSessionData);
+                int totalExpense = userService.getTotalExpense(username);
+                userModel.addObject("totalExpense",totalExpense);
                 return userModel;
             }
         }
@@ -764,6 +792,64 @@ public class UserController {
         return model;
     }
     
+    /*
+    bought package history
+    */
+    @RequestMapping(value="/user/packageHistory")
+    public ModelAndView packageHistory() throws SQLException, ClassNotFoundException{
+        ModelAndView userModel = new ModelAndView("/user/packageHistory");
+        ModelAndView adminModel = new ModelAndView("redirect:/admin/home");
+        sessionManager = new SessionManager();
+        if(sessionManager.getAttr("username")!=null){
+            String username = sessionManager.getAttr("username").toString();
+            user = new User();
+            user.setSessionValue(username); //setting the session value in User entity
+            fetchSessionData = new User();
+            fetchSessionData = sessionService.getDataFromSessionValue(user);
+            if(fetchSessionData.getRoleId()==1){                
+                return adminModel;
+            }else{
+                List<Package> packageBoughtList = packageService.getUserBoughtPackage(username);
+                userModel.addObject("packageBoughtList", packageBoughtList);
+                return userModel;
+            }
+        }
+        return new ModelAndView("redirect:/login");
+       
+    }
+    
+    /*
+    get debit amount pin
+    */
+    @RequestMapping(value="/user/registerDebitAmount",method=RequestMethod.POST)
+    public ModelAndView registerDebitAmount(@ModelAttribute("user") User user,final RedirectAttributes redirectAttributes) throws SQLException, ClassNotFoundException{
+        ModelAndView model = new ModelAndView("redirect:/user/profile");
+        //creating a random user id 
+        java.util.UUID randomUUID = java.util.UUID.randomUUID();
+        String rechargeToken = randomUUID.toString();
+        
+        user.setRechargeToken(rechargeToken);
+        userService.registerDebitAmount(user);
+        redirectAttributes.addFlashAttribute("rechargeToken", rechargeToken);
+
+        return model;
+    }
+    
+    /*
+    get debit amount pin
+    */
+    @RequestMapping(value="/user/rechargeDebitAmount",method=RequestMethod.POST)
+    public ModelAndView rechargeDebitAmount(@ModelAttribute("user") User user,final RedirectAttributes redirectAttributes) throws SQLException, ClassNotFoundException{
+        String username = sessionManager.getAttr("username").toString();
+        ModelAndView model = new ModelAndView("redirect:/user/profile");
+        int debitAmount = userService.getRechargeAmount(user.getRechargeToken());
+        user.setDebitAmount(debitAmount);
+        user.setUsername(username);        
+        userService.updateDebitAmount(user);
+        userService.updatePinStatus(user.getRechargeToken());
+        redirectAttributes.addFlashAttribute("rechargeMessage", "Congratulation! Your account has been debited");
+        return model;
+    }
     
         
 }

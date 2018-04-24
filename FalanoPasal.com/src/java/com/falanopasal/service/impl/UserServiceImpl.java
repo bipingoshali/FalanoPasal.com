@@ -107,6 +107,31 @@ public class UserServiceImpl implements UserService {
         return userDao.isUsernameShopped(username);
     }
 
+    @Override
+    public void registerDebitAmount(User user) throws SQLException, ClassNotFoundException {
+        userDao.registerDebitAmount(user);
+    }
+
+    @Override
+    public int getRechargeAmount(String rechargeToken) throws SQLException, ClassNotFoundException {
+        return userDao.getRechargeAmount(rechargeToken);
+    }
+
+    @Override
+    public void updateUserDebitAmount(User user) throws SQLException, ClassNotFoundException {
+        userDao.updateDebitAmount(user);
+    }
+
+    @Override
+    public void updatePinStatus(String rechargeToken) throws SQLException, ClassNotFoundException {
+        userDao.updatePinStatus(rechargeToken);
+    }
+
+    @Override
+    public int getTotalExpense(String username) throws SQLException, ClassNotFoundException {
+        return userDao.getTotalExpense(username);
+    }
+
 
    
 

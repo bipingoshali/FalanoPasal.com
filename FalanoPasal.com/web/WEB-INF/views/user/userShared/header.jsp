@@ -45,7 +45,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="${SITE_URL}/user/orderHistory">Order</a></li>
                                 <li><a href="${SITE_URL}/user/offerHistory">Offer</a></li>
-                                <li><a href="#">Something else here</a></li>
+                                <li><a href="${SITE_URL}/user/packageHistory">Package</a></li>
                             </ul>
                         </li>
                     </ul>

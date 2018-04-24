@@ -51,5 +51,20 @@ public interface UserDAO {
     //check whether the user has shopped from the website or not
     boolean isUsernameShopped(String username) throws SQLException,ClassNotFoundException;
     
+    //register debit amount
+    void registerDebitAmount(User user) throws SQLException,ClassNotFoundException;
+    
+    //get recharge amount
+    int getRechargeAmount(String rechargeToken) throws SQLException,ClassNotFoundException;
+    
+    //update user debit amount
+    void updateUserDebitAmount(User user) throws SQLException,ClassNotFoundException;
+    
+    //update pin status
+    void updatePinStatus(String rechargeToken) throws SQLException,ClassNotFoundException;
+    
+    //get total expense of user
+    int getTotalExpense(String username) throws SQLException,ClassNotFoundException;
+    
 
 }

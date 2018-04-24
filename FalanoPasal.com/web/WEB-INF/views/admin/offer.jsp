@@ -1,12 +1,18 @@
 <%@include file="adminShared/header.jsp" %>
     <h1 class="page-header">Offers and Discounts</h1>
 
-    <div class="row">    
+    <div class="row">   
+        <div class="col-lg-12">
     <!-- register new product button trigger modal -->
+    <a href="${SITE_URL}/admin/offerHistory" class="btn btn-primary pull-left">
+        <span class="glyphicon glyphicon-th"></span>
+        View bought offers
+    </a>
     <button type="button" class="btn btn-primary pull-right" data-toggle="modal" data-target="#createModal">
         <span class="glyphicon glyphicon-plus"></span>
         Create
     </button>
+        </div>
     </div>
 <hr>
 
